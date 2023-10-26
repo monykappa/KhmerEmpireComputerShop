@@ -1,0 +1,129 @@
+.nav-top {
+    margin-top: 15vh;
+}
+
+.search-product{
+    margin: 20px 0;
+}
+.search-product input{
+    margin: 0 auto;
+    display: flex;
+    width: 50%;
+    height: 40px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid var(--fourth-color);
+    padding: 10px;
+}
+
+.ad-ctn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.advertise img {
+    max-width: 100%;
+}
+
+.marquee {
+    height: 80px;
+    width: 80%;
+    margin:0 auto;
+    font-family: var(--secondary-font);
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+}
+
+.center-ctn {
+    display: flex;
+    justify-content: center;
+    width: 80%; /* Set the width to 80% */
+    margin: 0 auto;
+}
+
+.category-panel {
+    margin-right: 15px;
+    flex-basis: 20%;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-right: 1px solid #ccc;
+    box-sizing: border-box;
+    max-height: 700px;
+    overflow-y: auto;
+}
+
+.category-panel h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.category-panel ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-panel li {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.product-ctn {
+    flex-basis: 80%; /* Adjust this width as needed */
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product-card {
+    flex-basis: calc(25% - 10px); /* Four products per row in desktop mode */
+    margin: 0 5px 20px 5px;
+    box-sizing: border-box;
+}
+
+.product-card .card-text {
+    height: 80px; /* Set a fixed height for the card text */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show before truncating */
+    -webkit-box-orient: vertical;
+}
+
+.product-image {
+    max-width: 100%;
+}
+
+
+@media (max-width: 768px) {
+    .center-ctn {
+        flex-direction: column;
+    }
+
+    .category-panel, .product-ctn {
+        flex-basis: 100%;
+        border-right: none;
+    }
+    
+    .product-card {
+        flex-basis: calc(50% - 10px); /* Two products per row in phone mode */
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+    .product-ctn {
+        flex-basis: 70%; /* Adjust this width for a better tablet layout */
+    }
+
+    .product-card {
+        flex-basis: calc(33.33% - 10px); /* Three products per row in tablet mode */
+    }
+}
+
+
+
+
+
+

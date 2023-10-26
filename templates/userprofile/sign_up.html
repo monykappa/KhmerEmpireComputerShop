@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Sign Up</title>
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="text-center">Sign Up</h2>
+            <form method="post" action="{% url 'userprofile:signup' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="full_name">Full Name:</label>
+                    <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Enter your full name">
+                    {% if form.full_name.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.full_name.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+        
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                    {% if form.username.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.username.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                    {% if form.email.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.email.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="pfp">Profile Picture:</label>
+                    <input type="file" class="form-control" id="pfp" name="pfp">
+                </div>
+                <div class="form-group">
+                    <label for="password1">Password:</label>
+                    <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter your password" required>
+                </div>
+                <div class="form-group">
+                    <label for="password2">Confirm Password:</label>
+                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Enter your password" required>
+                </div>                
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+
+
+</body>
+</html>
