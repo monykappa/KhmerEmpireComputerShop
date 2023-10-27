@@ -44,6 +44,7 @@
     </div>
 
     <div class="center-ctn">
+
         <aside class="category-panel">
             <h2>CATEGORIES</h2>
             <ul>
@@ -63,7 +64,6 @@
                 <li><a href="#">UPS</a></li>
                 <li><a href="#">Software</a></li>
                 <li><a href="#">Security System</a></li>
-
             </ul>
         </aside>
         <div class="product-ctn">
@@ -75,7 +75,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.brand_name }} {{ product.model }} <span class="year">{{ product.year }}</span></h5>
                                 <p class="card-text">{{ product.productspec.cpu }} | {{ product.productspec.memory }}GB Ram | {{ product.productspec.storage}} Storage | {{ product.productspec.graphics_card }} | {{product.productspec.display}} inches</p>
-                                <a href="#" class="btn btn-primary btn-detail">View Details</a>
+                                <div class="detail-ctn">
+                                    <a href="#" class="btn btn-primary btn-detail">View Details</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -86,20 +88,13 @@
         
         
         
-        
-        
-        
-        
 
     </div>
 
-
-
-
-
     {% endblock content %}
 
-
+    
+    
+    
 </body>
-
 </html>

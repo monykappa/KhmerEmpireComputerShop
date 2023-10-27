@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Varela+Round&display=swap');
 *{
     padding:0;
     margin:0;
     box-sizing: border-box;
 }
 :root{
-    --primary-font: 'Comfortaa', sans-serif;
+    --primary-font: 'Varela Round', sans-serif;
     --secondary-font: 'Poppins', sans-serif;
     --main-color: #FFF2D8;
     --second-color: #EAD7BB;
