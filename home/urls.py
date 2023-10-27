@@ -9,7 +9,7 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('home/', views.home, name='home'),
     path('base/', views.base, name='base'),
-    path('product/', views.product, name='product'),
+    path('products/', views.product_list, name='product_list'),
     path('logout/', LogoutView.as_view(next_page='home:index'), name='logout'),
     
     # Add more URL patterns as needed

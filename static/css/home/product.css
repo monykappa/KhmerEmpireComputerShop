@@ -30,6 +30,7 @@
     height: 80px;
     width: 80%;
     margin:0 auto;
+    border:0;
     font-family: var(--secondary-font);
     white-space: nowrap;
     overflow: hidden;
@@ -47,16 +48,17 @@
     margin-right: 15px;
     flex-basis: 20%;
     padding: 20px;
-    background-color: #f2f2f2;
-    border-right: 1px solid #ccc;
+    background-color: var(--fourth-color);
     box-sizing: border-box;
     max-height: 700px;
     overflow-y: auto;
 }
 
 .category-panel h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 22px;
+    margin-bottom: 30px;
+    font-family: var(--primary-font);
+    color:var(--third-color);
 }
 
 .category-panel ul {
@@ -65,11 +67,20 @@
 }
 
 .category-panel li {
-    margin-bottom: 10px;
-    cursor: pointer;
+    margin:10px 0 10px 0;
+}
+.category-panel a{
+    font-size: 18px;
+    font-family: var(--secondary-font);
+    color:var(--second-color);
+    transition: 0.3s ease;
+}
+.category-panel a:hover{
+    color:var(--main-color);
 }
 
 .product-ctn {
+    font-family: var(--primary-font);
     flex-basis: 80%; /* Adjust this width as needed */
     box-sizing: border-box;
     display: flex;
@@ -82,9 +93,16 @@
     margin: 0 5px 20px 5px;
     box-sizing: border-box;
 }
-
+span.year{
+    color:red;
+}
+.card{
+    height: 480px;
+    border: 1px solid var(--third-color);
+}
 .product-card .card-text {
-    height: 80px; /* Set a fixed height for the card text */
+    font-family: var(--secondary-font);
+    height: 100px; /* Set a fixed height for the card text */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -92,7 +110,24 @@
     -webkit-box-orient: vertical;
 }
 
+a.btn-detail{
+    font-family: var(--secondary-font);
+    background-color: var(--fourth-color);
+    color:var(--main-color);
+    transition: 0.3s ease;
+    border: 2px solid white;
+}
+a.btn-detail:hover{
+    background-color: var(--second-color);
+    color:var(--fourth-color);
+    border: 2px solid black;
+}
+
+
 .product-image {
+    border: 2px solid red;
+    padding: 5px;
+    width: 100%;
     max-width: 100%;
 }
 

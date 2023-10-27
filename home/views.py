@@ -15,9 +15,9 @@ from django.contrib.auth.views import LogoutView
 class CustomLogoutView(LogoutView):
     next_page = '/'
 
-def product(request):
-    template = 'home/product.html'
-    return render(request, template)
+def product_list(request):
+    products = Product.objects.select_related('productspec').all()
+    return render(request, 'home/product_list.html', {'products': products})
 
 
 @login_required(login_url='userprofile:signin')  # Use the view name 'userprofile:signin'

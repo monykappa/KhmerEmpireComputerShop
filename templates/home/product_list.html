@@ -1,0 +1,105 @@
+{% extends 'home/home.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home/product.css' %}">
+    {% endblock extra_css %}
+    {% block title %}Product{% endblock title %}
+</head>
+
+<body>
+    {% block content %}
+
+    <div class="nav-top">
+    </div>
+    <div class="search-product">
+        <input type="search" placeholder="Search Product">
+    </div>
+
+    <div class="ad-ctn">
+        <div class="advertise">
+            <img src="https://www.goldonecomputer.com/image/cache/catalog/Banner%20and%20Slide/231005%20MSI-915x420.jpg"
+                alt="">
+        </div>
+    </div>
+    <div class="marquee">
+        <h1>
+            <span class="big-w">W</span>elcome to <span class="name"> <span class="big-w">K</span>hmer <span
+                    class="big-w">E</span>mpire <span class="big-w">C</span>omputer <span
+                    class="big-w">S</span>hop</span> Contact +855 8880 26678.
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Facebook_Home_logo_old.svg/50px-Facebook_Home_logo_old.svg.png"
+                alt="" width="60px"> Khmer Empire Computer Shop,
+            <img src="https://www.svgrepo.com/show/138536/twitter-social-logotype.svg" width="60px">
+            @KhmerEmpireComputerShop,
+            <img src="https://www.logo.wine/a/logo/YouTube/YouTube-Icon-Full-Color-Logo.wine.svg" alt="" width="100px">
+            Khmer Empire Computer Shop,
+            <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="" width="60px">
+            @KhmerEmpireComputerShop
+        </h1>
+    </div>
+
+    <div class="center-ctn">
+        <aside class="category-panel">
+            <h2>CATEGORIES</h2>
+            <ul>
+                <li><a href="#">Laptop</a></li>
+                <li><a href="#">Desktop</a></li>
+                <li><a href="#">Monitor</a></li>
+                <li><a href="#">Smart Phone</a></li>
+                <li><a href="#">PC Components</a></li>
+                <li><a href="#">Gaming Gear</a></li>
+                <li><a href="#">Accessories</a></li>
+                <li><a href="#">Digital Storage</a></li>
+                <li><a href="#">Audio Device</a></li>
+                <li><a href="#">Laptop Square Parts</a></li>
+                <li><a href="#">Network</a></li>
+                <li><a href="#">Printer and Scanner</a></li>
+                <li><a href="#">Projector</a></li>
+                <li><a href="#">UPS</a></li>
+                <li><a href="#">Software</a></li>
+                <li><a href="#">Security System</a></li>
+
+            </ul>
+        </aside>
+        <div class="product-ctn">
+            <div class="row">
+                {% for product in products %}
+                    <div class="product-card">
+                        <div class="card">
+                            <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="card-img-top product-image">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.brand_name }} {{ product.model }} <span class="year">{{ product.year }}</span></h5>
+                                <p class="card-text">{{ product.productspec.cpu }} | {{ product.productspec.memory }}GB Ram | {{ product.productspec.storage}} Storage | {{ product.productspec.graphics_card }} | {{product.productspec.display}} inches</p>
+                                <a href="#" class="btn btn-primary btn-detail">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+
+    </div>
+
+
+
+
+
+    {% endblock content %}
+
+
+</body>
+
+</html>

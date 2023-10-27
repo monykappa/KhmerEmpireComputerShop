@@ -8,7 +8,7 @@ class ProductSpecInline(admin.StackedInline):
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductSpecInline]
     
-    list_display = ('brand_name', 'model', 'year', 'price_with_dollar', 'category')
+    list_display = ('id', 'brand_name', 'model', 'year', 'price_with_dollar', 'category')
     list_filter = ('year', 'category')
 
     def price_with_dollar(self, obj):
