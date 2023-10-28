@@ -53,7 +53,7 @@ button.btn-toggle svg {
 .navbar {
     font-family: var(--primary-font);
     background-color: var(--fourth-color);
-    padding: 30px 0px;
+    padding: 10px 0px;
 }
 
 ul.navbar-nav {
@@ -95,7 +95,7 @@ ul li.menu a:hover {
 }
 
 .nav-top {
-    margin-top: 13vh;
+    margin-top: 9vh;
 }
 
 .marquee {
@@ -222,9 +222,20 @@ footer {
 
     }
 }
+@media (min-width:992px) and (max-width:1199px){
+    ul.navbar-nav li a{
+        font-size: 16px;
+    }
+    .container{
+        padding:0 15px;
 
+    }
+    a.about-us{
+        width:100px;
+    }
+}
 /* Repsonsive for tablet*/
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 987px) {
     .ctn {
         width: 100%;
     }
