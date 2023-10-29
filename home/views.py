@@ -36,8 +36,9 @@ class CustomLogoutView(LogoutView):
     next_page = '/'
 
 def product_list(request):
-    products = Product.objects.select_related('productspec').all()
+    products = Product.objects.select_related('laptopspec').all()
     return render(request, 'home/product_list.html', {'products': products})
+
 
 
 @login_required(login_url='userprofile:signin')  # Use the view name 'userprofile:signin'

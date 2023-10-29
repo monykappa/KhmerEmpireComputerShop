@@ -44,8 +44,8 @@ class Product(models.Model):
     def __str__(self):
         return self.brand_name
 
-class ProductSpec(models.Model):
-    product = models.OneToOneField(Product, on_delete=models.CASCADE, null=True, blank=True, related_name='productspec')
+class LaptopSpec(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, null=True, blank=True, related_name='laptopspec')
     cpu = models.CharField(max_length=100, null=True, blank=True)
     cpu_detail = models.CharField(max_length=200, null=True, blank=True)
     memory = models.CharField(max_length=100, null=True, blank=True)

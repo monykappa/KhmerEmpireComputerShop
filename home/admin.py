@@ -1,23 +1,21 @@
 from django.contrib import admin
-from .models import Category, Product, ProductSpec, Stock, Order, OrderItem
+from .models import Category, Product, LaptopSpec, Stock, Order, OrderItem
 
 class ProductSpecInline(admin.StackedInline):
-    model = ProductSpec
+    model = LaptopSpec
     extra = 1
 
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductSpecInline]
-    
-    list_display = ('id', 'brand_name', 'model', 'year', 'price_with_dollar', 'category')
+    list_display = ('id', 'brand_name', 'model', 'year', 'formatted_price', 'category')
     list_filter = ('year', 'category')
 
-    def price_with_dollar(self, obj):
-        return f"${obj.price}"
-    price_with_dollar.short_description = 'Price'
+    def formatted_price(self, obj):
+        price_str = "${:,.2f}".format(obj.price)
+        return price_str.rstrip('.00').rstrip('0').rstrip('.') if '.' in price_str else price_str
 
+    formatted_price.short_description = 'Price'
 
-
-class ProductSpecAdmin(admin.ModelAdmin):
+class LaptopSpecAdmin(admin.ModelAdmin):
     list_display = ('product_brand_name', 'product_model', 'price_with_dollar', 'cpu', 'memory', 'storage', 'graphics_card', 'display', 'operating_system')
 
     list_select_related = ('product',)  # Specify the related model to retrieve
@@ -74,7 +72,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 admin.site.register(Category)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(ProductSpec, ProductSpecAdmin)
+admin.site.register(LaptopSpec, LaptopSpecAdmin)
 admin.site.register(Stock, StockAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem)

@@ -8,7 +8,12 @@
     color: var(--main-color);
     font-family: var(--primary-font);
 }
-
+ul{
+    text-align: center;
+    font-family: var(--primary-font);
+    color: red;
+    font-size: 18px;
+}
 form {
     font-family: var(--secondary-font);
 }

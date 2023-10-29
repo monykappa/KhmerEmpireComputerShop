@@ -24,8 +24,10 @@ def user_directory_path(instance, filename):
     return os.path.join(directory_path, filename)
 
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
     profile_picture = models.ImageField(upload_to=user_directory_path, validators=[validate_file_extension], blank=True, null=True)
     other_field = models.CharField(max_length=100, blank=True)
 

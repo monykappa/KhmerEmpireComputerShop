@@ -10,6 +10,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from .models import *
+from django.contrib import messages 
+
 
 
 def custom_logout(request):
@@ -21,6 +23,8 @@ from django.contrib.auth import authenticate, login
 
 
 def signin(request):
+    if request.user.is_authenticated:
+        return redirect('home:home')  
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -38,16 +42,16 @@ def signin(request):
 
     return render(request, 'userprofile/sign_in.html', {'error_message': error_message})
 
-
 def signup(request):
-    error_message = ""  # Initialize error_message with an empty string
-
+    if request.user.is_authenticated:
+        return redirect('home:home')  
     if request.method == 'POST':
         full_name = request.POST['full_name']
         username = request.POST['username']
         email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
+        phone_number = request.POST['phone-number']  # Get the phone number
         pfp = request.FILES.get('pfp')  # Get the profile picture file if provided
 
         # Split the full name into first name and last name
@@ -55,28 +59,34 @@ def signup(request):
 
         # Check if the passwords match
         if password1 != password2:
-            error_message = "Passwords do not match."
+            messages.error(request, "Passwords do not match.")
         else:
-            # Check if a user with the same username or email already exists
-            if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
-                error_message = "A user with this username or email already exists."
+            # Check if a user with the same username, email, or phone number already exists
+            if User.objects.filter(username=username).exists():
+                messages.error(request, "Username is already taken. Please choose a different one.")
+            elif User.objects.filter(email=email).exists():
+                messages.error(request, "Email is already registered. Please use a different email address.")
+            elif UserProfile.objects.filter(phone_number=phone_number).exists():
+                messages.error(request, "Phone number is already in use. Please use a different phone number.")
             else:
-                # Create the user if the username and email are unique
+                # Create the user if the username, email, and phone number are unique
                 user = User(username=username, email=email, password=make_password(password1))
                 user.first_name = first_name
                 user.last_name = last_name
+                user.save()
 
+                # Create the UserProfile
+                user_profile = UserProfile.objects.create(user=user, phone_number=phone_number)
                 if pfp:
-                    user.profile_picture = pfp
-                    user.save()
+                    user_profile.profile_picture = pfp
+                    user_profile.save()
 
-                    user_profile = UserProfile.objects.create(user=user, profile_picture=pfp)
+                # Set the authentication backend
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
 
-                    #Set the authentication backend
-                    user.backend = 'django.contrib.auth.backends.ModelBackend'
+                # Log in the user
+                login(request, user)
+                messages.success(request, "Account created successfully.")
+                return redirect('home:home')  # Redirect to your home page
 
-                    # Log in the user
-                    login(request, user)
-                    return redirect('home:home')  # Redirect to your home page
-
-    return render(request, 'userprofile/sign_up.html', {'error_message': error_message})
+    return render(request, 'userprofile/sign_up.html')
