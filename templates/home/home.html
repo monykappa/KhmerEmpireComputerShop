@@ -1,3 +1,4 @@
+{% extends 'home/base.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -7,82 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/home/home.css' %}">
-    {% block extra_css %}{% endblock %}
+    {% endblock %}
     <title>{% block title %}Home{% endblock %}</title>
 </head>
 
 <body>
-    <!-- navbar start -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <!-- Logo on the left -->
-            <a class="navbar-brand logo-name" href="#">
-                <img src="https://cdn-icons-png.flaticon.com/512/1354/1354444.png" alt="Logo" height="50">
-                <h5 class="logo-name-logo">Khmer Empire Shop</h5>
-            </a>
-            <!-- Menu items on the right -->
-            <button class="navbar-toggler btn-toggle" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="40" viewBox="0,0,256,256"
-                    style="fill:#000000;">
-                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                        stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                        font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                        style="mix-blend-mode: normal">
-                        <g transform="scale(5.12,5.12)">
-                            <path
-                                d="M5,8c-0.72127,-0.0102 -1.39216,0.36875 -1.75578,0.99175c-0.36361,0.623 -0.36361,1.39351 0,2.01651c0.36361,0.623 1.0345,1.00195 1.75578,0.99175h40c0.72127,0.0102 1.39216,-0.36875 1.75578,-0.99175c0.36361,-0.623 0.36361,-1.39351 0,-2.01651c-0.36361,-0.623 -1.0345,-1.00195 -1.75578,-0.99175zM5,23c-0.72127,-0.0102 -1.39216,0.36875 -1.75578,0.99175c-0.36361,0.623 -0.36361,1.39351 0,2.01651c0.36361,0.623 1.0345,1.00195 1.75578,0.99175h40c0.72127,0.0102 1.39216,-0.36875 1.75578,-0.99175c0.36361,-0.623 0.36361,-1.39351 0,-2.01651c-0.36361,-0.623 -1.0345,-1.00195 -1.75578,-0.99175zM5,38c-0.72127,-0.0102 -1.39216,0.36875 -1.75578,0.99175c-0.36361,0.623 -0.36361,1.39351 0,2.01651c0.36361,0.623 1.0345,1.00195 1.75578,0.99175h40c0.72127,0.0102 1.39216,-0.36875 1.75578,-0.99175c0.36361,-0.623 0.36361,-1.39351 0,-2.01651c-0.36361,-0.623 -1.0345,-1.00195 -1.75578,-0.99175z">
-                            </path>
-                        </g>
-                    </g>
-                </svg>
-                <span class="navbar-toggler-icon"> </span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active menu">
-                        <a class="nav-link"
-                            href="{% if user.is_authenticated %}{% url 'home:home' %}{% else %}{% url 'home:index' %}{% endif %}">Home
-                        </a>
-                    </li>
-                    <li class="nav-item menu">
-                        <a class="nav-link" href="{% url 'home:product_list' %}">Product</a>
-                    </li>
-                    <li class="nav-item menu">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                    <li class="nav-item menu">
-                        <a class="nav-link about-us" href="#">About Us</a>
-                    </li>
-                    <li class="nav-item cart">
-                        <a class="nav-link" href="#"><img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="30px"></a>
-                    </li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item menu">
-                        <a class="nav-link" href="">{{ user.username }}</a>
-                    </li>
-                    <li class="nav-item menu">
-                        <a class="nav-link" href="{% url 'home:logout' %}">Logout</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item menu">
-                        <a class="nav-link" href="{% url 'userprofile:signin' %}">Sign In</a>
-                    </li>
-                    <li class="nav-item menu">
-                        <a class="nav-link" href="{% url 'userprofile:signup' %}">Sign Up</a>
-                    </li>
-                    {% endif %}
-                </ul>
-
-            </div>
-        </div>
-    </nav>
-    <!-- navbar end -->
-
     {% block content %}
-    <div class="nav-top">
-    </div>
     <div class="marquee">
         <h1>
             <span class="big-w">W</span>elcome to <span class="name"> <span class="big-w">K</span>hmer <span
@@ -121,28 +54,7 @@
 
     {% endblock content %}
 
-    <!-- Footer  start-->
-    <footer>
-        <div class="footer">
-            <img src="https://cdn-icons-png.flaticon.com/512/1354/1354444.png" alt="Logo" height="120"
-                class="footer-logo">
-            <h2>Khmer Empire Computer Shop</h2>
-            <div class="social-icons">
-                <a href="https://facebook.com" class="logo-social-media"><img
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Facebook_Home_logo_old.svg/50px-Facebook_Home_logo_old.svg.png"></a>
-                <a href="https://twitter.com" class="logo-social-media"><img
-                        src="https://www.svgrepo.com/show/138536/twitter-social-logotype.svg" alt="" width="50px"></a>
-                <a href="https://youtube.com" class="logo-social-media"><img
-                        src="https://www.logo.wine/a/logo/YouTube/YouTube-Icon-Full-Color-Logo.wine.svg" alt=""
-                        width="80px"></a>
-                <a href="https://telegram.com" class="logo-social-media"><img
-                        src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="" width="50px"></a>
-            </div>
-            <p>Contact: +855 888026678</p>
-            <p>&copy; 2023 Khmer Empire Computer Shop. All rights reserved.</p>
-        </div>
-    </footer>
-    <!-- Footer end -->
+
 
 
 

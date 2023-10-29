@@ -1,11 +1,10 @@
 {% extends 'home/base.html' %}
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
     {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/home/index.css' %}">
     {% endblock %}
@@ -13,6 +12,41 @@
 </head>
 <body>
     {% block content %}
+    <div class="marquee">
+        <h1>
+            <span class="big-w">W</span>elcome to <span class="name"> <span class="big-w">K</span>hmer <span
+                    class="big-w">E</span>mpire <span class="big-w">C</span>omputer <span
+                    class="big-w">S</span>hop</span> Contact +855 8880 26678.
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Facebook_Home_logo_old.svg/50px-Facebook_Home_logo_old.svg.png"
+                alt="" width="60px"> Khmer Empire Computer Shop,
+            <img src="https://www.svgrepo.com/show/138536/twitter-social-logotype.svg" width="60px">
+            @KhmerEmpireComputerShop,
+            <img src="https://www.logo.wine/a/logo/YouTube/YouTube-Icon-Full-Color-Logo.wine.svg" alt="" width="100px">
+            Khmer Empire Computer Shop,
+            <img src="https://cdn.worldvectorlogo.com/logos/telegram-1.svg" alt="" width="60px">
+            @KhmerEmpireComputerShop
+        </h1>
+    </div>
+
+
+    <div class="ctn">
+        <div class="news">
+            <img src="https://www.goldonecomputer.com/image/cache/catalog/Banner%20and%20Slide/231005%20MSI-915x420.jpg"
+                alt="">
+        </div>
+        <div class="news">
+            <img src="https://www.goldonecomputer.com/image/cache/catalog/Banner%20and%20Slide/231005%20MSI-915x420.jpg"
+                alt="">
+        </div>
+        <div class="news">
+            <img src="https://www.goldonecomputer.com/image/cache/catalog/Banner%20and%20Slide/231005%20MSI-915x420.jpg"
+                alt="">
+        </div>
+        <div class="news">
+            <img src="https://www.goldonecomputer.com/image/cache/catalog/Banner%20and%20Slide/231005%20MSI-915x420.jpg"
+                alt="">
+        </div>
+    </div>
     {% endblock %}
 </body>
 </html>

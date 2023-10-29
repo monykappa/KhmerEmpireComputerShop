@@ -1,27 +1,21 @@
+{% extends 'home/base.html' %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Varela+Round&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Sign in</title>
-    <style>
-        body {
-            font-family: 'ABeeZee', sans-serif;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-    </style>
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/userprofile/sign_in.css' %}">
+    {% endblock extra_css %}
+    {% block title %}Sign in{% endblock title %}
 </head>
 <body>
-    <div class="container">
+    {% block content %}
+    <div class="sign-in-ctn">
         <div class="col-md-6">
-            <h2 class="text-center">Sign In</h2>
+            <h2 class="text-center sign-in">Sign In</h2>
             <form method="post" action="{% url 'userprofile:signin' %}">
                 {% csrf_token %}
                 <div class="form-group">
@@ -32,12 +26,16 @@
                     <label for="password">Password:</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
                 </div>
-                <a href="{% url 'userprofile:signup' %}" class="btn btn-primary">Sign up</a>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <a href="" class="btn-forget"><p>Forget password?</a></p>
+                <button type="submit" class="btn btn-primary btn-sign-in">Sign in</button>
+                <hr style="background-color: var(--main-color);">
+                <p class="create-text">Don't have an account, just create one!</p>
+                <a href="{% url 'userprofile:signup' %}" class="btn btn-primary btn-sign-up">Sign up</a>
             </form>
         </div>
     </div>
-    
+
+    {% endblock content %}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

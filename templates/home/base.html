@@ -5,23 +5,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>{% block title %}Base{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/home/base.css' %}">
     {% block extra_css %}{% endblock %}
-
+    <title>{% block title %}Home{% endblock %}</title>
 </head>
 
 <body>
+    <!-- navbar start -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <!-- Logo on the left -->
             <a class="navbar-brand logo-name" href="#">
-                <img src="https://cdn-icons-png.flaticon.com/512/1354/1354444.png" alt="Logo" height="50">
+                <img src="https://cdn-icons-png.flaticon.com/512/1354/1354444.png" alt="Logo" height="50" class="nav-logo">
                 <h5 class="logo-name-logo">Khmer Empire Shop</h5>
             </a>
-
-
             <!-- Menu items on the right -->
             <button class="navbar-toggler btn-toggle" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +39,6 @@
                 </svg>
                 <span class="navbar-toggler-icon"> </span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active menu">
@@ -55,51 +53,65 @@
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item menu">
-                        <a class="nav-link" href="#">About Us</a>
+                        <a class="nav-link about-us" href="#">About Us</a>
                     </li>
                     <li class="nav-item cart">
                         <a class="nav-link" href="#"><img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="30px"></a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item menu">
-                        <a class="nav-link" href="">{{ user.username }}</a>
+                        <a class="nav-link user" href="{% url 'home:profile' %}">{{ user.username }}</a>
                     </li>
                     <li class="nav-item menu">
                         <a class="nav-link" href="{% url 'home:logout' %}">Logout</a>
                     </li>
                     {% else %}
                     <li class="nav-item menu">
-                        <a class="nav-link" href="{% url 'userprofile:signin' %}">Sign In</a>
+                        <a class="nav-link nav-sign-in" href="{% url 'userprofile:signin' %}">Sign In</a>
                     </li>
                     <li class="nav-item menu">
-                        <a class="nav-link" href="{% url 'userprofile:signup' %}">Sign Up</a>
+                        <a class="nav-link  nav-sign-up" href="{% url 'userprofile:signup' %}">Sign Up</a>
                     </li>
                     {% endif %}
                 </ul>
-
             </div>
-
         </div>
     </nav>
+    <!-- navbar end -->
+    <div class="nav-top"></div>
+    {% block content %}
 
-    <div style="margin-top: 7vh;">
-        <h1>hi</h1>
-        <h1>hi</h1>
-        <h1>hi</h1>
-        <h1>hi</h1>
-        <h1>hi</h1>
-    </div>
-    <div class="content">
-        {% block content %}
 
-        {% endblock %}
-    </div>
+    {% endblock content %}
+
+    <!-- Footer  start-->
+    <footer>
+        <div class="footer">
+            <img src="https://cdn-icons-png.flaticon.com/512/1354/1354444.png" alt="Logo" height="120"
+                class="footer-logo">
+            <h2>Khmer Empire Computer Shop</h2>
+            <div class="social-icons">
+                <a href="https://facebook.com" class="logo-social-media"><img
+                        src=" {% static 'images/icons/icons8-facebook-100.png' %}" width="50px"></a>
+                <a href="https://twitter.com" class="logo-social-media"><img
+                    src=" {% static 'images/icons/icons8-twitter-100.png' %}" width="50px"></a>
+                <a href="https://youtube.com" class="logo-social-media"><img
+                    src=" {% static 'images/icons/icons8-youtube-100.png' %}" alt=""
+                    width="65px"></a>
+                <a href="https://telegram.com" class="logo-social-media"><img
+                    src=" {% static 'images/icons/icons8-telegram-100.png' %}" width="75px"></a>
+            </div>
+            <p>Contact: +855 888026678</p>
+            <p>&copy; 2023 Khmer Empire Computer Shop. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Footer end -->
+
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

@@ -10,7 +10,27 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User 
 from django.contrib.auth import logout
 from .models import *
+from userprofile.models import *
 from django.contrib.auth.views import LogoutView
+from .forms import UserProfileForm
+
+@login_required(login_url='userprofile:signin') 
+def profile(request):
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        # If the user's profile doesn't exist, create one
+        user_profile = UserProfile(user=request.user)
+        user_profile.save()
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserProfileForm(instance=user_profile)
+
+    return render(request, 'home/profile.html', {'user_profile': user_profile, 'form': form})
 
 class CustomLogoutView(LogoutView):
     next_page = '/'

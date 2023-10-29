@@ -1,4 +1,4 @@
-{% extends 'home/home.html' %}
+{% extends 'home/base.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +66,6 @@
                 <li><a href="#">Security System</a></li>
             </ul>
         </aside>
-
         <div class="product-ctn">
             <div class="row">
                 {% for product in products %}
@@ -75,6 +74,7 @@
                             <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="card-img-top product-image">
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.brand_name }} {{ product.model }} <span class="year">{{ product.year }}</span></h5>
+                                <h5 class="price">${{product.price}}</h5>
                                 <p class="card-text">{{ product.productspec.cpu }} | {{ product.productspec.memory }}GB Ram | {{ product.productspec.storage}} Storage | {{ product.productspec.graphics_card }} | {{product.productspec.display}} inches</p>
                                 <div class="detail-ctn">
                                     <a href="#" class="btn btn-primary btn-detail">View Details</a>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poltawski+Nowy:wght@500&family=Poppins&display=swap');
 
 * {
     padding: 0;
@@ -7,22 +7,22 @@
 }
 
 :root {
-    --primary-font:  'Varela Round', sans-serif;
+    --primary-font:  'Poltawski Nowy', serif;
     --secondary-font: 'Poppins', sans-serif;
+    --brand-font: 'Agbalumo', sans-serif;
     --main-color: #FFF2D8;
     --second-color: #EAD7BB;
     --third-color: #BCA37F;
     --fourth-color: #113946;
 }
-.nav-top{
-    margin-top: 17vh;
-}
+
 a.logo-name {
     width: 320px;
     display: flex;
     flex-wrap: wrap;
     margin-left: 10px;
     padding: 5px;
+    
 }
 
 h5.logo-name-logo {
@@ -30,6 +30,7 @@ h5.logo-name-logo {
     font-size: 22px;
     padding: 10px;
     margin-top: 5px;
+    font-family: var(--primary-font);
 }
 
 button.btn-toggle {
@@ -94,6 +95,16 @@ ul li.menu a:hover {
     box-shadow: inset 200px 0 0 0 var(--second-color);
 }
 
+ul li.menu a.nav-sign-in{
+    border: 1px solid var(--main-color);
+}
+ul li.menu a.nav-sign-up{
+    border: 1px solid var(--third-color);
+}
+ul li.menu a.user{
+    text-underline-offset: 4px;
+    text-decoration: underline;
+}
 .nav-top {
     margin-top: 9vh;
 }
@@ -175,9 +186,69 @@ footer {
 }
 
 
+@media (min-width:237px) and (max-width:427px){
+    ul{
+        text-align: center;
+        width:100%;
+        
+    }
+    ul li.menu a{
+        text-align: center;
+        border: 2px solid var(--main-color);
+        box-shadow: none;
+        transition: 0.3s ease;
+        font-size: 14px;
 
+    }
+    ul li.menu a:hover{
+        color: var(--fourth-color);
+        background-color: var(--third-color);
+        box-shadow: none;
+    }
+    a.logo-name {
+        width:100%;
+        margin-left: 0;
+    }
+    img.nav-logo{
+        display: flex;
+        margin: 0 auto;
+    }
+    .container{
+        margin: 0 5px;
+    }   
+    h5.logo-name-logo{
+        display: flex;
+        margin: 0 auto;
+        font-size: 20px;
+    }
+    button.btn-toggle{
+        margin: 0 auto;
+        margin-top: 10px;
+        width:100%;
+    }
+    ul li.cart a {
+        border: 2px solid var(--main-color);
+        border-radius: 5px;
+        box-shadow: none;
+        transition: none;
+        padding:5px 0;
+        margin: 0;
+        margin-left: 5px;
+        transition: 0.3s ease;
+    }
+    ul li.cart{
+        width:98%;
+    }
+
+    ul li.cart:hover a {
+        background-color: var(--third-color);
+        border-radius: 5px;
+        box-shadow: none;
+    }
+    
+}
 /* Repsonsive for phone*/
-@media screen and (max-width:767px) {
+@media screen and (min-width:428px) and (max-width:767px){
     .ctn {
         width: 100%;
     }
@@ -219,7 +290,6 @@ footer {
     ul li.cart a img {
         margin: 0 auto;
         display: flex;
-
     }
 }
 @media (min-width:992px) and (max-width:1199px){
@@ -228,14 +298,25 @@ footer {
     }
     .container{
         padding:0 15px;
-
+    ul li.menu a{
+        text-align: center;
+    }
     }
     a.about-us{
         width:100px;
     }
+
+    a.nav-sign-in{
+        width: 80px;
+    }
+    a.nav-sign-up{
+        width: 88px;
+
+    }
 }
 /* Repsonsive for tablet*/
 @media (min-width: 768px) and (max-width: 987px) {
+
     .ctn {
         width: 100%;
     }
@@ -274,5 +355,45 @@ footer {
         margin: 0 auto;
         display: flex;
 
+    }
+}
+
+
+@media (max-width: 575px) {
+    .footer-logo{
+        width:100px;
+        height: 100px;
+    }
+}
+
+/* Define styles for small screens */
+@media (min-width: 576px) and (max-width: 767px) {
+    .footer-logo{
+        width:100px;
+        height: 100px;
+    }
+}
+
+/* Define styles for medium screens */
+@media (min-width: 768px) and (max-width: 991px) {
+    .footer-logo{
+        width:100px;
+        height: 100px;
+    }
+}
+
+/* Define styles for large screens */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .footer-logo{
+        width:100px;
+        height: 100px;
+    }
+}
+
+/* Define styles for extra large screens */
+@media (min-width: 1200px) {
+    .footer-logo{
+        width:100px;
+        height: 100px;
     }
 }
