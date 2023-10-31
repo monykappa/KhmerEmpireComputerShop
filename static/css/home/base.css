@@ -172,7 +172,6 @@ footer {
     bottom: 0;
     width: 100%;
 }
-
 .footer img.footer-logo {
     margin: 10px 0 20px 0;
 }
@@ -183,15 +182,28 @@ footer {
 }
 
 .logo-social-media {
-    margin: 0px 10px;
+    margin: 0px 5px;
 }
 
 .social-icons {
     font-size: 24px;
 }
 
+p.copy-rigth{
+    font-size: 12px;
+}
+
 
 @media (min-width:237px) and (max-width:427px){
+
+    .footer img.footer-logo {
+        width:60px;
+        height: 60px;
+    }
+    footer h2{
+        margin: 1rem;
+        font-size: 22px;
+    }
     ul{
         text-align: center;
         width:100%;
@@ -254,12 +266,20 @@ footer {
 }
 /* Repsonsive for phone*/
 @media screen and (min-width:428px) and (max-width:767px){
+    .footer img.footer-logo {
+        width:60px;
+        height: 60px;
+    }
+    footer h2{
+        margin: 1rem;
+        font-size: 26px;
+    }
     .ctn {
         width: 100%;
     }
 
     a.logo-name {
-        margin-left: 20px;
+        margin-left: 15px;
     }
 
     ul li.menu a {
@@ -298,6 +318,14 @@ footer {
     }
 }
 @media (min-width:992px) and (max-width:1199px){
+    .footer img.footer-logo {
+        width:80px;
+        height: 80px;
+    }
+    footer h2{
+        margin: 1rem;
+        font-size: 22px;
+    }
     ul.navbar-nav li a{
         font-size: 16px;
     }
@@ -321,6 +349,14 @@ footer {
 }
 /* Repsonsive for tablet*/
 @media (min-width: 768px) and (max-width: 987px) {
+    .footer img.footer-logo {
+        width:80px;
+        height: 80px;
+    }
+    footer h2{
+        margin: 1rem;
+        font-size: 22px;
+    }
 
     .ctn {
         width: 100%;
@@ -398,7 +434,11 @@ footer {
 /* Define styles for extra large screens */
 @media (min-width: 1200px) {
     .footer-logo{
-        width:100px;
-        height: 100px;
+        width:80px;
+        height: 80px;
+    }
+    footer h2{
+        margin: 1rem;
+        font-size: 26px;
     }
 }

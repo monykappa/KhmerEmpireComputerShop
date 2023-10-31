@@ -1,13 +1,20 @@
 from django.contrib import admin
-from .models import Category, Product, LaptopSpec, Stock, Order, OrderItem
+from .models import Category, Product, LaptopSpec, HeadphoneSpec, Stock, Order, OrderItem, brand_category
 
-class ProductSpecInline(admin.StackedInline):
+
+class HeadphoneSpecInline(admin.StackedInline):
+    model = HeadphoneSpec
+    max_num = 1
+    extra = 0
+
+class LaptopSpecInline(admin.StackedInline):
     model = LaptopSpec
     extra = 1
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'brand_name', 'model', 'year', 'formatted_price', 'category')
-    list_filter = ('year', 'category')
+    inlines = [HeadphoneSpecInline, LaptopSpecInline]
+    list_display = ('id', 'brand_name', 'brand_category', 'model', 'year', 'formatted_price', 'category')
+    list_filter = ('brand_category', 'year', 'category')
 
     def formatted_price(self, obj):
         price_str = "${:,.2f}".format(obj.price)
@@ -76,3 +83,5 @@ admin.site.register(LaptopSpec, LaptopSpecAdmin)
 admin.site.register(Stock, StockAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem)
+admin.site.register(brand_category)
+admin.site.register(HeadphoneSpec)

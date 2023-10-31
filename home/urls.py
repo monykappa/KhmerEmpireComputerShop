@@ -10,7 +10,9 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('base/', views.base, name='base'),
     path('profile', views.profile, name='profile'),
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('products/', views.product_list, name='product_list'),
+    path('product/<int:product_id>/', views.product_details, name='product_details'),
     path('logout/', LogoutView.as_view(next_page='home:index'), name='logout'),
     
     # Add more URL patterns as needed

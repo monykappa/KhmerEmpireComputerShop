@@ -151,14 +151,17 @@ a.btn-detail {
     font-family: var(--secondary-font);
     background-color: var(--fourth-color);
     color: var(--main-color);
-    transition: 0.3s ease;
+    transition: 0.3s ease-in;
     border: 2px solid white;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 a.btn-detail:hover {
     background-color: var(--second-color);
     color: var(--fourth-color);
     border: 2px solid black;
+    text-decoration: none;
 }
 
 
@@ -229,7 +232,7 @@ a.btn-detail:hover {
     }
 
     .detail-ctn {
-        bottom: 7px;
+        bottom: 10px;
     }
 
     h5.price {
@@ -249,10 +252,6 @@ a.btn-detail:hover {
         flex-wrap: wrap;
     }
 
-
-    .detail-ctn {
-        left: 10px;
-    }
 
     .center-ctn {
         flex-direction: column;
@@ -280,9 +279,10 @@ a.btn-detail:hover {
 
     h5.card-title {
         margin: 10px;
-
     }
-
+    .card-title{
+        height: 50px;
+    }
     p.card-text {
         font-size: 14px;
         padding: 0;
@@ -307,7 +307,8 @@ a.btn-detail:hover {
     }
 
     .detail-ctn {
-        bottom: 7px;
+        left: 10px;
+        bottom: 15px;
     }
 }
 
@@ -329,7 +330,7 @@ a.btn-detail:hover {
     }
 
     h5.card-title {
-        font-size: 18px;
+        font-size: 16px;
     }
 
 
@@ -353,7 +354,7 @@ a.btn-detail:hover {
     }
 
     .detail-ctn {
-        bottom: 10px;
+        bottom: 20px;
     }
 
     p.card-text {
@@ -372,7 +373,7 @@ a.btn-detail:hover {
     }
 
     .detail-ctn {
-        bottom: 10px;
+        bottom: 15px;
     }
 
     .card {
@@ -414,7 +415,9 @@ a.btn-detail:hover {
     .product-card {
         height: 450px;
     }
-
+    .detail-ctn{
+        bottom:15px;
+    }
     .card {
         height: 440px;
     }
@@ -425,7 +428,7 @@ a.btn-detail:hover {
 
 @media (min-width:460px) and (max-width:552px) {
     .detail-ctn {
-        bottom: 10px;
+        bottom: 20px;
     }
 
     p.card-text {

@@ -1,0 +1,108 @@
+{% extends 'home/base.html' %}
+{% load humanize %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home/product_details.css' %}">
+    {% endblock extra_css %}
+    {% block title %}
+    Product Details
+    {% endblock title %}
+</head>
+<body>
+    {% block content %}
+    <div class="go-back-ctn">
+        <button id="go-back-button">← Back</button>
+    </div>
+    <hr>
+    <div class="whole-ctn">
+    <div class="box-ctn">
+
+        <div class="product-ctn">
+            <div class="image-container">
+                <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" id="zoom-image">
+            </div>
+        </div>
+        <div class="spec-ctn">
+            <div class="header">
+                <h1>{{ product.brand_name }} {{ product.model }}</h1>
+            </div>
+            <div class="description">
+                <h3>${{ product.price }}</h3>
+                <p>Year: <span class="product-year">{{ product.year }}</span></p>
+                <p>Brand: {{ product.brand_category.company_name }}</p>
+            </div>
+            <hr>
+            {% if specs %}
+            <div class="specs">
+                <h5>Laptop Specifications:</h5>
+                <ul>
+                    <li>CPU: {{ product.laptopspec.cpu }} {{ product.laptopspec.cpu_detail }}</li>
+                    <li>Memory: {{ product.laptopspec.memory }}GB ({{ product.laptopspec.memory_detail }})</li>
+                    <li>Storage: {{ product.laptopspec.storage }} {{ product.laptopspec.storage_detail }}</li>
+                    <li>Graphics Card: {{ product.laptopspec.graphics_card }} {{ product.laptopspec.graphics_card_detail }}</li>
+                    <li>Display: {{ product.laptopspec.display }} {{ product.laptopspec.display_detail }}</li>
+                    <li>Operating System: {{ product.laptopspec.operating_system }}</li>
+                </ul>
+            </div>
+            {% endif %}
+            <button id="add-to-cart-btn"><img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="20px" class="cart-logo">Add to cart</button>
+        </div>
+    </div>
+    <div class="recommend-ctn">
+        <h3 style="font-size: 20px; text-align: center; color:var(--fourth-color)">Recommend products</h3>
+        <div class="sub-recommend-ctn">
+        {% for recommended_product in recommended_products %}
+        <div class="recommend-product">
+            <a href="{% url 'home:product_details' recommended_product.id %}"> <!-- Add the URL for the product details page -->
+                <img src="{{ recommended_product.images.url }}" alt="img">
+                <div class="recommend-ctn-spec">
+                    <h3 class="product-name">{{ recommended_product.brand_name }} {{ recommended_product.model }}</h3>
+                    <h6 class="price">${{ recommended_product.price }}</h6>
+                </div>
+            </a>
+            
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+    
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+    <script>
+        document.getElementById("go-back-button").addEventListener("click", function () {
+            window.history.back();
+        });
+
+        const imageContainer = document.querySelector('.image-container');
+        const zoomImage = document.getElementById('zoom-image');
+
+        imageContainer.addEventListener('mousemove', (e) => {
+            const rect = imageContainer.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / imageContainer.clientWidth;
+            const y = (e.clientY - rect.top) / imageContainer.clientHeight;
+            zoomImage.style.transformOrigin = `${x * 100}% ${y * 100}%`;
+        });
+
+    </script>
+
+
+    {% endblock content %}
+</body>
+
+</html>

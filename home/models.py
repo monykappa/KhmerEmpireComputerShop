@@ -30,11 +30,16 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class brand_category(models.Model):
+    company_name = models.CharField(max_length=200, null=True, blank=True)
 
+    def __str__(self):
+        return self.company_name
 
 class Product(models.Model):
     brand_name = models.CharField(max_length=200, null=True, blank=True)
     model = models.CharField(max_length=200, null=True, blank=True)
+    brand_category = models.ForeignKey(brand_category, on_delete=models.CASCADE, null=True, blank=True, related_name='brand_category')
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     images = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True)
@@ -43,6 +48,17 @@ class Product(models.Model):
 
     def __str__(self):
         return self.brand_name
+
+class HeadphoneSpec(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, null=True, blank=True, related_name='headphonespec')
+    driver_size = models.CharField(max_length=100, null=True, blank=True)
+    frequency_response = models.CharField(max_length=100, null=True, blank=True)
+    impedance = models.CharField(max_length=100, null=True, blank=True)
+    noise_cancellation = models.CharField(max_length=100, null=True, blank=True)
+    connector_type = models.CharField(max_length=100, null=True, blank=True)
+    weight = models.CharField(max_length=100, null=True, blank=True)
+    battery_life = models.CharField(max_length=100, null=True, blank=True)
+    additional_features = models.CharField(max_length=100, null=True, blank=True)
 
 class LaptopSpec(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE, null=True, blank=True, related_name='laptopspec')
