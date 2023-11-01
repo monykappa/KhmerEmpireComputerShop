@@ -14,6 +14,7 @@ urlpatterns = [
     path('products/', views.product_list, name='product_list'),
     path('product/<int:product_id>/', views.product_details, name='product_details'),
     path('logout/', LogoutView.as_view(next_page='home:index'), name='logout'),
+    path('ajax/', views.product_list_ajax, name='product_list_ajax'),
     
     # Add more URL patterns as needed
 ]

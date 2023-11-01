@@ -23,6 +23,17 @@ def product_directory_path(instance, filename):
     # Return the complete file path
     return os.path.join(directory_path, filename)
 
+# does not count
+def product_related_images_directory_path(instance, filename):
+    # Generate a unique identifier for the directory
+    unique_id = str(uuid.uuid4())
+    # Construct the directory path
+    directory_path = f'product_related_images/{unique_id}/'
+
+    # Return the complete file path
+    return os.path.join(directory_path, filename)
+
+
 # Create a model for the Category of products (e.g., laptops, desktops).
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -40,9 +51,14 @@ class Product(models.Model):
     brand_name = models.CharField(max_length=200, null=True, blank=True)
     model = models.CharField(max_length=200, null=True, blank=True)
     brand_category = models.ForeignKey(brand_category, on_delete=models.CASCADE, null=True, blank=True, related_name='brand_category')
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    images = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True)
+    images = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
+    image_2 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
+    image_3 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
+    image_4 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
+    image_5 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
+    image_6 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     year = models.CharField(max_length=4, choices=[(str(year), str(year)) for year in range(2015, 2056)], null=True, blank=True)
 

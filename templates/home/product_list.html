@@ -18,16 +18,14 @@
 
     <div class="nav-top">
     </div>
-    <div class="search-product">
-        <input type="search" placeholder="Search Product">
-    </div>
-
     <div class="ad-ctn">
         <div class="advertise">
             <img src="https://www.goldonecomputer.com/image/cache/catalog/Banner%20and%20Slide/231005%20MSI-915x420.jpg"
                 alt="">
         </div>
     </div>
+    <div id="search-results"></div>
+
     <div class="marquee">
         <h1>
             <span class="big-w">W</span>elcome to <span class="name"> <span class="big-w">K</span>hmer <span
@@ -43,12 +41,55 @@
             @KhmerEmpireComputerShop
         </h1>
     </div>
+            
+    <div class="search-product">
+        <form method="GET" action="{% url 'home:product_list' %}">
+            <input type="search" name="q" id="search-input" placeholder="Search Product">
+            <button type="submit" class="btn-search">Search</button>
+        </form>
+    </div>
 
     <div class="center-ctn">
-
         <aside class="category-panel">
             <h2>CATEGORIES</h2>
             <ul>
+                <li><a href="#">Laptop</a></li>
+                <li><a href="#">Desktop</a></li>
+                <li><a href="#">Monitor</a></li>
+                <li><a href="#">Smart Phone</a></li>
+                <li><a href="#">PC Components</a></li>
+                <li><a href="#">Gaming Gear</a></li>
+                <li><a href="#">Accessories</a></li>
+                <li><a href="#">Digital Storage</a></li>
+                <li><a href="#">Audio Device</a></li>
+                <li><a href="#">Laptop Square Parts</a></li>
+                <li><a href="#">Network</a></li>
+                <li><a href="#">Printer and Scanner</a></li>
+                <li><a href="#">Projector</a></li>
+                <li><a href="#">UPS</a></li>
+                <li><a href="#">Software</a></li>
+                <li><a href="#">Security System</a></li>
+            </ul>
+        </aside>
+        <aside class="category-panel-1">
+            <div class="sub-category-panel-1">
+                <h2 style="font-size: 22px; color:var(--third-color); margin-top: 9px;">CATEGORIES</h2>
+                <button  id="category-dropdown-button"><img src=""><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="30" viewBox="0,0,256,256"
+                    style="fill:#000000;">
+                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                        stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                        font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                        style="mix-blend-mode: normal">
+                        <g transform="scale(5.12,5.12)">
+                            <path
+                                d="M5,8c-0.72127,-0.0102 -1.39216,0.36875 -1.75578,0.99175c-0.36361,0.623 -0.36361,1.39351 0,2.01651c0.36361,0.623 1.0345,1.00195 1.75578,0.99175h40c0.72127,0.0102 1.39216,-0.36875 1.75578,-0.99175c0.36361,-0.623 0.36361,-1.39351 0,-2.01651c-0.36361,-0.623 -1.0345,-1.00195 -1.75578,-0.99175zM5,23c-0.72127,-0.0102 -1.39216,0.36875 -1.75578,0.99175c-0.36361,0.623 -0.36361,1.39351 0,2.01651c0.36361,0.623 1.0345,1.00195 1.75578,0.99175h40c0.72127,0.0102 1.39216,-0.36875 1.75578,-0.99175c0.36361,-0.623 0.36361,-1.39351 0,-2.01651c-0.36361,-0.623 -1.0345,-1.00195 -1.75578,-0.99175zM5,38c-0.72127,-0.0102 -1.39216,0.36875 -1.75578,0.99175c-0.36361,0.623 -0.36361,1.39351 0,2.01651c0.36361,0.623 1.0345,1.00195 1.75578,0.99175h40c0.72127,0.0102 1.39216,-0.36875 1.75578,-0.99175c0.36361,-0.623 0.36361,-1.39351 0,-2.01651c-0.36361,-0.623 -1.0345,-1.00195 -1.75578,-0.99175z">
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+            </button>
+            </div>
+            <ul id="category-list">
                 <li><a href="#">Laptop</a></li>
                 <li><a href="#">Desktop</a></li>
                 <li><a href="#">Monitor</a></li>
@@ -75,10 +116,10 @@
                             <div class="card">
                                 <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="card-img-top product-image">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ product.brand_name }} {{ product.model }} <span class="year">{{ product.year }}</span></h5>
+                                    <h5 class="card-title">{{ product.brand_name }} <span class="year">{{ product.year }}</span></h5>
                                     <h5 class="price">$ {{ product.price|floatformat:2|intcomma }}{% if product.price|floatformat:2|intcomma|slice:"-3:" == ".00" %}{% else %}.00{% endif %}</h5>
                                     <p class="card-text">
-                                        {{ product.laptopspec.cpu }} | {{ product.laptopspec.memory }}GB Ram | {{ product.laptopspec.storage}} Storage | {{ product.laptopspec.graphics_card }} | {{ product.laptopspec.display }} inches
+                                        {{ product.laptopspec.cpu }} | {{ product.laptopspec.memory }}GB | {{ product.laptopspec.storage }} Storage | {{ product.laptopspec.graphics_card }} | {{ product.laptopspec.display }} inches
                                     </p>
                                     <div class="detail-ctn">
                                         <a href="{% url 'home:product_details' product.id %}" class="btn-detail">View Details</a>
@@ -89,19 +130,63 @@
                     {% endif %}
                 {% endfor %}
             </div>
-        </div>
-        
-        
-        
-        
-        
-
+        </div>    
     </div>
 
+
+    <script>
+        // Get the button and the list
+        const dropdownButton = document.getElementById("category-dropdown-button");
+        const categoryList = document.getElementById("category-list");
+    
+        // Add a click event listener to the button
+        dropdownButton.addEventListener("click", function () {
+            // Toggle the display of the list
+            if (categoryList.style.display === "none" || categoryList.style.display === "") {
+                categoryList.style.display = "block";
+            } else {
+                categoryList.style.display = "none";
+            }
+        });
+    </script>
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // JavaScript code for the real-time search
+        // Get the search input element
+        const searchInput = document.querySelector('#search-input');
+
+        // Add a keyup event listener to the search input
+        searchInput.addEventListener('keyup', function () {
+            // Get the search query
+            const query = searchInput.value;
+
+            // Make an AJAX request to the server
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `/ajax/?q=${query}`);
+            xhr.send();
+
+
+            // When the server responds, update the search results UI
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Get the search results from the JSON response
+                    const searchResults = JSON.parse(xhr.responseText);
+
+                    // Update the search results UI
+                    // ...
+                }
+            };
+        });
+
+
+    </script>
     {% endblock content %}
 
-    
-    
-    
+
+
+
 </body>
+
 </html>

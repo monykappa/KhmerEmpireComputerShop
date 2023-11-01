@@ -22,19 +22,25 @@
     <hr>
     <div class="whole-ctn">
     <div class="box-ctn">
-
         <div class="product-ctn">
             <div class="image-container">
                 <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" id="zoom-image">
             </div>
+            {% for image_field in image_fields %}
+                <div class="related-image">
+                    <img src="{{ image_field.url }}" alt="{{ product.brand_name }}" width="400px">
+                </div>
+            {% endfor %}
         </div>
+        
         <div class="spec-ctn">
             <div class="header">
-                <h1>{{ product.brand_name }} {{ product.model }}</h1>
+                <h1>{{ product.brand_name }}</h1>
             </div>
             <div class="description">
                 <h3>${{ product.price }}</h3>
                 <p>Year: <span class="product-year">{{ product.year }}</span></p>
+                <p>Model: {{ product.model }}</p>
                 <p>Brand: {{ product.brand_category.company_name }}</p>
             </div>
             <hr>
@@ -56,27 +62,26 @@
     </div>
     <div class="recommend-ctn">
         <h3 style="font-size: 20px; text-align: center; color:var(--fourth-color)">Recommend products</h3>
+        <hr>
         <div class="sub-recommend-ctn">
         {% for recommended_product in recommended_products %}
-        <div class="recommend-product">
-            <a href="{% url 'home:product_details' recommended_product.id %}"> <!-- Add the URL for the product details page -->
+        <a href="{% url 'home:product_details' recommended_product.id %}">
+        <div class="recommend-product"> <!-- Add the URL for the product details page -->
                 <img src="{{ recommended_product.images.url }}" alt="img">
                 <div class="recommend-ctn-spec">
-                    <h3 class="product-name">{{ recommended_product.brand_name }} {{ recommended_product.model }}</h3>
+                    <h3 class="product-name">{{ recommended_product.brand_name }}</h3>
                     <h6 class="price">${{ recommended_product.price }}</h6>
                 </div>
-            </a>
+
             
         </div>
+    </a>
         {% endfor %}
     </div>
     </div>
     
     
 </div>
-
-
-
 
 
 

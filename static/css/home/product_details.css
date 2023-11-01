@@ -36,7 +36,7 @@ button#go-back-button:hover {
 .product-ctn {
     border: 0.5px solid rgba(128, 128, 128, 0.219);
     padding: 20px 0;
-    max-width: 40%;
+    max-width: 100%;
     flex-basis: 50%;
     height: 400px;
     margin: 0 auto;
@@ -81,7 +81,23 @@ span.product-year {
     display: flex;
     font-family: var(--primary-font);
 }
-
+.box-ctn{
+    border: 2px solid red;
+}
+.product-ctn{
+    border: 2px solid red;
+    display: flex;
+}
+.related-image{
+    margin-top: 13rem;
+    display: inline-flex;
+    border: 2px solid red;
+    width:200px;
+    height: 150px;
+}
+.related-image img {
+    max-width: 100%; /* Ensure the images don't stretch too wide */
+}
 .spec-ctn {
     flex-basis: 50%;
     max-width: 35%;
@@ -102,7 +118,7 @@ span.product-year {
     margin: 0 auto;
     height: auto;
     width: 200px;
-    object-fit: contain;
+    object-fit: cover;
     padding: 1rem;
 }
 
@@ -238,7 +254,6 @@ button#add-to-cart-btn:hover {
         display: flex;
         flex-wrap: wrap;
         width: 100%;
-
     }
     .recommend-ctn {
         width: 90%;

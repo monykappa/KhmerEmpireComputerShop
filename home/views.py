@@ -13,6 +13,7 @@ from .models import *
 from userprofile.models import *
 from django.contrib.auth.views import LogoutView
 from .forms import UserProfileForm
+from django.db.models import Q
 
 
 @login_required
@@ -70,17 +71,69 @@ class CustomLogoutView(LogoutView):
     next_page = '/'
 
 def product_list(request):
-    products = Product.objects.select_related('laptopspec').all()
-    return render(request, 'home/product_list.html', {'products': products})
+    query = request.GET.get('q')
+    products = Product.objects.select_related('laptopspec')
+    
+    # Define the variable 'filtered_products' before the 'if' block
+    filtered_products = products
+
+    if query:
+        # Use Q objects to perform a case-insensitive search on multiple fields
+        filtered_products = filtered_products.filter(
+            Q(brand_name__icontains=query) |
+            Q(model__icontains=query) |
+            Q(laptopspec__cpu__icontains=query)
+        )
+
+    return render(request, 'home/product_list.html', {'products': filtered_products})
+
+
+
+def product_list_ajax(request):
+    query = request.GET.get('q')
+    products = Product.objects.select_related('laptopspec')
+
+    if query:
+    # Use Q objects to perform a case-insensitive search on multiple fields
+        products = products.filter(
+        Q(brand_name__icontains=query) |
+        Q(model__icontains=query) |
+        Q(laptopspec__cpu__icontains=query)
+        )
+
+    search_results = []
+    for product in products:
+        search_results.append({
+        'id': product.id,
+        'brand_name': product.brand_name,
+        'model': product.model,
+        'cpu': product.laptopspec.cpu
+    })
+
+    return JsonResponse(search_results, safe=False)
+
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     specs = LaptopSpec.objects.filter(product=product)
-    
+
+    image_fields = []
+    for i in range(2, 7):
+        field_name = f'image_{i}'
+        image_field = getattr(product, field_name, None)
+        if image_field:
+            image_fields.append(image_field)
+
     # Add a query to get recommended products (you can customize this query)
-    recommended_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:5]
-    
-    return render(request, 'home/product_details.html', {'product': product, 'specs': specs, 'recommended_products': recommended_products})
+    recommended_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:6]
+
+    return render(request, 'home/product_details.html', {
+        'product': product,
+        'specs': specs,
+        'recommended_products': recommended_products,
+        'image_fields': image_fields
+    })
+
 
 
 
