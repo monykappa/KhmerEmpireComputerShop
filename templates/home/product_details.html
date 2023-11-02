@@ -22,17 +22,18 @@
     <hr>
     <div class="whole-ctn">
     <div class="box-ctn">
+        <div class="sub-box-ctn">
         <div class="product-ctn">
             <div class="image-container">
-                <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" id="zoom-image">
+                <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="zoom-image">
             </div>
-            {% for image_field in image_fields %}
-                <div class="related-image">
-                    <img src="{{ image_field.url }}" alt="{{ product.brand_name }}" width="400px">
-                </div>
-            {% endfor %}
         </div>
-        
+        {% for image_field in image_fields %}
+        <div class="related-image">
+            <img class="image-item" src="{{ image_field.url }}" alt="{{ product.brand_name }}">
+        </div>
+        {% endfor %}
+    </div>
         <div class="spec-ctn">
             <div class="header">
                 <h1>{{ product.brand_name }}</h1>
@@ -66,14 +67,12 @@
         <div class="sub-recommend-ctn">
         {% for recommended_product in recommended_products %}
         <a href="{% url 'home:product_details' recommended_product.id %}">
-        <div class="recommend-product"> <!-- Add the URL for the product details page -->
+        <div class="recommend-product">
                 <img src="{{ recommended_product.images.url }}" alt="img">
                 <div class="recommend-ctn-spec">
                     <h3 class="product-name">{{ recommended_product.brand_name }}</h3>
                     <h6 class="price">${{ recommended_product.price }}</h6>
                 </div>
-
-            
         </div>
     </a>
         {% endfor %}
@@ -90,22 +89,76 @@
 
 
     <script>
-        document.getElementById("go-back-button").addEventListener("click", function () {
-            window.history.back();
+       const imageContainer = document.querySelector('.image-container');
+const zoomImages = document.querySelectorAll('.zoom-image');
+
+imageContainer.addEventListener('mousemove', (e) => {
+    const rect = imageContainer.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / imageContainer.clientWidth;
+    const y = (e.clientY - rect.top) / imageContainer.clientHeight;
+    zoomImages.forEach((zoomImage) => {
+        zoomImage.style.transformOrigin = `${x * 100}% ${y * 100}%`;
+    });
+});
+
+zoomImages.forEach((zoomImage) => {
+    zoomImage.addEventListener('click', function() {
+        const fullscreenImage = document.createElement('div');
+        fullscreenImage.id = 'fullscreen-image';
+        const fullscreenImageContainer = document.createElement('div');
+        fullscreenImageContainer.classList.add('fullscreen-image-container');
+        const fullscreenImageElement = document.createElement('img');
+        fullscreenImageElement.src = zoomImage.src;
+        fullscreenImageElement.alt = zoomImage.alt;
+
+        const closeButton = document.createElement('button');
+        closeButton.classList.add('close-button');
+        closeButton.innerHTML = 'X';
+
+        fullscreenImageContainer.appendChild(fullscreenImageElement);
+        fullscreenImageContainer.appendChild(closeButton);
+        fullscreenImage.appendChild(fullscreenImageContainer);
+        document.body.appendChild(fullscreenImage);
+
+        closeButton.addEventListener('click', function() {
+            fullscreenImage.remove();
         });
-
-        const imageContainer = document.querySelector('.image-container');
-        const zoomImage = document.getElementById('zoom-image');
-
-        imageContainer.addEventListener('mousemove', (e) => {
-            const rect = imageContainer.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / imageContainer.clientWidth;
-            const y = (e.clientY - rect.top) / imageContainer.clientHeight;
-            zoomImage.style.transformOrigin = `${x * 100}% ${y * 100}%`;
-        });
-
+    });
+});
     </script>
+    <script>
+       const images = document.querySelectorAll('.related-image .image-item');
 
+images.forEach(function(image) {
+  image.addEventListener('click', function() {
+    const fullscreenImage = document.createElement('div');
+    fullscreenImage.id = 'fullscreen-image';
+    const fullscreenImageContainer = document.createElement('div');
+    fullscreenImageContainer.classList.add('fullscreen-image-container');
+    const fullscreenImageElement = document.createElement('img');
+    fullscreenImageElement.src = image.src;
+    fullscreenImageElement.alt = image.alt;
+
+    const closeButton = document.createElement('button');
+    closeButton.classList.add('close-button');
+    closeButton.innerHTML = 'X';
+
+    fullscreenImageContainer.appendChild(fullscreenImageElement);
+    fullscreenImageContainer.appendChild(closeButton);
+    fullscreenImage.appendChild(fullscreenImageContainer);
+    document.body.appendChild(fullscreenImage);
+
+    closeButton.addEventListener('click', function() {
+      fullscreenImage.remove();
+    });
+  });
+});
+    </script>
+    <script>
+        document.getElementById("go-back-button").addEventListener("click", function () {
+    window.history.back();
+});
+    </script>
 
     {% endblock content %}
 </body>
