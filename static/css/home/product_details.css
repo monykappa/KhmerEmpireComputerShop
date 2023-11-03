@@ -250,6 +250,31 @@ button#add-to-cart-btn:hover {
 }
 
 @media (min-width: 0px) and (max-width: 575px) {
+    .sub-box-ctn {
+        width: 100%;
+    }
+    .related-image img{
+        width: 70px;
+    }
+    .related-image{
+        margin:0 .5rem 0 0;
+    }
+    .image-container{
+        border: 1px solid rgba(128, 128, 128, 0.288);
+        width: 100%;
+    }
+    .close-button {
+        top: 3rem;
+        right: 2rem;
+        padding:5px 15px;
+        border-radius: 5px;
+        background: transparent;
+        border: 1px solid grey;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
     .whole-ctn {
         display: block;
     }
@@ -308,6 +333,31 @@ button#add-to-cart-btn:hover {
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
+    .sub-box-ctn {
+        width: 100%;
+    }
+    .related-image img{
+        width: 90px;
+    }
+    .related-image{
+        margin:0 .5rem 0 0;
+    }
+    .image-container{
+        border: 1px solid rgba(128, 128, 128, 0.288);
+        width: 100%;
+    }
+    .close-button {
+        top: 3rem;
+        right: 2rem;
+        padding:5px 15px;
+        border-radius: 5px;
+        background: transparent;
+        border: 1px solid grey;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
     .whole-ctn {
         display: block;
     }
@@ -317,7 +367,6 @@ button#add-to-cart-btn:hover {
         object-fit: fill;
     }
 
-    .recommend-product img {}
 
     .sub-recommend-ctn {
         justify-content: space-evenly;
@@ -357,6 +406,28 @@ button#add-to-cart-btn:hover {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+    .sub-box-ctn {
+        width: 100%;
+    }
+    .related-image img{
+        width: 100px;
+    }
+    .related-image{
+        margin:0 .5rem 0 0;
+    }
+    .close-button {
+        top: 3rem;
+        right: 3rem;
+        padding:5px 15px;
+        border-radius: 5px;
+        background: transparent;
+        border: 1px solid grey;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+    
     .whole-ctn {
         display: block;
     }
@@ -400,9 +471,13 @@ button#add-to-cart-btn:hover {
         flex-basis: 100%;
         max-width: 100%;
     }
-
+    .image-container{
+        border: 1px solid rgba(128, 128, 128, 0.288);
+        width: 100%;
+    }
     .spec-ctn {
         margin: 0;
+    
     }
 
     .header h1 {
@@ -411,6 +486,19 @@ button#add-to-cart-btn:hover {
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
+    .sub-box-ctn {
+        width: 60%;
+    }
+    .related-image img{
+        width: 80px;
+    }
+    .related-image{
+        margin:0 .5rem 0 0;
+    }
+    .image-container{
+        border: 1px solid rgba(128, 128, 128, 0.288);
+        width: 100%;
+    }
     .whole-ctn {
         display: block;
     }
@@ -457,7 +545,7 @@ button#add-to-cart-btn:hover {
     }
 
     .spec-ctn {
-        margin-left: 1rem;
+        margin-left: 2rem;
     }
 
     .header h1 {
@@ -466,6 +554,20 @@ button#add-to-cart-btn:hover {
 }
 
 @media (min-width: 1200px) and (max-width:1333px) {
+    .sub-box-ctn {
+        width: 50%;
+        margin-left: 1.5rem;
+    }
+    .related-image img{
+        width: 80px;
+    }
+    .related-image{
+        margin:0 .5rem 0 0;
+    }
+    .image-container{
+        border: 1px solid rgba(128, 128, 128, 0.288);
+        width: 100%;
+    }
     .whole-ctn {
         display: flex;
     }
@@ -513,7 +615,7 @@ button#add-to-cart-btn:hover {
     }
 
     .spec-ctn {
-        margin-left: 1rem;
+        margin-left: 3rem;
     }
 
     .header h1 {
@@ -521,7 +623,20 @@ button#add-to-cart-btn:hover {
     }
 }
 
-@media (min-width:1333px) and (max-width: 1620px) {
+@media (min-width:1333px) and (max-width: 1919px) {
+    .sub-box-ctn {
+        width: 55%;
+    }
+    .related-image img{
+        width: 100px;
+    }
+    .related-image{
+        margin:0 .5rem 0 0;
+    }
+    .image-container{
+        border: 1px solid rgba(128, 128, 128, 0.288);
+        width: 100%;
+    }
     .whole-ctn {
         display: flex;
     }

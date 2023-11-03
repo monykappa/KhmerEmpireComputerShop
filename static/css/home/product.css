@@ -199,55 +199,8 @@ a.btn-detail:hover {
     object-fit: contain;
 }
 
-@media (min-width:237px) and (max-width:273px) {
-    .row {
-        display: block;
-        margin: 0px;
-    }
-
-    .card {
-        max-height: 450px;
-
-    }
-
-    .detail-ctn {
-        bottom: 5px;
-    }
-
-    .product-card {
-        height: 450px;
-    }
-
-    h5.price {
-        margin-left: 10px;
-    }
-
-}
-
-@media (min-width:274px) and (max-width:327px) {
-    .row {
-        display: block;
-        margin: 0px;
-    }
-
-    .card {
-        max-height: 450px;
-
-    }
-
-    .product-card {
-        height: 450px;
-    }
-    .row{
-        display: block;
-    }
-
-    h5.price {
-        margin-left: 10px;
-    }
-}
-
 @media (min-width:252px) and (max-width:459px) {
+    
     .search-product {
         width: 100%;
     }
@@ -261,30 +214,112 @@ a.btn-detail:hover {
     }
 }
 
-@media (min-width:328px) and (max-width:460px) {
-    .row {
+@media (min-width:0px) and (max-width:460px) {
+    .product-card {
+        flex-basis: calc(50% - 10px);
+    }
+    .center-ctn{
+        width:90%;
+    }
+    .category-panel-1 {
+        display: contents;
+    }
+    .row{
+        width: 100%;
+    }
+    .sub-category-panel-1 {
+        color: var(--main-color);
+        background-color: var(--fourth-color);
+        display: flex;
+        padding: 0.5rem;
+        border-radius: 5px 5px 0 0;
+        position: relative;
+        margin: 0 5px 0 5px;
+    }
+
+    button#category-dropdown-button {
+        background-color: transparent;
+        position: absolute;
+        padding: 2px 5px 2px 5px;
+        border: 1px solid var(--main-color);
+        border-radius: 5px;
+        right: 2em;
+        transition: background-color 0.5s ease;
+        /* Added transition for background-color */
+    }
+
+    button#category-dropdown-button:hover {
+        background-color: var(--third-color);
+    }
+
+    ul#category-list {
+        margin: 0 5px 0 5px;
+        background-color: var(--fourth-color);
+        display: none;
+        transition: max-height 0.5s ease;
+
+        padding: 1rem 0 1rem 3rem;
+        color: var(--third-color);
+
+    }
+    ul#category-list li a{
+        font-family: var(--secondary-font);
+        color: var(--third-color);
+    }
+    .category-panel {
+        display: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        max-height: auto;
+    }
+    .center-ctn {
         display: block;
+    }
+
+    .category-panel,
+    .product-ctn {
+        flex-basis: 100%;
+        border-right: none;
+    }
+    .row {
+        display: flex;
         margin: 0px;
 
         .product-card {
             height: 450px;
+            border: 1px solid var(--fourth-color);
         }
     }
 
     .card {
-        max-height: 450px;
+        max-height: 430px;
+        border: none;
     }
 
     .detail-ctn {
-        bottom: 10px;
+        position: static;
+        padding-bottom: 100px;
     }
 
     h5.price {
-        margin-left: 10px;
+
+        font-size: 18px;
     }
+    h5.card-title{
+        font-size: 18px;
+    }
+    p.card-text{
+        line-height: 1.2rem;
+        font-size: 10px;
+    }
+    .card-body{
+        padding:.5rem;
+    }
+
+
 }
 
-@media (max-width: 768px) {
+@media (min-width:461px) and (max-width: 768px) {
     .sub-category-panel-1 {
         color: var(--main-color);
         background-color: var(--fourth-color);
@@ -365,7 +400,6 @@ a.btn-detail:hover {
 
     h5.card-title {
         margin: 10px;
-        font-size: 18px;
         height: 40px;
     }
 
@@ -374,13 +408,13 @@ a.btn-detail:hover {
     }
 
     p.card-text {
-        font-size: 14px;
         padding: 0;
         margin: 15px;
+        font-size: 12px;
     }
 
     .card {
-        height: 440px;
+        height: 450px;
     }
 
     .product-card {
@@ -401,6 +435,15 @@ a.btn-detail:hover {
     .detail-ctn {
         left: 10px;
         bottom: 20px;
+    }
+    #search-input{
+        width: 80%;
+    }
+    .search-product{
+        width: 100%;
+    }
+    .search-product form{
+        width: 100%;
     }
 }
 
@@ -499,77 +542,10 @@ a.btn-detail:hover {
     }
 }
 
-@media (min-width:553px) and (max-width:768px) {
-    .search-product {
-        width: 100%;
-    }
-
-    .search-product form {
-        width: 100%;
-    }
-
-    #search-input {
-        width: 80%;
-    }
-
-    p.card-text {
-        font-size: 14px;
-    }
-
-    .product-card {
-        height: 450px;
-    }
-
-    .detail-ctn {
-        bottom: 15px;
-    }
-
-    .card {
-        height: 440px;
-    }
-
-    h5.price {
-        margin-left: 10px;
-    }
-}
-
-@media (min-width:460px) and (max-width:552px) {
-    .search-product {
-        width: 100%;
-    }
-
-    .search-product form {
-        width: 100%;
-    }
-
-    #search-input {
-        width: 80%;
-    }
-
-    .detail-ctn {
-        bottom: 20px;
-    }
-
-    p.card-text {
-        font-size: 12px;
-    }
-
-    .card {
-        height: 450px;
-    }
-
-    .product-card {
-        height: 450px;
-    }
-
-    h5.price {
-        margin-left: 10px;
-    }
-}
-
 @media (min-width:992px) and (max-width:1040px) {
     p.card-text {
-        font-size: 14px;
+        font-size: 12px;
+        line-height: 1.2rem;
     }
 
     .card-body {
@@ -578,15 +554,18 @@ a.btn-detail:hover {
     }
 
     .product-card {
+        border: 1px solid var(--third-color);
         height: 435px;
     }
 
     .detail-ctn {
-        bottom: 20px;
+        position: static;
+        margin-top: 10px;
     }
 
     .card {
         height: 430px;
+        border: 0;
     }
 
     h5.card-title {
@@ -623,15 +602,18 @@ a.btn-detail:hover {
     }
 
     .product-card {
-        height: 400px;
+        height: 450px;
+        border: 1px solid var(--fourth-color);
     }
 
     .detail-ctn {
-        bottom: 20px;
+        position: static;
+        margin-top: 10px;
     }
 
     .card {
         height: 420px;
+        border: 0;
     }
 
     h5.card-title {
@@ -639,7 +621,7 @@ a.btn-detail:hover {
     }
 
     p.card-text {
-        font-size: 12px;
+        font-size: 10px;
         margin: 0;
     }
 

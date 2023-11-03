@@ -14,6 +14,7 @@
     Product Details
     {% endblock title %}
 </head>
+
 <body>
     {% block content %}
     <div class="go-back-ctn">
@@ -21,66 +22,67 @@
     </div>
     <hr>
     <div class="whole-ctn">
-    <div class="box-ctn">
-        <div class="sub-box-ctn">
-        <div class="product-ctn">
-            <div class="image-container">
-                <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="zoom-image">
-            </div>
-        </div>
-        {% for image_field in image_fields %}
-        <div class="related-image">
-            <img class="image-item" src="{{ image_field.url }}" alt="{{ product.brand_name }}">
-        </div>
-        {% endfor %}
-    </div>
-        <div class="spec-ctn">
-            <div class="header">
-                <h1>{{ product.brand_name }}</h1>
-            </div>
-            <div class="description">
-                <h3>${{ product.price }}</h3>
-                <p>Year: <span class="product-year">{{ product.year }}</span></p>
-                <p>Model: {{ product.model }}</p>
-                <p>Brand: {{ product.brand_category.company_name }}</p>
-            </div>
-            <hr>
-            {% if specs %}
-            <div class="specs">
-                <h5>Laptop Specifications:</h5>
-                <ul>
-                    <li>CPU: {{ product.laptopspec.cpu }} {{ product.laptopspec.cpu_detail }}</li>
-                    <li>Memory: {{ product.laptopspec.memory }}GB ({{ product.laptopspec.memory_detail }})</li>
-                    <li>Storage: {{ product.laptopspec.storage }} {{ product.laptopspec.storage_detail }}</li>
-                    <li>Graphics Card: {{ product.laptopspec.graphics_card }} {{ product.laptopspec.graphics_card_detail }}</li>
-                    <li>Display: {{ product.laptopspec.display }} {{ product.laptopspec.display_detail }}</li>
-                    <li>Operating System: {{ product.laptopspec.operating_system }}</li>
-                </ul>
-            </div>
-            {% endif %}
-            <button id="add-to-cart-btn"><img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="20px" class="cart-logo">Add to cart</button>
-        </div>
-    </div>
-    <div class="recommend-ctn">
-        <h3 style="font-size: 20px; text-align: center; color:var(--fourth-color)">Recommend products</h3>
-        <hr>
-        <div class="sub-recommend-ctn">
-        {% for recommended_product in recommended_products %}
-        <a href="{% url 'home:product_details' recommended_product.id %}">
-        <div class="recommend-product">
-                <img src="{{ recommended_product.images.url }}" alt="img">
-                <div class="recommend-ctn-spec">
-                    <h3 class="product-name">{{ recommended_product.brand_name }}</h3>
-                    <h6 class="price">${{ recommended_product.price }}</h6>
+        <div class="box-ctn">
+            <div class="sub-box-ctn">
+                <div class="product-ctn">
+                    <div class="image-container">
+                        <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="zoom-image">
+                    </div>
                 </div>
+                {% for image_field in image_fields %}
+                <div class="related-image">
+                    <img class="image-item" src="{{ image_field.url }}" alt="{{ product.brand_name }}">
+                </div>
+                {% endfor %}
+            </div>
+            <div class="spec-ctn">
+                <div class="header">
+                    <h1>{{ product.brand_name }}</h1>
+                </div>
+                <div class="description">
+                    <h3>${{ product.price }}</h3>
+                    <p>Year: <span class="product-year">{{ product.year }}</span></p>
+                    <p>Model: {{ product.model }}</p>
+                    <p>Brand: {{ product.brand_category.company_name }}</p>
+                </div>
+                <hr>
+                {% if specs %}
+                <div class="specs">
+                    <h5>Laptop Specifications:</h5>
+                    <ul>
+                        <li>CPU: {{ product.laptopspec.cpu }} {{ product.laptopspec.cpu_detail }}</li>
+                        <li>Memory: {{ product.laptopspec.memory }}GB ({{ product.laptopspec.memory_detail }})</li>
+                        <li>Storage: {{ product.laptopspec.storage }} {{ product.laptopspec.storage_detail }}</li>
+                        <li>Graphics Card: {{ product.laptopspec.graphics_card }} {{ product.laptopspec.graphics_card_detail }}</li>
+                        <li>Display: {{ product.laptopspec.display }} {{ product.laptopspec.display_detail }}</li>
+                        <li>Operating System: {{ product.laptopspec.operating_system }}</li>
+                    </ul>
+                </div>
+                {% endif %}
+                <button id="add-to-cart-btn"><img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}"
+                        width="20px" class="cart-logo">Add to cart</button>
+            </div>
         </div>
-    </a>
-        {% endfor %}
+        <div class="recommend-ctn">
+            <h3 style="font-size: 20px; text-align: center; color:var(--fourth-color)">Recommend products</h3>
+            <hr>
+            <div class="sub-recommend-ctn">
+                {% for recommended_product in recommended_products %}
+                <a href="{% url 'home:product_details' recommended_product.id %}">
+                    <div class="recommend-product">
+                        <img src="{{ recommended_product.images.url }}" alt="img">
+                        <div class="recommend-ctn-spec">
+                            <h3 class="product-name">{{ recommended_product.brand_name }}</h3>
+                            <h6 class="price">${{ recommended_product.price }}</h6>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+
     </div>
-    </div>
-    
-    
-</div>
 
 
 
@@ -89,75 +91,75 @@
 
 
     <script>
-       const imageContainer = document.querySelector('.image-container');
-const zoomImages = document.querySelectorAll('.zoom-image');
+        const imageContainer = document.querySelector('.image-container');
+        const zoomImages = document.querySelectorAll('.zoom-image');
 
-imageContainer.addEventListener('mousemove', (e) => {
-    const rect = imageContainer.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / imageContainer.clientWidth;
-    const y = (e.clientY - rect.top) / imageContainer.clientHeight;
-    zoomImages.forEach((zoomImage) => {
-        zoomImage.style.transformOrigin = `${x * 100}% ${y * 100}%`;
-    });
-});
-
-zoomImages.forEach((zoomImage) => {
-    zoomImage.addEventListener('click', function() {
-        const fullscreenImage = document.createElement('div');
-        fullscreenImage.id = 'fullscreen-image';
-        const fullscreenImageContainer = document.createElement('div');
-        fullscreenImageContainer.classList.add('fullscreen-image-container');
-        const fullscreenImageElement = document.createElement('img');
-        fullscreenImageElement.src = zoomImage.src;
-        fullscreenImageElement.alt = zoomImage.alt;
-
-        const closeButton = document.createElement('button');
-        closeButton.classList.add('close-button');
-        closeButton.innerHTML = 'X';
-
-        fullscreenImageContainer.appendChild(fullscreenImageElement);
-        fullscreenImageContainer.appendChild(closeButton);
-        fullscreenImage.appendChild(fullscreenImageContainer);
-        document.body.appendChild(fullscreenImage);
-
-        closeButton.addEventListener('click', function() {
-            fullscreenImage.remove();
+        imageContainer.addEventListener('mousemove', (e) => {
+            const rect = imageContainer.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / imageContainer.clientWidth;
+            const y = (e.clientY - rect.top) / imageContainer.clientHeight;
+            zoomImages.forEach((zoomImage) => {
+                zoomImage.style.transformOrigin = `${x * 100}% ${y * 100}%`;
+            });
         });
-    });
-});
+
+        zoomImages.forEach((zoomImage) => {
+            zoomImage.addEventListener('click', function () {
+                const fullscreenImage = document.createElement('div');
+                fullscreenImage.id = 'fullscreen-image';
+                const fullscreenImageContainer = document.createElement('div');
+                fullscreenImageContainer.classList.add('fullscreen-image-container');
+                const fullscreenImageElement = document.createElement('img');
+                fullscreenImageElement.src = zoomImage.src;
+                fullscreenImageElement.alt = zoomImage.alt;
+
+                const closeButton = document.createElement('button');
+                closeButton.classList.add('close-button');
+                closeButton.innerHTML = 'X';
+
+                fullscreenImageContainer.appendChild(fullscreenImageElement);
+                fullscreenImageContainer.appendChild(closeButton);
+                fullscreenImage.appendChild(fullscreenImageContainer);
+                document.body.appendChild(fullscreenImage);
+
+                closeButton.addEventListener('click', function () {
+                    fullscreenImage.remove();
+                });
+            });
+        });
     </script>
     <script>
-       const images = document.querySelectorAll('.related-image .image-item');
+        const images = document.querySelectorAll('.related-image .image-item');
 
-images.forEach(function(image) {
-  image.addEventListener('click', function() {
-    const fullscreenImage = document.createElement('div');
-    fullscreenImage.id = 'fullscreen-image';
-    const fullscreenImageContainer = document.createElement('div');
-    fullscreenImageContainer.classList.add('fullscreen-image-container');
-    const fullscreenImageElement = document.createElement('img');
-    fullscreenImageElement.src = image.src;
-    fullscreenImageElement.alt = image.alt;
+        images.forEach(function (image) {
+            image.addEventListener('click', function () {
+                const fullscreenImage = document.createElement('div');
+                fullscreenImage.id = 'fullscreen-image';
+                const fullscreenImageContainer = document.createElement('div');
+                fullscreenImageContainer.classList.add('fullscreen-image-container');
+                const fullscreenImageElement = document.createElement('img');
+                fullscreenImageElement.src = image.src;
+                fullscreenImageElement.alt = image.alt;
 
-    const closeButton = document.createElement('button');
-    closeButton.classList.add('close-button');
-    closeButton.innerHTML = 'X';
+                const closeButton = document.createElement('button');
+                closeButton.classList.add('close-button');
+                closeButton.innerHTML = 'X';
 
-    fullscreenImageContainer.appendChild(fullscreenImageElement);
-    fullscreenImageContainer.appendChild(closeButton);
-    fullscreenImage.appendChild(fullscreenImageContainer);
-    document.body.appendChild(fullscreenImage);
+                fullscreenImageContainer.appendChild(fullscreenImageElement);
+                fullscreenImageContainer.appendChild(closeButton);
+                fullscreenImage.appendChild(fullscreenImageContainer);
+                document.body.appendChild(fullscreenImage);
 
-    closeButton.addEventListener('click', function() {
-      fullscreenImage.remove();
-    });
-  });
-});
+                closeButton.addEventListener('click', function () {
+                    fullscreenImage.remove();
+                });
+            });
+        });
     </script>
     <script>
         document.getElementById("go-back-button").addEventListener("click", function () {
-    window.history.back();
-});
+            window.history.back();
+        });
     </script>
 
     {% endblock content %}
