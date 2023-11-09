@@ -184,13 +184,13 @@ span.product-year {
 .recommend-product {
     margin: 10px 0;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    border: 1px solid var(--fourth-color);
+    border: 1px solid var(--third-color);
     padding: 15px;
-    transition: 0.5s ease;
+    transition: 0.3s ease;
 }
 
 .recommend-product:hover {
-    border-style: dashed;
+    border-style: dotted;
 }
 
 h3.product-name {
@@ -279,23 +279,23 @@ button#add-to-cart-btn:hover {
         display: block;
     }
 
-    .sub-recommend-ctn {
-        justify-content: space-around;
+    .sub-recommend-ctn{
+        justify-content:space-between;
         display: flex;
         flex-wrap: wrap;
-        width: 100%;
-
     }
 
     .recommend-product {
-        margin: 0 auto;
+        flex-basis: calc(50% - 5px);
+        display: flex;
         width: 100%;
         margin-top: 10px;
-        height: 90%;
+        box-sizing: border-box;
     }
 
     .recommend-product img {
-        height: 150px;
+        width: 100%; 
+        height: auto;
     }
 
     .recommend-ctn {
@@ -442,13 +442,15 @@ button#add-to-cart-btn:hover {
     .recommend-product {
         margin: 0 auto;
         object-fit: cover;
-        width: 30%;
+        width: 100%;
         margin-top: 10px;
+        height: 250px;
     }
 
     .recommend-product img {
-        object-fit: cover;
+        object-fit: contain;
         max-width: 100%;
+        height: 70%;
     }
 
     .recommend-ctn {
@@ -508,19 +510,20 @@ button#add-to-cart-btn:hover {
         display: flex;
         flex-wrap: wrap;
         width: 100%;
-
     }
 
     .recommend-product {
         margin: 0 auto;
-        object-fit: contain;
-        width: 30%;
+        object-fit: cover;
+        width: 100%;
         margin-top: 10px;
+        height: 250px;
     }
 
     .recommend-product img {
-        object-fit: cover;
+        object-fit: contain;
         max-width: 100%;
+        height: 70%;
     }
 
     .recommend-ctn {

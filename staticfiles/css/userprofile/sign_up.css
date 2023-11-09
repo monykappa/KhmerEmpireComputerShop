@@ -1,0 +1,114 @@
+.ctn-sign-up {
+    margin: 3rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    background-color: var(--fourth-color);
+    border-radius: 5px;
+    width: 50%;
+    margin: 0 auto;
+    color: var(--main-color);
+    font-family: var(--primary-font);
+}
+ul{
+    text-align: center;
+    font-family: var(--primary-font);
+    color: red;
+    font-size: 18px;
+}
+form {
+    font-family: var(--secondary-font);
+}
+
+.col-md-6 {
+    padding: 3rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+p.create-text {
+    text-align: center;
+}
+
+.pfp-form{
+    border: 1px solid var(--third-color);
+    padding: 10px;
+    border-radius: 5px;
+}
+.custom-file-upload {
+    font-family: var(--secondary-font);
+    cursor: pointer;
+    background-color: var(--main-color);
+    color: var(--fourth-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: 15px;
+}
+
+#image-preview {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 5px;
+    
+}
+
+button.btn-sign-up {
+    margin-top: 15px;
+    color: var(--main-color);
+    width: 100%;
+    background-color: var(--fourth-color);
+    border: 1px solid var(--third-color);
+    transition: 0.3s ease; /* Fix the transition property value */
+}
+.btn-sign-up:hover {
+    color: var(--fourth-color);
+    background-color: var(--second-color);
+    border: 1px solid var(--third-color);
+}
+
+a.btn-sign-in {
+    color: var(--fourth-color);
+    width: 100%;
+    background-color: var(--main-color);
+    border: 1px solid var(--third-color);
+    transition: 0.3s ease; /* Fix the transition property value */
+}
+a.btn-sign-in:hover{
+    border: 1px solid var(--third-color);
+    color: var(--main-color);
+    background-color: var(--fourth-color);
+}
+
+/* Define styles for extra small screens */
+@media (max-width: 575px) {
+    .ctn-sign-up{
+        width:90%;
+    }
+    h2.sign-up-text{
+        margin-bottom: 15px;
+    }
+}
+
+/* Define styles for small screens */
+@media (min-width: 576px) and (max-width: 767px) {
+    .ctn-sign-up{
+        width: 90%;
+    }
+}
+
+/* Define styles for medium screens */
+@media (min-width: 768px) and (max-width: 991px) {
+        .ctn-sign-up{
+            width: 90%;
+        }
+}
+
+/* Define styles for large screens */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .ctn-sign-up{
+        width: 70%; 
+    }
+}
+
+/* Define styles for extra large screens */
+@media (min-width: 1200px) {
+    /* Your CSS rules for extra large screens go here */
+}

@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/home/product.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home/product_list.css' %}">
     {% endblock extra_css %}
     {% block title %}Product{% endblock title %}
 </head>
@@ -125,6 +125,7 @@
                                         <a href="{% url 'home:product_details' product.id %}" class="btn-detail">View Details</a>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     {% endif %}

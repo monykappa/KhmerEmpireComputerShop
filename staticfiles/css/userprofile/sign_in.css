@@ -1,0 +1,130 @@
+.sign-in-ctn {
+    background-color: var(--fourth-color);
+    font-family: var(--primary-font);
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 480px;
+    border: 2px solid var(--fourth-color);
+    border-radius: 5px;
+    margin-top: 20vh;
+    color: var(--main-color);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+/* Add a media query for smaller screens */
+@media (max-width: 768px) {
+    .sign-in-ctn {
+        width: 70%; /* Adjust the width for smaller screens */
+        height: auto; /* Let the content dictate the height */
+    }
+}
+
+.col-md-6{
+    min-width: 70%;
+}
+h2.sign-in {
+    font-size: 2.5rem;
+    margin-bottom: .45rem;
+}
+
+a.btn-forget {
+    color: var(--main-color);
+}
+
+.btn {
+    border: 1px solid var(--main-color);
+    background-color: transparent;
+}
+
+.btn-sign-in {
+    width: 100%;
+    transition: 0.3s ease; /* Fix the transition property value */
+}
+
+.btn-sign-in:hover {
+    background-color: var(--second-color);
+    color: var(--fourth-color);
+    border: 1px solid var(--third-color);
+}
+
+p.create-text {
+    font-size: 14px;
+    text-align: center;
+}
+
+.btn-sign-up {
+    background-color: var(--main-color);
+    border: 1px solid var(--third-color);
+    color: var(--fourth-color);
+    width: 100%;
+    transition: 0.3s ease; /* Fix the transition property value */
+}
+
+.btn-sign-up:hover {
+    background-color: var(--fourth-color);
+    border: 1px solid var(--third-color);
+}
+form{
+    font-family: var(--secondary-font);
+}
+/* Define styles for extra small screens */
+@media (max-width: 575px) {
+    .sign-in-ctn {
+        padding: 25px;
+    }
+    h2.sign-in{
+        font-size: 2rem;
+        margin: 10px;
+    }
+}
+
+/* Define styles for small screens */
+@media (min-width: 576px) and (max-width: 767px) {
+    .sign-in-ctn {
+        padding: 25px;
+    }
+    h2.sign-in{
+        font-size: 2rem;
+    }
+}
+
+/* Define styles for medium screens */
+@media (min-width: 768px) and (max-width: 991px) {
+    .sign-in-ctn {
+        width:70%;
+
+    }
+    h2.sign-in{
+        font-size: 2rem;
+    }
+    form{
+        width:400px;
+    }
+    .col-md-6{
+
+        max-width: 100%;
+    }
+}
+
+/* Define styles for large screens */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .sign-in-ctn {
+        width:60%;
+
+    }
+    h2.sign-in{
+        font-size: 2rem;
+    }
+    form{
+        width:400px;
+    }
+    .col-md-6{
+
+        max-width: 100%;
+    }
+}
+
+
