@@ -14,6 +14,7 @@ from userprofile.models import *
 from django.contrib.auth.views import LogoutView
 from .forms import UserProfileForm
 from django.db.models import Q
+from embed_video.templatetags.embed_video_tags import register
 
 
 @login_required
@@ -113,7 +114,7 @@ def product_list_ajax(request):
     return JsonResponse(search_results, safe=False)
 
 
-def product_details(request, product_id):
+def laptop_details(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     specs = LaptopSpec.objects.filter(product=product)
 
@@ -127,7 +128,27 @@ def product_details(request, product_id):
     # Add a query to get recommended products (you can customize this query)
     recommended_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:6]
 
-    return render(request, 'home/product_details.html', {
+    return render(request, 'home/laptop_details.html', {
+        'product': product,
+        'specs': specs,
+        'recommended_products': recommended_products,
+        'image_fields': image_fields
+    })
+
+def headphone_details(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    specs = HeadphoneSpec.objects.filter(product=product).first()  # Assuming there is only one headphone spec per product
+
+    image_fields = []
+    for i in range(2, 7):
+        field_name = f'image_{i}'
+        image_field = getattr(product, field_name, None)
+        if image_field:
+            image_fields.append(image_field)
+
+    recommended_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:6]
+
+    return render(request, 'home/headphone_details.html', {
         'product': product,
         'specs': specs,
         'recommended_products': recommended_products,

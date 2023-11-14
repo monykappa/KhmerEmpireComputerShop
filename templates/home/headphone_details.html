@@ -1,0 +1,168 @@
+{% extends 'home/base.html' %}
+{% load embed_video_tags %}
+{% load humanize %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home/product_details.css' %}">
+    {% endblock extra_css %}
+    {% block title %}
+    Product Details
+    {% endblock title %}
+</head>
+
+<body>
+    {% block content %}
+    <div class="go-back-ctn">
+        <button id="go-back-button">← Back</button>
+    </div>
+    <hr>
+    <div class="whole-ctn">
+        <div class="box-ctn">
+            <div class="sub-box-ctn">
+                <div class="product-ctn">
+                    <div class="image-container">
+                        <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="zoom-image">
+                    </div>
+                </div>
+                {% for image_field in image_fields %}
+                <div class="related-image">
+                    <img class="image-item" src="{{ image_field.url }}" alt="{{ product.brand_name }}">
+                </div>
+                {% endfor %}
+            </div>
+            <div class="spec-ctn">
+                <div class="header">
+                    <h1>{{ product.brand_name }}</h1>
+                </div>
+                <div class="description">
+                    <h3>${{ product.price }}</h3>
+                    <p>Year: <span class="product-year">{{ product.year }}</span></p>
+                    <p>Model: {{ product.model }}</p>
+                    <p>Brand: {{ product.brand_category.company_name }}</p>
+                </div>
+                <hr>
+                {% if specs %}
+                <div class="specs">
+                    <h5>Headphone Specifications:</h5>
+                    <ul>
+                        <li>Driver size: {{ product.headphonespecdriver_size }}</li>
+                        <li>Frequency response: {{ product.headphonespec.frequency_response }}</li>
+                        <li>Impedance:{{ product.headphonespec.impedance }}</li>
+                        <li>Noise cancellation: {{ product.headphonespec.noise_cancellation }}</li>
+                        <li>Connector type: {{ product.headphonespec.connector_type }}</li>
+                        <li>Weight: {{ product.headphonespec.weight }}</li>
+                        <li>Battery life:{{ product.headphonespec.battery_life }}</li>
+                        <li>Additional features: {{ product.headphonespec.additional_features }}</li>
+                    </ul>
+                </div>
+                {% endif %}
+                <button id="add-to-cart-btn"><img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}"
+                        width="20px" class="cart-logo">Add to cart</button>
+            </div>
+            {% if product.yt_url %}
+
+            
+    
+        </div>
+        <div class="recommend-ctn">
+            <h3 style="font-size: 20px; text-align: center; color:var(--fourth-color)">Recommend products</h3>
+            <hr>
+            <div class="sub-recommend-ctn">
+                {% for recommended_product in recommended_products %}
+                <a href="{% url 'home:headphone_details' recommended_product.id %}">
+                    <div class="recommend-product">
+                        <img src="{{ recommended_product.images.url }}" alt="img">
+                        <div class="recommend-ctn-spec">
+                            <h3 class="product-name">{{ recommended_product.brand_name }}</h3>
+                            <h6 class="price">${{ recommended_product.price }}</h6>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script>
+        const imageContainer = document.querySelector('.image-container');
+        const zoomImages = document.querySelectorAll('.zoom-image');
+
+        imageContainer.addEventListener('mousemove', (e) => {
+            const rect = imageContainer.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / imageContainer.clientWidth;
+            const y = (e.clientY - rect.top) / imageContainer.clientHeight;
+            zoomImages.forEach((zoomImage) => {
+                zoomImage.style.transformOrigin = `${x * 100}% ${y * 100}%`;
+            });
+        });
+
+        zoomImages.forEach((zoomImage) => {
+            zoomImage.addEventListener('click', function () {
+                const fullscreenImage = document.createElement('div');
+                fullscreenImage.id = 'fullscreen-image';
+                const fullscreenImageContainer = document.createElement('div');
+                fullscreenImageContainer.classList.add('fullscreen-image-container');
+                const fullscreenImageElement = document.createElement('img');
+                fullscreenImageElement.src = zoomImage.src;
+                fullscreenImageElement.alt = zoomImage.alt;
+
+                const closeButton = document.createElement('button');
+                closeButton.classList.add('close-button');
+                closeButton.innerHTML = 'X';
+
+                fullscreenImageContainer.appendChild(fullscreenImageElement);
+                fullscreenImageContainer.appendChild(closeButton);
+                fullscreenImage.appendChild(fullscreenImageContainer);
+                document.body.appendChild(fullscreenImage);
+
+                closeButton.addEventListener('click', function () {
+                    fullscreenImage.remove();
+                });
+            });
+        });
+    </script>
+    <script>
+        const images = document.querySelectorAll('.related-image .image-item');
+
+        images.forEach(function (image) {
+            image.addEventListener('click', function () {
+                const fullscreenImage = document.createElement('div');
+                fullscreenImage.id = 'fullscreen-image';
+                const fullscreenImageContainer = document.createElement('div');
+                fullscreenImageContainer.classList.add('fullscreen-image-container');
+                const fullscreenImageElement = document.createElement('img');
+                fullscreenImageElement.src = image.src;
+                fullscreenImageElement.alt = image.alt;
+
+                const closeButton = document.createElement('button');
+                closeButton.classList.add('close-button');
+                closeButton.innerHTML = 'X';
+
+                fullscreenImageContainer.appendChild(fullscreenImageElement);
+                fullscreenImageContainer.appendChild(closeButton);
+                fullscreenImage.appendChild(fullscreenImageContainer);
+                document.body.appendChild(fullscreenImage);
+
+                closeButton.addEventListener('click', function () {
+                    fullscreenImage.remove();
+                });
+            });
+        });
+    </script>
+    <script>
+        document.getElementById("go-back-button").addEventListener("click", function () {
+            window.history.back();
+        });
+    </script>
+
+    {% endblock content %}
+</body>

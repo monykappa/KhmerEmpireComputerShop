@@ -12,7 +12,8 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('products/', views.product_list, name='product_list'),
-    path('product/<int:product_id>/', views.product_details, name='product_details'),
+    path('product/<int:product_id>/', views.laptop_details, name='laptop_details'),
+    path('product/<int:product_id>/', views.headphone_details, name='headphone_details'),
     path('logout/', LogoutView.as_view(next_page='home:index'), name='logout'),
     path('ajax/', views.product_list_ajax, name='product_list_ajax'),
     

@@ -5,6 +5,7 @@ from django.core.validators import RegexValidator
 from ckeditor.fields import RichTextField
 import uuid
 import os
+from embed_video.fields import EmbedVideoField
 
 
 def validate_file_extension(value): 
@@ -59,6 +60,7 @@ class Product(models.Model):
     image_4 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
     image_5 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
     image_6 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
+    yt_url = EmbedVideoField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     year = models.CharField(max_length=4, choices=[(str(year), str(year)) for year in range(2015, 2056)], null=True, blank=True)
 

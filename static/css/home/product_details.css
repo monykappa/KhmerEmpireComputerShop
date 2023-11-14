@@ -117,7 +117,7 @@ span.product-year {
 }
 
 .fullscreen-image-container {
-    max-width: 90%;
+    max-width: 40%;
     max-height: 90%;
 }
 
@@ -180,7 +180,14 @@ span.product-year {
 .recommend-product a:hover {
     text-decoration: none;
 }
-
+/* Add this CSS to your stylesheet or within a <style> tag in your HTML */
+.plyr-play {
+    display: none;
+  }
+  
+  .plyr-pause {
+    display: none;
+  }
 .recommend-product {
     margin: 10px 0;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;

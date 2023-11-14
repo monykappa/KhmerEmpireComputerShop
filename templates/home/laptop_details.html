@@ -1,12 +1,13 @@
 {% extends 'home/base.html' %}
+{% load embed_video_tags %}
 {% load humanize %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
     {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/home/product_details.css' %}">
     {% endblock extra_css %}
@@ -62,13 +63,15 @@
                 <button id="add-to-cart-btn"><img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}"
                         width="20px" class="cart-logo">Add to cart</button>
             </div>
+            
+    
         </div>
         <div class="recommend-ctn">
             <h3 style="font-size: 20px; text-align: center; color:var(--fourth-color)">Recommend products</h3>
             <hr>
             <div class="sub-recommend-ctn">
                 {% for recommended_product in recommended_products %}
-                <a href="{% url 'home:product_details' recommended_product.id %}">
+                <a href="{% url 'home:laptop_details' recommended_product.id %}">
                     <div class="recommend-product">
                         <img src="{{ recommended_product.images.url }}" alt="img">
                         <div class="recommend-ctn-spec">
@@ -83,11 +86,6 @@
 
 
     </div>
-
-
-
-
-
 
 
     <script>
@@ -164,5 +162,3 @@
 
     {% endblock content %}
 </body>
-
-</html>
