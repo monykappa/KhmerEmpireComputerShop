@@ -114,50 +114,46 @@
                 <h1>Laptop</h1>
             </div>
             <div class="row">
-                {% for product in products %}
-                    {% if product.laptopspec %}
+                {% for stock in laptop_stocks  %}
                         <div class="product-card">
                             <div class="card">
-                                <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="card-img-top product-image">
+                                <img src="{{ stock.product.images.url }}" alt="{{ stock.product.brand_name }}" class="card-img-top product-image">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ product.brand_name }} <span class="year">{{ product.year }}</span></h5>
-                                    <h5 class="price">$ {{ product.price|floatformat:2|intcomma }}{% if product.price|floatformat:2|intcomma|slice:"-3:" == ".00" %}{% else %}.00{% endif %}</h5>
+                                    <h5 class="card-title">{{ stock.product.brand_name }} <span class="year">{{ stock.product.year }}</span></h5>
+                                    <h5 class="price">${{ stock.product.price|floatformat:-2 }}</h5>                
                                     <p class="card-text">
-                                        {{ product.laptopspec.cpu }} | {{ product.laptopspec.memory }}GB | {{ product.laptopspec.storage }} Storage | {{ product.laptopspec.graphics_card }} | {{ product.laptopspec.display }} inches
+                                        {{ stock.product.laptopspec.cpu }} | {{ stock.product.laptopspec.memory }}GB | {{ stock.product.laptopspec.storage }} Storage | {{ stock.product.laptopspec.graphics_card }} | {{ stock.product.laptopspec.display }} inches
                                     </p>
                                     <div class="detail-ctn">
-                                        <a href="{% url 'home:product_details' product.id %}" class="btn-detail">View Details</a>
+                                        <a href="{% if stock.product %}{% url 'home:product_details' stock.product.id %}{% endif %}" class="btn-detail">View Details</a>
                                     </div>
                                 </div>
                                 
                             </div>
                         </div>
-                    {% endif %}
                 {% endfor %}
             </div>
                 <div class="category-ctn laptop-ctn">
                     <h1>Headphone</h1>
                 </div>
             <div class="row">
-                {% for product in products %}
-                    {% if product.headphonespec %}
+                {% for stock in headphone_stocks  %}
                         <div class="product-card">
                             <div class="card">
-                                <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="card-img-top product-image">
+                                <img src="{{ stock.product.images.url }}" alt="{{ stock.product.brand_name }}" class="card-img-top product-image">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ product.brand_name }} {{ product.model }}<span class="year">{{ product.year }}</span></h5>
-                                    <h5 class="price">$ {{ product.price|floatformat:2|intcomma }}{% if product.price|floatformat:2|intcomma|slice:"-3:" == ".00" %}{% else %}.00{% endif %}</h5>
+                                    <h5 class="card-title">{{ stock.product.brand_name }} {{ stock.product.model }}<span class="year">{{ stock.product.year }}</span></h5>
+                                    <h5 class="price">${{ stock.product.price|floatformat:-2 }}</h5>
                                     <p class="card-text">
-                                        {{ product.headphonespec.driver_size }} driver | {{ product.headphonespec.noise_cancellation }} | {{ product.headphonespec.connector_type }}
+                                        {{ stock.product.headphonespec.driver_size }} driver | {{ stock.product.headphonespec.noise_cancellation }} | {{ stock.product.headphonespec.connector_type }}
                                     </p>
                                     <div class="detail-ctn">
-                                        <a href="{% url 'home:headphone_details' product.id %}" class="btn-detail">View Details</a>
+                                        <a href="{% url 'home:headphone_details' stock.product.id %}" class="btn-detail">View Details</a>
                                     </div>
                                 </div>
                                 
                             </div>
                         </div>
-                    {% endif %}
                 {% endfor %}
             </div>
         </div>    

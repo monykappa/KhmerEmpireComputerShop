@@ -71,22 +71,30 @@ def profile(request):
 class CustomLogoutView(LogoutView):
     next_page = '/'
 
+
+
+
+#Product list page
 def product_list(request):
     query = request.GET.get('q')
-    products = Product.objects.select_related('laptopspec')
     
-    # Define the variable 'filtered_products' before the 'if' block
-    filtered_products = products
+    laptop_stocks = Stock.objects.filter(product__category__name='Laptop').select_related('product__laptopspec')
+    headphone_stocks = Stock.objects.filter(product__category__name='Headphone').select_related('product__headphonespec')
 
     if query:
-        # Use Q objects to perform a case-insensitive search on multiple fields
-        filtered_products = filtered_products.filter(
-            Q(brand_name__icontains=query) |
-            Q(model__icontains=query) |
-            Q(laptopspec__cpu__icontains=query)
+        laptop_stocks = laptop_stocks.filter(
+            Q(product__brand_name__icontains=query) |
+            Q(product__model__icontains=query) |
+            Q(product__laptopspec__cpu__icontains=query)
+        )
+        
+        headphone_stocks = headphone_stocks.filter(
+            Q(product__brand_name__icontains=query) |
+            Q(product__model__icontains=query) |
+            Q(product__headphonespec__driver_size__icontains=query)
         )
 
-    return render(request, 'home/product_list.html', {'products': filtered_products})
+    return render(request, 'home/product_list.html', {'laptop_stocks': laptop_stocks, 'headphone_stocks': headphone_stocks})
 
 
 
@@ -118,6 +126,8 @@ def headphone_details(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     specs = HeadphoneSpec.objects.filter(product=product).first() 
 
+    stock = Stock.objects.filter(product=product).first()
+
     image_fields = []
     for i in range(2, 7):
         field_name = f'image_{i}'
@@ -130,6 +140,7 @@ def headphone_details(request, product_id):
     return render(request, 'home/headphone_details.html', {
         'product': product,
         'specs': specs,
+        'stock': stock,
         'recommended_products': recommended_products,
         'image_fields': image_fields
     })
@@ -139,6 +150,9 @@ def headphone_details(request, product_id):
 def product_details(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     specs = LaptopSpec.objects.filter(product=product)
+    
+    # Fetch the stock for the given product
+    stock = Stock.objects.filter(product=product).first()
 
     image_fields = []
     for i in range(2, 7):
@@ -153,6 +167,7 @@ def product_details(request, product_id):
     return render(request, 'home/laptop_details.html', {
         'product': product,
         'specs': specs,
+        'stock': stock,  # Pass the stock to the template
         'recommended_products': recommended_products,
         'image_fields': image_fields
     })

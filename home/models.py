@@ -66,7 +66,7 @@ class Product(models.Model):
     warranty_years = models.IntegerField(null=True, blank=True) 
 
     def __str__(self):
-        return self.brand_name
+        return f"{self.brand_name} - ${self.price}" if self.price % 1 != 0 else f"{self.brand_name} - ${int(self.price)}"
 
 class HeadphoneSpec(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE, null=True, blank=True, related_name='headphonespec')
@@ -78,6 +78,12 @@ class HeadphoneSpec(models.Model):
     weight = models.CharField(max_length=100, null=True, blank=True)
     battery_life = models.CharField(max_length=100, null=True, blank=True)
     additional_features = models.CharField(max_length=100, null=True, blank=True)
+
+    
+    def __str__(self):
+        if self.product:
+            return f"{self.product.brand_name} - {self.product.model} - Headphone Specifications"
+        return "HeadphoneSpec (No Product)"
 
 class LaptopSpec(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE, null=True, blank=True, related_name='laptopspec')
@@ -112,7 +118,7 @@ class Stock(models.Model):
     quantity = models.PositiveIntegerField(default=0)  # The initial stock quantity
 
     def __str__(self):
-        return f"{self.product.brand_name} - {self.product.model} - {self.product.year}"
+        return f"{self.product.brand_name} - {self.product.model} - {self.product.year} - {self.quantity} units in stock"
 
     def price_per_unit(self):
         return self.product.price if self.product else 0
@@ -126,21 +132,20 @@ class Stock(models.Model):
     def total_price_with_dollar(self):
         return f"${self.total_price()}"
     
-# Create a model for customer orders.
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    ordered_products = models.ManyToManyField(Product, through='OrderItem')
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f'Order #{self.id} - {self.customer_name}'
+        return f'Order #{self.id} - User: {self.user}'
 
-# Create a model for the items in an order.
 class OrderItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE, null=True, blank=True)  # Assuming you have a Stock model
     quantity = models.PositiveIntegerField()
 
     def __str__(self):
-        return f'{self.quantity} x {self.product.name}'
+        return f'{self.quantity} x {self.stock.product.brand_name} - {self.stock.product.model} - {self.stock.product.year}'
+    
+
 
