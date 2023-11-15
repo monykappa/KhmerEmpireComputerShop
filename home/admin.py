@@ -1,5 +1,7 @@
 from django.contrib import admin
+from django.urls import reverse
 from .models import Category, Product, LaptopSpec, HeadphoneSpec, Stock, Order, OrderItem, brand_category
+from django.utils.html import format_html
 
 
 class HeadphoneSpecInline(admin.StackedInline):
@@ -13,8 +15,15 @@ class LaptopSpecInline(admin.StackedInline):
 
 class ProductAdmin(admin.ModelAdmin):
     inlines = [HeadphoneSpecInline, LaptopSpecInline]
-    list_display = ('id', 'brand_name', 'brand_category', 'model', 'year', 'formatted_price', 'category')
+    list_display = ('display_image', 'brand_name', 'brand_category', 'model', 'year', 'formatted_price', 'category', 'id')
     list_filter = ('brand_category', 'year', 'category')
+
+    def display_image(self, obj):
+        url = reverse('admin:home_product_change', args=[obj.id])
+        return format_html('<a href="{}"><img src="{}" style="width: 70px; height: 70px; object-fit: contain;" /></a>'.format(url, obj.images.url)) if obj.images else "No Image"
+
+    display_image.short_description = 'Product Image'
+    display_image.allow_tags = True 
 
     def formatted_price(self, obj):
         price_str = "${:,.2f}".format(obj.price)

@@ -207,6 +207,7 @@ a.btn-detail:hover {
     object-fit: contain;
 }
 
+
 @media (min-width:252px) and (max-width:459px) {
     
     .search-product {
@@ -223,6 +224,9 @@ a.btn-detail:hover {
 }
 
 @media (min-width:0px) and (max-width:460px) {
+    .category-ctn{
+        margin-top: 10px;
+    }
     .product-card {
         flex-basis: calc(50% - 10px);
     }
@@ -331,6 +335,9 @@ a.btn-detail:hover {
 }
 
 @media (min-width:461px) and (max-width: 768px) {
+    .category-ctn{
+        margin-top: 10px;
+    }
     .sub-category-panel-1 {
         color: var(--main-color);
         background-color: var(--fourth-color);
@@ -460,6 +467,9 @@ a.btn-detail:hover {
 }
 
 @media (min-width: 769px) and (max-width: 889px) {
+    .category-ctn{
+        margin-top: 10px;
+    }
     .sub-category-panel-1 {
         color: var(--main-color);
         background-color: var(--fourth-color);
@@ -513,6 +523,7 @@ a.btn-detail:hover {
 
     .category-panel-1 {
         display: contents;
+
     }
 
     .center-ctn {
@@ -553,6 +564,9 @@ a.btn-detail:hover {
 }
 
 @media (min-width: 890px) and (max-width: 1040px) {
+    .category-ctn{
+        margin-top: 10px;
+    }
     .sub-category-panel-1 {
         color: var(--main-color);
         background-color: var(--fourth-color);

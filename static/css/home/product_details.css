@@ -86,14 +86,16 @@ span.product-year {
 }
 
 .related-image {
-    object-fit: contain;
+
     margin: 1rem 0 0 1rem;
     display: inline-flex;
     border: 1px solid rgba(128, 128, 128, 0.288);
     border-radius: 4px;
+    height: 100px;
 }
 
 .related-image img {
+    object-fit: contain;
     width: 130px;
     cursor: pointer;
     padding: 5px;
@@ -175,6 +177,22 @@ span.product-year {
 
 .recommend-ctn-spec {
     padding: 0.5rem;
+}
+.specs ul li span{
+    font-weight: 700;
+    
+}
+
+.qty{
+    margin-bottom: 15px;
+}
+.qty input{
+    border-radius: 5px;
+    border:1px solid var(--third-color);
+    height: 35px;
+    width: 50px;
+    padding: 5px;
+    text-align: center;
 }
 
 .recommend-product a:hover {

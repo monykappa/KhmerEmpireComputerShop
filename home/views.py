@@ -114,7 +114,29 @@ def product_list_ajax(request):
     return JsonResponse(search_results, safe=False)
 
 
-def laptop_details(request, product_id):
+def headphone_details(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    specs = HeadphoneSpec.objects.filter(product=product).first() 
+
+    image_fields = []
+    for i in range(2, 7):
+        field_name = f'image_{i}'
+        image_field = getattr(product, field_name, None)
+        if image_field:
+            image_fields.append(image_field)
+
+    recommended_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:6]
+
+    return render(request, 'home/headphone_details.html', {
+        'product': product,
+        'specs': specs,
+        'recommended_products': recommended_products,
+        'image_fields': image_fields
+    })
+
+
+
+def product_details(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     specs = LaptopSpec.objects.filter(product=product)
 
@@ -135,25 +157,7 @@ def laptop_details(request, product_id):
         'image_fields': image_fields
     })
 
-def headphone_details(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    specs = HeadphoneSpec.objects.filter(product=product).first()  # Assuming there is only one headphone spec per product
 
-    image_fields = []
-    for i in range(2, 7):
-        field_name = f'image_{i}'
-        image_field = getattr(product, field_name, None)
-        if image_field:
-            image_fields.append(image_field)
-
-    recommended_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:6]
-
-    return render(request, 'home/headphone_details.html', {
-        'product': product,
-        'specs': specs,
-        'recommended_products': recommended_products,
-        'image_fields': image_fields
-    })
 
 
 

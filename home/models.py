@@ -5,7 +5,6 @@ from django.core.validators import RegexValidator
 from ckeditor.fields import RichTextField
 import uuid
 import os
-from embed_video.fields import EmbedVideoField
 
 
 def validate_file_extension(value): 
@@ -60,9 +59,11 @@ class Product(models.Model):
     image_4 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
     image_5 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
     image_6 = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
-    yt_url = EmbedVideoField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    color = models.CharField(max_length=200, null=True, blank=True)
     year = models.CharField(max_length=4, choices=[(str(year), str(year)) for year in range(2015, 2056)], null=True, blank=True)
+    warranty_months = models.IntegerField(null=True, blank=True)
+    warranty_years = models.IntegerField(null=True, blank=True) 
 
     def __str__(self):
         return self.brand_name
@@ -90,6 +91,11 @@ class LaptopSpec(models.Model):
     graphics_card_detail = models.CharField(max_length=100, null=True, blank=True)
     display = models.CharField(max_length=100, null=True, blank=True)
     display_detail = models.CharField(max_length=100, null=True, blank=True)
+    port = models.CharField(max_length=500, null=True, blank=True)
+    wireless_connectivity = models.CharField(max_length=500, null=True, blank=True)
+    webcam = models.CharField(max_length=100, null=True, blank=True)
+    battery = models.CharField(max_length=100, null=True, blank=True)
+    weight = models.CharField(max_length=100, null=True, blank=True)
     operating_system = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):

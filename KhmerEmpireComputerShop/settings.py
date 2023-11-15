@@ -101,8 +101,11 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',  # Add this line
     'django.contrib.auth.middleware.AuthenticationMiddleware',  # Add this line
     'django.contrib.messages.middleware.MessageMiddleware',  # Add this lin
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 # Password validation
