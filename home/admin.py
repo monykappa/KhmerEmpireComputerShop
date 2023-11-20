@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import reverse
-from .models import Category, Product, LaptopSpec, HeadphoneSpec, Stock, Order, OrderItem, brand_category
+from .models import Category, Product, LaptopSpec, HeadphoneSpec, Stock, brand_category, Order, CartItem
 from django.utils.html import format_html
+
 
 
 class HeadphoneSpecInline(admin.StackedInline):
@@ -92,6 +93,7 @@ class HeadphoneSpecAdmin(admin.ModelAdmin):
 class StockInline(admin.TabularInline):
     model = Stock
     extra = 1
+    
 
 from django import forms
 class StockForm(forms.ModelForm):
@@ -134,24 +136,33 @@ class StockAdmin(admin.ModelAdmin):
 
 
 
-class OrderItemInline(admin.TabularInline):
-    model = OrderItem
-    extra = 1
+
+
+class BrandCategoryAdmin(admin.ModelAdmin):
+    list_display = ('company_name', 'display_logo')
+
+    def display_logo(self, obj):
+        if obj.logo:
+            return format_html('<img src="{}" style="width: 80px; height: 80px; object-fit: contain; background-color:white; padding:10px;" />'.format(obj.logo.url))
+        else:
+            return "No Image"
+
+    display_logo.short_description = 'Logo'
 
 class OrderAdmin(admin.ModelAdmin):
-    inlines = [OrderItemInline]
-    list_display = ('id', 'user', 'total_price')
+    list_display = ['id', 'user', 'created_at', 'total_price']
+    readonly_fields = ['total_price']
 
-    def user_username(self, obj):
-        return obj.user.username
+admin.site.register(Order, OrderAdmin)
 
-    user_username.short_description = 'User'
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ['order', 'product', 'quantity', 'subtotal']
 
+admin.site.register(CartItem, CartItemAdmin)
 admin.site.register(Category)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(LaptopSpec, LaptopSpecAdmin)
 admin.site.register(HeadphoneSpec, HeadphoneSpecAdmin)
 admin.site.register(Stock, StockAdmin)
-admin.site.register(Order, OrderAdmin)
-admin.site.register(OrderItem)
-admin.site.register(brand_category)
+# admin.site.register(OrderItem)
+admin.site.register(brand_category, BrandCategoryAdmin)

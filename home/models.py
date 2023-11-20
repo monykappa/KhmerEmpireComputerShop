@@ -43,6 +43,7 @@ class Category(models.Model):
 
 class brand_category(models.Model):
     company_name = models.CharField(max_length=200, null=True, blank=True)
+    logo = models.FileField(upload_to=product_directory_path, validators=[validate_file_extension], blank=True, null=True)
 
     def __str__(self):
         return self.company_name
@@ -111,6 +112,38 @@ class LaptopSpec(models.Model):
             return "Unassociated Product Specification"
 
 
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+
+    def __str__(self):
+        return f"Order #{self.id} - Total: ${self.total_price}"
+    
+class CartItem(models.Model):
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+
+    def save(self, *args, **kwargs):
+        try:
+            stock = self.product.stock
+            if stock.quantity >= self.quantity:
+                stock.quantity -= self.quantity
+                stock.save()
+            else:
+                # Handle insufficient stock situation
+                raise ValueError("Insufficient stock")
+        except Stock.DoesNotExist:
+            raise ValueError("Stock does not exist for the product")
+
+        # Update subtotal based on product price and quantity
+        self.subtotal = self.product.price * self.quantity
+
+        super().save(*args, **kwargs)
+
+
 
 
 class Stock(models.Model):
@@ -132,20 +165,4 @@ class Stock(models.Model):
     def total_price_with_dollar(self):
         return f"${self.total_price()}"
     
-class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        return f'Order #{self.id} - User: {self.user}'
-
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    stock = models.ForeignKey(Stock, on_delete=models.CASCADE, null=True, blank=True)  # Assuming you have a Stock model
-    quantity = models.PositiveIntegerField()
-
-    def __str__(self):
-        return f'{self.quantity} x {self.stock.product.brand_name} - {self.stock.product.model} - {self.stock.product.year}'
-    
-
 

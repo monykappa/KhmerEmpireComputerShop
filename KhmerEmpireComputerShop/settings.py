@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'KhmerEmpireComputerShop.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "db_computer",
+        "NAME": "db_khmer_empire",
         "USER": "root",
         "PASSWORD": "",
         "HOST": "localhost",
