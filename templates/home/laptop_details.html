@@ -47,10 +47,13 @@
                     <p>Model: {{ product.model }}</p>
                     <p>Brand: {{ product.brand_category.company_name }}</p>
                 </div>
-                <div class="qty">
-                    <p class="quantity">Quantity:</p>
-                    <input type="text" pattern="\d*" title="Please enter a number" value="1">
-                </div>
+                <!-- Update the value attribute of the quantity input -->
+<div class="qty">
+    <p class="quantity">Quantity:</p>
+    <input type="text" pattern="\d*" title="Please enter a number" value="{{ product.quantity }}">
+</div>
+
+
                 <button id="add-to-cart-btn"><img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="20px" class="cart-logo">Add to cart</button>
                 <!-- Add this section to display the stock quantity -->
                 {% if stock %}
@@ -156,6 +159,39 @@
 
 
     </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addToCartBtn = document.getElementById('add-to-cart-btn');
+
+        addToCartBtn.addEventListener('click', function () {
+            const quantityInput = document.querySelector('.qty input');
+            const quantity = parseInt(quantityInput.value);
+
+            // Make sure quantity is a valid number
+            if (!isNaN(quantity) && quantity > 0) {
+                // Assuming you have a product ID, replace 'product_id' with the actual ID
+                const productId = '{{ product.id }}';
+
+                // You can customize the URL according to your Django project
+                const addToCartUrl = `/add-to-cart/${productId}/${quantity}/`;
+
+                // Redirect to the add to cart URL
+                window.location.href = addToCartUrl;
+            } else {
+                alert('Please enter a valid quantity.');
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
 
 
     <script>

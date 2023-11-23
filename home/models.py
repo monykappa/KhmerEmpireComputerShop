@@ -4,7 +4,9 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from ckeditor.fields import RichTextField
 import uuid
+from decimal import Decimal
 import os
+
 
 
 def validate_file_extension(value): 
@@ -123,7 +125,7 @@ class Order(models.Model):
 class CartItem(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=1)  # Set a default value here
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
 
     def save(self, *args, **kwargs):
@@ -141,13 +143,16 @@ class CartItem(models.Model):
         # Update subtotal based on product price and quantity
         self.subtotal = self.product.price * self.quantity
 
-        super().save(*args, **kwargs)
+        # Check if the cart item already exists
+        existing_cart_item = self.__class__.objects.filter(order=self.order, product=self.product).first()
 
-
+        # Save only if the cart item is new or the quantity has changed
+        if existing_cart_item is None or existing_cart_item.quantity != self.quantity:
+            super().save(*args, **kwargs)
 
 
 class Stock(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.OneToOneField(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)  # The initial stock quantity
 
     def __str__(self):

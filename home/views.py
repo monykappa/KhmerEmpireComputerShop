@@ -14,8 +14,60 @@ from userprofile.models import *
 from django.contrib.auth.views import LogoutView
 from .forms import UserProfileForm
 from django.db.models import Q
+from decimal import Decimal
 from embed_video.templatetags.embed_video_tags import register
 
+
+def add_to_cart(request, product_id, quantity):
+    # Get the product based on the provided ID
+    product = get_object_or_404(Product, id=product_id)
+
+    # Ensure the quantity is a valid integer
+    try:
+        quantity = int(quantity)
+    except ValueError:
+        return redirect('cart')  # Redirect to cart if quantity is not a valid integer
+
+    # Debugging: Print or log the quantity received
+    print(f"Quantity received: {quantity}")
+
+    # Check if the product is in stock
+    stock = get_object_or_404(Stock, product=product)
+    if stock.quantity < quantity:
+        # Redirect to cart with a message indicating insufficient stock
+        return redirect('cart')  # You might want to pass a message in the redirect
+
+    # Get the user's order (create a new order if it doesn't exist)
+    user_order, created = Order.objects.get_or_create(user=request.user, total_price=Decimal('0.0'))
+
+    # Check if the product is already in the user's cart
+    cart_item, created = CartItem.objects.get_or_create(order=user_order, product=product)
+
+    # Update the quantity and subtotal using Decimal
+    cart_item.quantity += quantity
+    cart_item.subtotal = cart_item.quantity * Decimal(str(product.price))
+    cart_item.save()
+
+    # Debugging: Print or log the quantity stored in the database
+    print(f"Quantity stored in the database: {cart_item.quantity}")
+    # In your Django view
+    print(f"Product ID: {product_id}, Quantity: {quantity}")
+
+
+
+    # Update the total price of the order using Decimal
+    user_order.total_price += cart_item.subtotal
+    user_order.save()
+
+    # Update the stock quantity
+    stock.quantity -= quantity
+    stock.save()
+
+    # Redirect to the cart page
+    return redirect('home:cart')
+
+def cart(request):
+    return render(request, 'home/cart.html')
 
 @login_required
 def edit_profile(request):

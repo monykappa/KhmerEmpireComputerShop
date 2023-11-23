@@ -1,0 +1,55 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home/cart.css' %}">
+    {% endblock %}
+    <title>{% block title %}Cart{% endblock %}</title>
+</head>
+
+<body>
+    
+    {% block content %}
+    <div class="container-cart mt-5">
+        <h2>Your Shopping Cart</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Product 1</td>
+                    <td>$19.99</td>
+                    <td>2</td>
+                    <td>$39.98</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Product 2</td>
+                    <td>$29.99</td>
+                    <td>1</td>
+                    <td>$29.99</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="font-weight-bold">Total: $69.97</p>
+        <button class="btn btn-primary">Proceed to Checkout</button>
+    </div>
+    {% endblock content %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>

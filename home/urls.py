@@ -17,6 +17,10 @@ urlpatterns = [
     path('headphone/<int:product_id>/', headphone_details, name='headphone_details'),
     path('logout/', LogoutView.as_view(next_page='home:index'), name='logout'),
     path('ajax/', views.product_list_ajax, name='product_list_ajax'),
+    path('cart/', views.cart, name='cart'),
+    path('add-to-cart/<int:product_id>/<int:quantity>/', views.add_to_cart, name='add_to_cart'),
+
+
     
     # Add more URL patterns as needed
 ]
