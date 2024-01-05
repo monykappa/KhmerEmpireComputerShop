@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
     <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/home/product_details.css' %}">
     {% endblock extra_css %}
@@ -48,13 +50,14 @@
                     <p>Brand: {{ product.brand_category.company_name }}</p>
                 </div>
                 <!-- Update the value attribute of the quantity input -->
-<div class="qty">
-    <p class="quantity">Quantity:</p>
-    <input type="text" pattern="\d*" title="Please enter a number" value="{{ product.quantity }}">
-</div>
-
-
-                <button id="add-to-cart-btn"><img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="20px" class="cart-logo">Add to cart</button>
+                <div class="qty">
+                    <p class="quantity">Quantity:</p>
+                    <input type="text" id="quantity-input" pattern="\d*" title="Please enter a number" value="1"> 
+                </div>
+                <button id="add-to-cart-btn" onclick="addToCart({{ product.id }})">
+                    <img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="20px" class="cart-logo">
+                    Add to cart
+                </button>
                 <!-- Add this section to display the stock quantity -->
                 {% if stock %}
                 <p style="color:var(--fourth-color);">*{{ stock.quantity }} unit{{ stock.quantity|pluralize:"s" }} in stock</p>
@@ -161,32 +164,23 @@
     </div>
 
 
+
+<!-- Add this to your HTML template -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const addToCartBtn = document.getElementById('add-to-cart-btn');
+    function addToCart(productId) {
+        // Get the quantity value from the input field
+        var quantity = document.getElementById('quantity-input').value;
 
-        addToCartBtn.addEventListener('click', function () {
-            const quantityInput = document.querySelector('.qty input');
-            const quantity = parseInt(quantityInput.value);
-
-            // Make sure quantity is a valid number
-            if (!isNaN(quantity) && quantity > 0) {
-                // Assuming you have a product ID, replace 'product_id' with the actual ID
-                const productId = '{{ product.id }}';
-
-                // You can customize the URL according to your Django project
-                const addToCartUrl = `/add-to-cart/${productId}/${quantity}/`;
-
-                // Redirect to the add to cart URL
-                window.location.href = addToCartUrl;
-            } else {
-                alert('Please enter a valid quantity.');
-            }
-        });
-    });
+        // You can use JavaScript to send an AJAX request to your add_to_cart view
+        // Here's a simple example using fetch:
+        fetch(`/add-to-cart/${productId}/?quantity=${quantity}`)
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message); // Display the message in an alert for testing
+            })
+            .catch(error => console.error('Error:', error));
+    }
 </script>
-
-
 
 
 
@@ -253,7 +247,6 @@
                 const fullscreenImageElement = document.createElement('img');
                 fullscreenImageElement.src = image.src;
                 fullscreenImageElement.alt = image.alt;
-
                 const closeButton = document.createElement('button');
                 closeButton.classList.add('close-button');
                 closeButton.innerHTML = 'X';

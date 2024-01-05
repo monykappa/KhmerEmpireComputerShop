@@ -153,7 +153,20 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'created_at', 'total_price']
     readonly_fields = ['total_price']
 
-admin.site.register(Order, OrderAdmin)
+    def save_model(self, request, obj, form, change):
+        # Calculate the total price based on CartItems associated with the order
+        cart_items = CartItem.objects.filter(order=obj)
+        total_price = sum(item.subtotal for item in cart_items)
+        obj.total_price = total_price
+
+        # Save the order and update the CartItem instances
+        super().save_model(request, obj, form, change)
+
+        # Save CartItem instances to ensure their subtotals are up-to-date
+        for item in cart_items:
+            item.save()
+
+
 
 class CartItemAdmin(admin.ModelAdmin):
     list_display = ['order', 'product', 'quantity', 'subtotal']
@@ -164,5 +177,5 @@ admin.site.register(Product, ProductAdmin)
 admin.site.register(LaptopSpec, LaptopSpecAdmin)
 admin.site.register(HeadphoneSpec, HeadphoneSpecAdmin)
 admin.site.register(Stock, StockAdmin)
-# admin.site.register(OrderItem)
+admin.site.register(Order, OrderAdmin)
 admin.site.register(brand_category, BrandCategoryAdmin)

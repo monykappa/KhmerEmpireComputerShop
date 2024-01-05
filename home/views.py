@@ -10,64 +10,97 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User 
 from django.contrib.auth import logout
 from .models import *
+from django.utils import timezone
 from userprofile.models import *
 from django.contrib.auth.views import LogoutView
 from .forms import UserProfileForm
 from django.db.models import Q
 from decimal import Decimal
 from embed_video.templatetags.embed_video_tags import register
+from django.views.decorators.http import require_POST
+from .forms import *
 
 
-def add_to_cart(request, product_id, quantity):
-    # Get the product based on the provided ID
+def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    user = request.user
+    current_time = timezone.now()
 
-    # Ensure the quantity is a valid integer
+    # Get the quantity from the query parameters
+    quantity = int(request.GET.get('quantity', 1))
+
     try:
-        quantity = int(quantity)
-    except ValueError:
-        return redirect('cart')  # Redirect to cart if quantity is not a valid integer
+        # Check if there is an existing open order for the user within the last 5 minutes
+        existing_order = Order.objects.filter(user=user, total_price=0.0, created_at__gte=current_time - timezone.timedelta(minutes=5)).first()
 
-    # Debugging: Print or log the quantity received
-    print(f"Quantity received: {quantity}")
+        if existing_order:
+            order = existing_order
+        else:
+            # If no existing order, create a new order
+            order = Order.objects.create(user=user, total_price=0.0)
 
-    # Check if the product is in stock
-    stock = get_object_or_404(Stock, product=product)
-    if stock.quantity < quantity:
-        # Redirect to cart with a message indicating insufficient stock
-        return redirect('cart')  # You might want to pass a message in the redirect
+        # Calculate the total quantity in the cart for the specific product
+        total_quantity_in_cart = order.cartitem_set.filter(product=product).aggregate(models.Sum('quantity'))['quantity__sum'] or 0
 
-    # Get the user's order (create a new order if it doesn't exist)
-    user_order, created = Order.objects.get_or_create(user=request.user, total_price=Decimal('0.0'))
+        if product.stock.quantity >= quantity:
+            # Check if the product is already in the cart
+            cart_item, cart_item_created = CartItem.objects.get_or_create(order=order, product=product)
 
-    # Check if the product is already in the user's cart
-    cart_item, created = CartItem.objects.get_or_create(order=user_order, product=product)
+            if not cart_item_created:
+                # Calculate the quantity to add to the existing quantity in the cart
+                additional_quantity = quantity - cart_item.quantity
+                cart_item.quantity += additional_quantity
+                cart_item.subtotal = product.price * cart_item.quantity
+                cart_item.save()
+            else:
+                # Set quantity and subtotal
+                cart_item.quantity = quantity
+                cart_item.subtotal = product.price * quantity
+                cart_item.save()
 
-    # Update the quantity and subtotal using Decimal
-    cart_item.quantity += quantity
-    cart_item.subtotal = cart_item.quantity * Decimal(str(product.price))
-    cart_item.save()
+            # Update stock quantity based on the requested quantity
+            product.stock.quantity = max(0, product.stock.quantity - quantity)
+            product.stock.save()
 
-    # Debugging: Print or log the quantity stored in the database
-    print(f"Quantity stored in the database: {cart_item.quantity}")
-    # In your Django view
-    print(f"Product ID: {product_id}, Quantity: {quantity}")
+            # Update total price of the order
+            order.total_price = sum(item.subtotal for item in order.cartitem_set.all())
+            order.save()
+
+            return JsonResponse({'message': f'{product.name} added to cart, quantity: {quantity}'})
+        else:
+            raise ValueError("Insufficient stock")
+    except Stock.DoesNotExist:
+        raise ValueError("Stock does not exist for the product")
 
 
-
-    # Update the total price of the order using Decimal
-    user_order.total_price += cart_item.subtotal
-    user_order.save()
-
-    # Update the stock quantity
-    stock.quantity -= quantity
-    stock.save()
-
-    # Redirect to the cart page
-    return redirect('home:cart')
 
 def cart(request):
-    return render(request, 'home/cart.html')
+    user_cart_items = CartItem.objects.filter(order__user=request.user)
+    total_price = sum(item.subtotal for item in user_cart_items)
+
+    return render(request, 'home/cart.html', {'cart_items': user_cart_items, 'total_price': total_price})
+
+
+def remove_from_cart(request):
+    if request.method == 'POST':
+        form = RemoveFromCartForm(request.POST)
+        if form.is_valid():
+            item_id = form.cleaned_data['item_id']
+            item = get_object_or_404(CartItem, id=item_id)
+
+            # Update the stock when removing a product from the cart
+            stock = get_object_or_404(Stock, product=item.product)
+            stock.quantity += item.quantity
+            stock.save()
+
+            # Perform the logic to remove the item from the cart
+            item.delete()
+
+            return redirect('home:cart')
+
+    # Redirect back to the cart page if the form is not valid
+    return redirect('home:cart')
+
 
 @login_required
 def edit_profile(request):

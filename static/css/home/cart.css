@@ -1,0 +1,12 @@
+.container-cart{
+    width: 80%;
+    margin:auto;
+    padding: 15px;
+    flex-wrap: wrap;
+}
+tbody td, th{
+    border-bottom:1px solid rgba(128, 128, 128, 0.349);
+}
+tr{
+    border:1px solid rgba(128, 128, 128, 0.349);
+}

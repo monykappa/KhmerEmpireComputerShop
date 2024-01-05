@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 from .views import product_details, headphone_details
 
+
 app_name = 'home'
 urlpatterns = [
     path('index/', views.index, name='index'),
@@ -18,7 +19,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='home:index'), name='logout'),
     path('ajax/', views.product_list_ajax, name='product_list_ajax'),
     path('cart/', views.cart, name='cart'),
-    path('add-to-cart/<int:product_id>/<int:quantity>/', views.add_to_cart, name='add_to_cart'),
+    path('add-to-cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('remove_from_cart/', views.remove_from_cart, name='remove_from_cart'),
 
 
     

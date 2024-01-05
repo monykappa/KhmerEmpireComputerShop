@@ -129,26 +129,21 @@ class CartItem(models.Model):
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
 
     def save(self, *args, **kwargs):
-        try:
-            stock = self.product.stock
-            if stock.quantity >= self.quantity:
-                stock.quantity -= self.quantity
-                stock.save()
-            else:
-                # Handle insufficient stock situation
-                raise ValueError("Insufficient stock")
-        except Stock.DoesNotExist:
-            raise ValueError("Stock does not exist for the product")
+        # Check if the cart item already exists
+        existing_cart_item = self.__class__.objects.filter(order=self.order, product=self.product).first()
 
         # Update subtotal based on product price and quantity
         self.subtotal = self.product.price * self.quantity
 
-        # Check if the cart item already exists
-        existing_cart_item = self.__class__.objects.filter(order=self.order, product=self.product).first()
-
         # Save only if the cart item is new or the quantity has changed
         if existing_cart_item is None or existing_cart_item.quantity != self.quantity:
             super().save(*args, **kwargs)
+
+        # Update the total price of the associated order
+        self.order.total_price = sum(item.subtotal for item in self.order.cartitem_set.all())
+        self.order.save()
+
+
 
 
 class Stock(models.Model):
