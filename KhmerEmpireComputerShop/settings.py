@@ -18,6 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
+
+
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -47,6 +49,11 @@ INSTALLED_APPS = [
     'embed_video',
     'home',
     'userprofile',
+    
+    
+    
+    #Payment intergration
+    'paypal.standard.ipn',
     
 ]
 
@@ -161,3 +168,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+PAYPAL_RECEIVER_EMAIL = 'sb-amy1d29165459@personal.example.com'
+PAYPAL_TEST = True

@@ -19,6 +19,30 @@ from decimal import Decimal
 from embed_video.templatetags.embed_video_tags import register
 from django.views.decorators.http import require_POST
 from .forms import *
+import json
+
+#Paypal payment integration
+def paymentComplete(request):
+    body = json.loads(request)
+    CartItem = CartItem.object.get(id=body['cart_item_id'], order__user=request.user)
+    Order.object.create(
+        CartItem = CartItem,
+    )
+    return render(request, 'payment/payment_completed.html')
+
+def payment_failed_view(request):
+    return render(request, 'payment/payment_failed.html')
+
+# @login_required
+# def checkout(request, pk):
+#     cart_item = CartItem.objects.get(id=pk, order__user=request.user)
+
+#     # Debug statement to check cart_item.pk value
+#     print("Cart Item PK:", cart_item.pk)
+
+#     context = {'cart_item': cart_item}
+#     return render(request, 'payment/checkout.html', context)
+
 
 
 def add_to_cart(request, product_id):
@@ -75,6 +99,15 @@ def add_to_cart(request, product_id):
 
 
 def cart(request):
+    if request.method == 'POST' and 'paypal' in request.POST:
+        # Process PayPal payment and capture details here
+
+        # Clear the user's cart after successful payment
+        user_cart_items = CartItem.objects.filter(order__user=request.user)
+        user_cart_items.delete()
+
+        return redirect('home:cart')  # Redirect to a success page after payment
+
     user_cart_items = CartItem.objects.filter(order__user=request.user)
     total_price = sum(item.subtotal for item in user_cart_items)
 

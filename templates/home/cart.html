@@ -27,28 +27,99 @@
         </thead>
         <tbody>
             {% for item in cart_items %}
-                <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ item.product.brand_name }}</td>
-                    <td><img src="{{ item.product.images.url }}" width="100px" height="100px" alt="{{ item.product.brand_name }} Image" w></td>
-                    <td>${{ item.product.price }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>${{ item.subtotal }}</td>
-                    <td>
-                        <form method="post" action="{% url 'home:remove_from_cart' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="item_id" value="{{ item.id }}">
-                            <button type="submit" class="btn btn-danger">Remove</button>
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ item.product.brand_name }}</td>
+                <td><img src="{{ item.product.images.url }}" width="100px" height="100px"
+                        alt="{{ item.product.brand_name }} Image" w></td>
+                <td>${{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.subtotal }}</td>
+                <td>
+                    <form method="post" action="{% url 'home:remove_from_cart' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
     <p class="font-weight-bold">Total: ${{ total_price }}</p>
     <p style="color:red;">Note: Item(s) will remove from the cart if there is no process of checkout</p>
-    <button class="btn btn-primary">Proceed to Checkout</button>
+    <!-- <a href="" class="btn btn-primary">Proceed to Checkout</a> -->
 </div>
+
+<div id="paypal-button-container"></div>
+
+
+
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AeZdUsvYWhg3F2w4QDAjrhECmXEETYuEL3npaQUV0KqdkLQjxnqxhHqvlr38zKvTDtkq8vyNoRePrv_a&currency=USD"></script>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+    var total = '{{ total_price }}'
+    var productId = '{{ CartItem.id }}'
+    function completeOrder() {
+        var url = "{% url 'home:paymentComplete' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ 'productId': productId })
+        })
+    }
+
+
+
+    paypal.Buttons({
+        style: {
+            color: 'blue',
+            shape: 'rect',
+            label: 'pay',
+            height: 40
+        },
+        createOrder: function (date, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: total
+                    }
+                }]
+            });
+        },
+        onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+
+                alert('Transaction completed by' + details.payer.name.given_name);
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+
+
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>

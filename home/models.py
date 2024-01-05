@@ -129,18 +129,14 @@ class CartItem(models.Model):
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
 
     def save(self, *args, **kwargs):
-        # Check if the cart item already exists
-        existing_cart_item = self.__class__.objects.filter(order=self.order, product=self.product).first()
-
         # Update subtotal based on product price and quantity
         self.subtotal = self.product.price * self.quantity
 
-        # Save only if the cart item is new or the quantity has changed
-        if existing_cart_item is None or existing_cart_item.quantity != self.quantity:
-            super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
         # Update the total price of the associated order
-        self.order.total_price = sum(item.subtotal for item in self.order.cartitem_set.all())
+        order_items = self.order.cartitem_set.all()
+        self.order.total_price = sum(item.subtotal for item in order_items)
         self.order.save()
 
 

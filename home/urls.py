@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.conf import settings 
 from django.conf.urls.static import static
@@ -22,9 +22,14 @@ urlpatterns = [
     path('add-to-cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('remove_from_cart/', views.remove_from_cart, name='remove_from_cart'),
 
+    #paypal url
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    path('payment-completed/', views.paymentComplete, name='paymentComplete'),
+    path('payment-failed/', views.payment_failed_view, name='payment_failed'),
+    # path('checkout/<int:pk>/', views.checkout, name='checkout'),
 
     
-    # Add more URL patterns as needed
+    
 ]
 
 if settings.DEBUG:
