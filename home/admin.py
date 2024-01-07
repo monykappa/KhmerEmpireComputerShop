@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import reverse
-from .models import Category, Product, LaptopSpec, HeadphoneSpec, Stock, brand_category, Order, CartItem
+from .models import *
 from django.utils.html import format_html
 
 
@@ -133,7 +133,19 @@ class StockAdmin(admin.ModelAdmin):
     total_price_with_dollar.short_description = 'Total Price'
 
 
+class OrderHistoryItemInline(admin.TabularInline):
+    model = OrderHistoryItem
 
+
+@admin.register(OrderHistory)
+class OrderHistoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'ordered_date')
+    inlines = [OrderHistoryItemInline]
+
+
+@admin.register(OrderHistoryItem)  
+class OrderHistoryItemAdmin(admin.ModelAdmin):
+    list_display = ('order_history', 'product', 'quantity', 'subtotal')
 
 
 

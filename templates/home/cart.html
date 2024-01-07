@@ -8,6 +8,22 @@
 <title>{% block title %}Cart{% endblock %}</title>
 
 {% block content %}
+<style>
+    #paypal-button-container {
+        width: 30%;
+        margin: auto;
+    }
+
+    .product-image {
+        object-fit: contain;
+    }
+
+    @media screen and (max-width: 768px) {
+        #paypal-button-container {
+            width: 70%;
+        }
+    }
+</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -16,9 +32,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Product name</th>
-                <th scope="col"></th>
+                <th scope="col">Image</th>
                 <th scope="col">Price</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
@@ -28,10 +43,15 @@
         <tbody>
             {% for item in cart_items %}
             <tr>
-                <th scope="row">{{ forloop.counter }}</th>
+
                 <td>{{ item.product.brand_name }}</td>
-                <td><img src="{{ item.product.images.url }}" width="100px" height="100px"
-                        alt="{{ item.product.brand_name }} Image" w></td>
+                <td>
+                    <a href="{{ item.product.images.url }}" target="_blank">
+                        <img src="{{ item.product.images.url }}" width="100px" height="100px"
+                            alt="{{ item.product.brand_name }} Image" class="product-image">
+                    </a>
+                </td>
+
                 <td>${{ item.product.price }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>${{ item.subtotal }}</td>
@@ -52,7 +72,10 @@
     <!-- <a href="" class="btn btn-primary">Proceed to Checkout</a> -->
 </div>
 
-<div id="paypal-button-container"></div>
+<div class="paypal-ctn">
+    <div id="paypal-button-container">
+    </div>
+</div>
 
 
 
@@ -79,7 +102,7 @@
     var total = '{{ total_price }}'
     var productId = '{{ CartItem.id }}'
     function completeOrder() {
-        var url = "{% url 'home:paymentComplete' %}"
+        var url = "{% url 'home:payment_complete' %}"
 
         fetch(url, {
             method: 'POST',
@@ -112,7 +135,20 @@
         onApprove: function (data, actions) {
             return actions.order.capture().then(function (details) {
 
-                alert('Transaction completed by' + details.payer.name.given_name);
+                // Clear cart
+                fetch('/clear-cart/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    }
+                })
+                    .then(res => {
+                        if (res.ok) {
+                            // Redirect inside this callback
+                            window.location.href = "{% url 'home:payment_complete' %}";
+                        }
+                    });
             });
         }
     }).render('#paypal-button-container');

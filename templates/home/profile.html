@@ -1,22 +1,17 @@
 {% extends 'home/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/home/profile.css' %}">
     {% endblock extra_css %}
-
     {% block title %}Profile{% endblock title %}
-</head>
 
-<body>
+
     {% block content %}
-    <!-- Your profile.html template -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <a href="{% url 'home:order_history'%}" class="btn btn-success">Check your order history</a>
+    <!-- Your profile.html template
     <div class="pfp-ctn">
         <div class="row">
             <div class="col-md-12">
@@ -31,6 +26,8 @@
                 {% else %}
                 <p>No profile picture available</p>
                 {% endif %}
+
+                <a href="{% url 'home:order_history'%}" class="btn btn-success">Check your order history</a>
             </div>
             <div class="col-md-8">
                 <h3 class="mb-3">Change User Information here</h3>
@@ -69,7 +66,7 @@
                         </div>
                 
                         <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
+                    </form> -->
 
 
 
@@ -77,9 +74,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
         </script>
-</body>
+
 
 {% endblock content %}
-</body>
 
-</html>

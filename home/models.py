@@ -128,6 +128,9 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)  # Set a default value here
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
 
+    def __str__(self):
+        return f"Order #{self.id} - Total: ${self.total_price}"
+
     def save(self, *args, **kwargs):
         # Update subtotal based on product price and quantity
         self.subtotal = self.product.price * self.quantity
@@ -137,7 +140,26 @@ class CartItem(models.Model):
         # Update the total price of the associated order
         order_items = self.order.cartitem_set.all()
         self.order.total_price = sum(item.subtotal for item in order_items)
-        self.order.save()
+        self.order.save() 
+    
+
+
+class OrderHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
+    ordered_date = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+
+    def __str__(self):
+        return f"Order #{self.id} - {self.ordered_date}"
+
+class OrderHistoryItem(models.Model):
+    order_history = models.ForeignKey(OrderHistory, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    def product_details(self):
+        return f"{self.product.brand_name} - {self.product.description}" 
 
 
 

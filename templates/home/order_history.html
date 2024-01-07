@@ -1,0 +1,60 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}
+Order History
+{% endblock title %}
+
+{% block content %}
+<style>
+    .sub-ctn {
+        text-align: center;
+
+    }
+
+    .product-images {
+        object-fit: contain;
+        width: 120px;
+        height: 120px;
+    }
+
+    .test-ctn {
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        margin: auto;
+        width: 50%;
+        border-radius: 12px;
+
+
+    }
+
+    .test-ctn ul {
+        list-style-type: none;
+    }
+</style>
+<a href="{% url 'home:profile'%}" class="btn btn-primary">Go back</a>
+
+
+<div class="order-history-ctn">
+    <div class="sub-ctn">
+        {% for order in orders %}
+        <div class="test-ctn">
+            <h3>Order #{{ order.id }} - {{ order.ordered_date|date:'M d, Y' }}</h3>
+
+            <ul>
+                {% for item in order.orderhistoryitem_set.all %}
+                <div class="product-ctn">
+                    <li>({{ item.quantity }} x ${{ item.subtotal }})</li>
+                    <li>{{ item.product.brand_name }}</li>
+                    <img src="{{ item.product.images.url }}" alt="product_images" class="product-images">
+                </div>
+                {% endfor %}
+            </ul>
+
+            <p>Total: ${{ order.total_price }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -24,10 +24,15 @@ urlpatterns = [
 
     #paypal url
     path('paypal/', include('paypal.standard.ipn.urls')),
-    path('payment-completed/', views.paymentComplete, name='paymentComplete'),
+    path('payment_complete/', views.payment_complete, name='payment_complete'),
     path('payment-failed/', views.payment_failed_view, name='payment_failed'),
+    path('clear-cart/', views.clear_cart, name='clear_cart'),
     # path('checkout/<int:pk>/', views.checkout, name='checkout'),
 
+    
+    path('order-history/', views.order_history, name='order_history') 
+    
+    
     
     
 ]

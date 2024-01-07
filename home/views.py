@@ -21,14 +21,53 @@ from django.views.decorators.http import require_POST
 from .forms import *
 import json
 
-#Paypal payment integration
-def paymentComplete(request):
-    body = json.loads(request)
-    CartItem = CartItem.object.get(id=body['cart_item_id'], order__user=request.user)
-    Order.object.create(
-        CartItem = CartItem,
+
+
+def order_history(request):
+    orders = OrderHistory.objects.filter(user=request.user).order_by('-id')
+    context = {'orders': orders}
+    return render(request, 'home/order_history.html', context)
+
+
+def clear_cart(request):
+    # Get cart items
+    cart_items = CartItem.objects.filter(order__user=request.user)
+    
+    # Calculate total
+    total = sum(item.subtotal for item in cart_items)
+    
+    # Create OrderHistory
+    order_history = OrderHistory.objects.create(
+        user=request.user, 
+        total_price=total
     )
-    return render(request, 'payment/payment_completed.html')
+
+    # Save items
+    for item in cart_items:
+        OrderHistoryItem.objects.create(
+            order_history=order_history,
+            product=item.product,
+            quantity=item.quantity,
+            subtotal=item.subtotal
+            )
+
+    # Clear cart 
+    CartItem.objects.filter(order__user=request.user).delete()
+
+    # Redirect
+    return redirect('home:payment_complete') 
+
+    
+#Paypal payment integration
+def payment_complete(request):
+    # Get the most recent order for the user
+    order_history = OrderHistory.objects.filter(user=request.user).order_by('-id').first()
+    order_history = {'order_history': order_history}
+
+    # Alternatively, you can use get_object_or_404 to handle the case where no order is found
+    # order = get_object_or_404(Order, user=request.user)
+
+    return render(request, 'payment/payment_completed.html', {'order_history': order_history}, )
 
 def payment_failed_view(request):
     return render(request, 'payment/payment_failed.html')
