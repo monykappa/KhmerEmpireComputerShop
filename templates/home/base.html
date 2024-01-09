@@ -4,7 +4,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Add these lines to include Plyr CSS and JavaScript files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta %}
+        
+    {% endblock meta %}<!-- Add these lines to include Plyr CSS and JavaScript files -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/home/base.css' %}">

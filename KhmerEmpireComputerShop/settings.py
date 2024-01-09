@@ -49,14 +49,19 @@ INSTALLED_APPS = [
     'embed_video',
     'home',
     'userprofile',
-    
-    
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     
     #Payment intergration
     'paypal.standard.ipn',
-    
 ]
 
+
+
+SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,7 +70,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'KhmerEmpireComputerShop.urls'
 
@@ -104,13 +112,7 @@ DATABASES = {
 
 
 
-MIDDLEWARE = [
-    'django.contrib.sessions.middleware.SessionMiddleware',  # Add this line
-    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Add this line
-    'django.contrib.messages.middleware.MessageMiddleware',  # Add this lin
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-]
+
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
@@ -172,3 +174,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PAYPAL_RECEIVER_EMAIL = 'sb-amy1d29165459@personal.example.com'
 PAYPAL_TEST = True
+
+AUTHENTICATION_BACKENDS = [
+
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+]
+
+
+SOCIALACCOUNT_LOGIN_ON_GET=True
+

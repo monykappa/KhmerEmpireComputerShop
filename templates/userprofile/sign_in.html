@@ -1,44 +1,57 @@
 {% extends 'home/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/userprofile/sign_in.css' %}">
-    {% endblock extra_css %}
-    {% block title %}Sign in{% endblock title %}
-</head>
-<body>
-    {% block content %}
-    <div class="sign-in-ctn">
-        <div class="col-md-6">
-            <h2 class="text-center sign-in">Sign In</h2>
-            <form method="post" action="{% url 'userprofile:signin' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-                </div>
-                <a href="" class="btn-forget"><p>Forget password?</a></p>
-                <button type="submit" class="btn btn-primary btn-sign-in">Sign in</button>
-                <hr style="background-color: var(--main-color);">
-                <p class="create-text">Don't have an account, just create one!</p>
-                <a href="{% url 'userprofile:signup' %}" class="btn btn-primary btn-sign-up">Sign up</a>
-            </form>
+{% load socialaccount %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/userprofile/sign_in.css' %}">
+{% endblock extra_css %}
+{% block title %}Sign in{% endblock title %}
+
+
+
+{% block content %}
+
+<div class="sign-in-ctn">
+    <div class="col-md-6">
+        <h2 class="text-center sign-in">Sign In</h2>
+        <form method="post" action="{% url 'userprofile:signin' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password"
+                    placeholder="Enter your password">
+            </div>
+            <a href="" class="btn-forget">
+                <p>Forget password?
+            </a></p>
+            <button type="submit" class="btn btn-primary btn-sign-in">Sign in</button>
+            <hr style="background-color: var(--main-color);">
+            <p class="create-text">Don't have an account, just create one!</p>
+            <a href="{% url 'userprofile:signup' %}" class="btn btn-primary btn-sign-up">Sign up</a>
+        </form>
+
+        <div class="flex items-center justify-center h-screen dark:bg-gray-800">
+            <a href="{% provider_login_url "google" %}" class="login-with-google-btn">Login with Google
+            </a>
         </div>
+
+
     </div>
 
-    {% endblock content %}
+</div>
+<div class="flex items-center justify-center h-screen dark:bg-gray-800">
+    <a href="{% provider_login_url "facebook" method="oauth2" %}"class="login-with-google-btn">Login with Facebook
+    </a>
+</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock content %}
