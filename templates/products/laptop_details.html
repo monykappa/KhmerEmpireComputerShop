@@ -1,0 +1,281 @@
+{% extends 'home/base.html' %}
+{% load embed_video_tags %}
+{% load humanize %}
+{% load static %}
+
+
+
+
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home/product_details.css' %}">
+{% endblock extra_css %}
+{% block title %}
+Product Details
+{% endblock title %}
+
+
+
+{% block content %}
+<script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="go-back-ctn">
+    <button id="go-back-button">← Back</button>
+</div>
+<hr>
+<div class="whole-ctn">
+    <div class="box-ctn">
+        <div class="sub-box-ctn">
+            <div class="product-ctn">
+                <div class="image-container">
+                    <img src="{{ product.images.url }}" alt="{{ product.brand_name }}" class="zoom-image">
+                </div>
+            </div>
+            {% for image_field in image_fields %}
+            <div class="related-image">
+                <img class="image-item" src="{{ image_field.url }}" alt="{{ product.brand_name }}">
+            </div>
+            {% endfor %}
+
+        </div>
+        <div class="spec-ctn">
+            <div class="header">
+                <h1>{{ product.brand_name }}</h1>
+            </div>
+            <div class="description">
+                <h3>${{ product.price|floatformat:-2 }}</h3>
+                <p>Year: <span class="product-year">{{ product.year }}</span></p>
+                <p>Model: {{ product.model }}</p>
+                <p>Brand: {{ product.brand_category.company_name }}</p>
+            </div>
+            <!-- Update the value attribute of the quantity input -->
+            <div class="qty">
+                <p class="quantity">Quantity:</p>
+                <input type="text" id="quantity-input" pattern="\d*" title="Please enter a number" value="1">
+            </div>
+            <button id="add-to-cart-btn" onclick="addToCart({{ product.id }})">
+                <img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="20px" class="cart-logo">
+                Add to cart
+            </button>
+            <!-- Add this section to display the stock quantity -->
+            {% if stock %}
+            <p style="color:var(--fourth-color);">*{{ stock.quantity }} unit{{ stock.quantity|pluralize:"s" }} in stock
+            </p>
+            {% else %}
+            <p>Out of stock</p>
+            {% endif %}
+
+
+            <hr>
+            {% if specs %}
+            <div class="specs">
+                <h5>Laptop Specifications:</h5>
+                <ul>
+                    <li>
+                        <span>Color:</span>
+                        {{ product.color }}
+                    </li>
+                    <li>
+                        <span>CPU:</span>
+                        {{ product.laptopspec.cpu }} {{ product.laptopspec.cpu_detail }}
+                    </li>
+                    <li>
+                        <span>Memory:</span>
+                        {{ product.laptopspec.memory }}GB ({{ product.laptopspec.memory_detail }})
+                    </li>
+                    <li>
+                        <span>Storage:</span>
+                        {{ product.laptopspec.storage }} {{ product.laptopspec.storage_detail }}
+                    </li>
+                    <li>
+                        <span>Graphics Card:</span>
+                        {{ product.laptopspec.graphics_card }} {{ product.laptopspec.graphics_card_detail }}
+                    </li>
+                    <li>
+                        <span>Display:</span>
+                        {{ product.laptopspec.display }} {{ product.laptopspec.display_detail }}
+                    </li>
+                    <li>
+                        <span>Operating System:</span>
+                        {{ product.laptopspec.operating_system }}
+                    </li>
+                    <li>
+                        <span>Battery: </span>
+                        {{ product.laptopspec.battery }}
+                    </li>
+                    <li>
+                        <span>Webcam:</span>
+                        {{ product.laptopspec.webcam }}
+                    </li>
+                    <li>
+                        <span>Weight:</span>
+                        {{ product.laptopspec.weight }}
+                    </li>
+                    <li>
+                        <span>Wireless connectivity:</span>
+                        {{ product.laptopspec.wireless_connectivity }}
+                    </li>
+                    <li>
+                        <span>Port:</span>
+                        {{ product.laptopspec.port }}
+                    </li>
+                    <li style="color:red">
+                        Warranty:
+                        {% if product.warranty_months %}
+                        {{ product.warranty_months }} months
+                        {% if product.warranty_years %}
+                        and {{ product.warranty_years }} years
+                        {% endif %}
+                        {% elif product.warranty_years %}
+                        {{ product.warranty_years }} years
+                        {% else %}
+                        No information available
+                        {% endif %}
+                    </li>
+
+                </ul>
+            </div>
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+    <div class="recommend-ctn">
+        <h3 style="font-size: 20px; text-align: center; color:var(--fourth-color)">Recommend products</h3>
+        <hr>
+        <div class="sub-recommend-ctn">
+            {% for recommended_product in recommended_products %}
+            <a href="{% url 'home:product_details' recommended_product.id %}">
+                <div class="recommend-product">
+                    <img src="{{ recommended_product.images.url }}" alt="img">
+                    <div class="recommend-ctn-spec">
+                        <h3 class="product-name">{{ recommended_product.brand_name }}</h3>
+                        <h6 class="price">${{ recommended_product.price }}</h6>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function addToCart(productId) {
+        // Get the quantity value from the input field
+        var quantity = document.getElementById('quantity-input').value;
+
+        // Display a simple JavaScript alert
+        alert('Item Added to Cart');
+
+        // Delay the page reload for 1.5 seconds (1500 milliseconds)
+        setTimeout(function () {
+            // Reload the page
+            window.location.reload();
+        }, 1500);
+
+        // Send an AJAX request to add the item to the cart
+        fetch(`/add-to-cart/${productId}/?quantity=${quantity}`)
+        .then(response => response.json())
+        .then(data => {
+            // Display an alert notification
+            alert('Item Added to Cart');
+    
+            // Reload the page immediately
+            window.location.reload();
+        })
+        .catch(error => console.error('Error:', error));
+    
+
+    }
+</script>
+
+
+
+<script>
+    // JavaScript to enforce numeric input
+    document.addEventListener('input', function (e) {
+        if (e.target.tagName.toLowerCase() === 'input' && e.target.type === 'text') {
+            e.target.value = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+        }
+    });
+</script>
+
+<script>
+    const imageContainer = document.querySelector('.image-container');
+    const zoomImages = document.querySelectorAll('.zoom-image');
+
+    imageContainer.addEventListener('mousemove', (e) => {
+        const rect = imageContainer.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / imageContainer.clientWidth;
+        const y = (e.clientY - rect.top) / imageContainer.clientHeight;
+        zoomImages.forEach((zoomImage) => {
+            zoomImage.style.transformOrigin = `${x * 100}% ${y * 100}%`;
+        });
+    });
+
+    zoomImages.forEach((zoomImage) => {
+        zoomImage.addEventListener('click', function () {
+            const fullscreenImage = document.createElement('div');
+            fullscreenImage.id = 'fullscreen-image';
+            const fullscreenImageContainer = document.createElement('div');
+            fullscreenImageContainer.classList.add('fullscreen-image-container');
+            const fullscreenImageElement = document.createElement('img');
+            fullscreenImageElement.src = zoomImage.src;
+            fullscreenImageElement.alt = zoomImage.alt;
+
+            const closeButton = document.createElement('button');
+            closeButton.classList.add('close-button');
+            closeButton.innerHTML = 'X';
+
+            fullscreenImageContainer.appendChild(fullscreenImageElement);
+            fullscreenImageContainer.appendChild(closeButton);
+            fullscreenImage.appendChild(fullscreenImageContainer);
+            document.body.appendChild(fullscreenImage);
+
+            closeButton.addEventListener('click', function () {
+                fullscreenImage.remove();
+            });
+        });
+    });
+</script>
+<script>
+    const images = document.querySelectorAll('.related-image .image-item');
+
+    images.forEach(function (image) {
+        image.addEventListener('click', function () {
+            const fullscreenImage = document.createElement('div');
+            fullscreenImage.id = 'fullscreen-image';
+            const fullscreenImageContainer = document.createElement('div');
+            fullscreenImageContainer.classList.add('fullscreen-image-container');
+            const fullscreenImageElement = document.createElement('img');
+            fullscreenImageElement.src = image.src;
+            fullscreenImageElement.alt = image.alt;
+            const closeButton = document.createElement('button');
+            closeButton.classList.add('close-button');
+            closeButton.innerHTML = 'X';
+
+            fullscreenImageContainer.appendChild(fullscreenImageElement);
+            fullscreenImageContainer.appendChild(closeButton);
+            fullscreenImage.appendChild(fullscreenImageContainer);
+            document.body.appendChild(fullscreenImage);
+
+            closeButton.addEventListener('click', function () {
+                fullscreenImage.remove();
+            });
+        });
+    });
+</script>
+<script>
+    document.getElementById("go-back-button").addEventListener("click", function () {
+        window.history.back();
+    });
+</script>
+
+
+{% endblock content %}

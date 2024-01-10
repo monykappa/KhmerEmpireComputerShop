@@ -23,6 +23,8 @@ import json
 
 
 
+def about_us(request):
+    return render(request, 'home/about_us.html')
 def order_history(request):
     orders = OrderHistory.objects.filter(user=request.user).order_by('-id')
     context = {'orders': orders}
@@ -251,7 +253,7 @@ def product_list(request):
             Q(product__headphonespec__driver_size__icontains=query)
         )
 
-    return render(request, 'home/product_list.html', {'laptop_stocks': laptop_stocks, 'headphone_stocks': headphone_stocks})
+    return render(request, 'products/product_list.html', {'laptop_stocks': laptop_stocks, 'headphone_stocks': headphone_stocks})
 
 
 
@@ -294,7 +296,7 @@ def headphone_details(request, product_id):
 
     recommended_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:6]
 
-    return render(request, 'home/headphone_details.html', {
+    return render(request, 'products/headphone_details.html', {
         'product': product,
         'specs': specs,
         'stock': stock,
@@ -321,7 +323,7 @@ def product_details(request, product_id):
     # Add a query to get recommended products (you can customize this query)
     recommended_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:6]
 
-    return render(request, 'home/laptop_details.html', {
+    return render(request, 'products/laptop_details.html', {
         'product': product,
         'specs': specs,
         'stock': stock,  # Pass the stock to the template

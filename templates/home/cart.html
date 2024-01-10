@@ -9,6 +9,9 @@
 
 {% block content %}
 <style>
+    table{
+        text-align: center;
+    }
     #paypal-button-container {
         width: 30%;
         margin: auto;
@@ -23,54 +26,59 @@
             width: 70%;
         }
     }
+    thead tr{
+        background-color: var(--fourth-color);
+        color: var(--main-color);
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<div class="container-cart mt-5">
-    <h2>Your Shopping Cart</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Product name</th>
-                <th scope="col">Image</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-                <th scope="col">Remove</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in cart_items %}
-            <tr>
-
-                <td>{{ item.product.brand_name }}</td>
-                <td>
-                    <a href="{{ item.product.images.url }}" target="_blank">
-                        <img src="{{ item.product.images.url }}" width="100px" height="100px"
-                            alt="{{ item.product.brand_name }} Image" class="product-image">
-                    </a>
-                </td>
-
-                <td>${{ item.product.price }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>${{ item.subtotal }}</td>
-                <td>
-                    <form method="post" action="{% url 'home:remove_from_cart' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="item_id" value="{{ item.id }}">
-                        <button type="submit" class="btn btn-danger">Remove</button>
-                    </form>
-
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <p class="font-weight-bold">Total: ${{ total_price }}</p>
-    <p style="color:red;">Note: Item(s) will remove from the cart if there is no process of checkout</p>
+<div class="container mt-5">
+    <h2>My Cart ({{ cart_items|length }} items)</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Unit price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.product.brand_name }}</td>
+                    <td>{{ item.product.model }}</td>
+                    <td>
+                        <a href="{{ item.product.images.url }}" target="_blank">
+                            <img src="{{ item.product.images.url }}" width="100px" height="100px" alt="{{ item.product.brand_name }} Image" class="img-fluid">
+                        </a>
+                    </td>
+                    <td>${{ item.product.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.subtotal|floatformat:"0" }}</td>
+                    <td>
+                        <form method="post" action="{% url 'home:remove_from_cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p class="font-weight-bold text-danger">Total: ${{ total_price|floatformat:"0" }}</p>
+    <p class="">Note: Items will be removed from the cart if there is no checkout process.</p>
     <!-- <a href="" class="btn btn-primary">Proceed to Checkout</a> -->
 </div>
+
 
 <div class="paypal-ctn">
     <div id="paypal-button-container">

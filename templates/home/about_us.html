@@ -1,0 +1,42 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}
+About us
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container">
+        <h1 class="my-4">Welcome to Khmer Empire Shop</h1>
+    </div>
+
+    <main class="container my-4">
+        <section>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>About Us</h2>
+                    <p>Welcome to Your Company Name, your trusted source for high-quality electronic devices in Cambodia.</p>
+                    <p>At Your Company Name, we are passionate about delivering the latest and best electronic gadgets to our
+                        customers. With a focus on innovation and customer satisfaction, we strive to provide a seamless shopping
+                        experience.</p>
+                    <p>Our team consists of dedicated professionals who are committed to staying ahead in the dynamic world of
+                        technology. We carefully curate our product selection to ensure that you have access to cutting-edge devices
+                        from leading brands.</p>
+                    <p>Whether you are looking for smartphones, laptops, smartwatches, or other electronic accessories, Your Company
+                        Name is your one-stop destination for all your tech needs. We believe in offering competitive prices without
+                        compromising on quality.</p>
+                    <p>Thank you for choosing Your Company Name. We look forward to serving you and becoming your preferred
+                        electronics provider in Cambodia.</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="{% static 'images/20211026092921_2026.jpg' %}" alt="Company Image" class="img-fluid">
+                </div>
+            </div>
+        </section>
+    </main>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock content %}

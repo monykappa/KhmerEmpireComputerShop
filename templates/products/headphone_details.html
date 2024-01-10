@@ -1,6 +1,4 @@
 {% extends 'home/base.html' %}
-{% load embed_video_tags %}
-{% load humanize %}
 {% load static %}
 
 <head>
@@ -8,13 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
     <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/home/product_details.css' %}">
     {% endblock extra_css %}
     {% block title %}
-    Product Details
+    Product details
     {% endblock title %}
 </head>
 
@@ -37,11 +33,10 @@
                     <img class="image-item" src="{{ image_field.url }}" alt="{{ product.brand_name }}">
                 </div>
                 {% endfor %}
-                
             </div>
             <div class="spec-ctn">
                 <div class="header">
-                    <h1>{{ product.brand_name }}</h1>
+                    <h1>{{ product.brand_name }} {{ product.model }}</h1>
                 </div>
                 <div class="description">
                     <h3>${{ product.price|floatformat:-2 }}</h3>
@@ -49,109 +44,93 @@
                     <p>Model: {{ product.model }}</p>
                     <p>Brand: {{ product.brand_category.company_name }}</p>
                 </div>
-                <!-- Update the value attribute of the quantity input -->
                 <div class="qty">
                     <p class="quantity">Quantity:</p>
-                    <input type="text" id="quantity-input" pattern="\d*" title="Please enter a number" value="1"> 
+                    <input type="text" pattern="\d*" title="Please enter a number" value="1">
                 </div>
                 <button id="add-to-cart-btn" onclick="addToCart({{ product.id }})">
-                    <img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="20px" class="cart-logo">
+                    <img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="20px"
+                        class="cart-logo">
                     Add to cart
                 </button>
-                <!-- Add this section to display the stock quantity -->
                 {% if stock %}
-                <p style="color:var(--fourth-color);">*{{ stock.quantity }} unit{{ stock.quantity|pluralize:"s" }} in stock</p>
+                <p style="color:var(--fourth-color);">*{{ stock.quantity }} unit{{ stock.quantity|pluralize:"s" }} in
+                    stock</p>
                 {% else %}
-                    <p>Out of stock</p>
+                <p>Out of stock</p>
                 {% endif %}
-
 
                 <hr>
                 {% if specs %}
                 <div class="specs">
-                    <h5>Laptop Specifications:</h5>
+                    <h5>Headphone Specifications:</h5>
                     <ul>
                         <li>
-                            <span>Color:</span> 
+                            <span>Color:</span>
                             {{ product.color }}
                         </li>
                         <li>
-                            <span>CPU:</span> 
-                            {{ product.laptopspec.cpu }} {{ product.laptopspec.cpu_detail }}
+                            <span>Driver size: </span>
+                            {{ product.headphonespec.driver_size }}
                         </li>
                         <li>
-                            <span>Memory:</span> 
-                            {{ product.laptopspec.memory }}GB ({{ product.laptopspec.memory_detail }})
+                            <span>Frequency response:</span>
+                            {{ product.headphonespec.frequency_response }}
                         </li>
                         <li>
-                            <span>Storage:</span> 
-                            {{ product.laptopspec.storage }} {{ product.laptopspec.storage_detail }}
+                            <span>Impedance:</span>
+                            {{ product.headphonespec.impedance }}
                         </li>
                         <li>
-                            <span>Graphics Card:</span> 
-                            {{ product.laptopspec.graphics_card }} {{ product.laptopspec.graphics_card_detail }}
+                            <span>Noise cancellation:</span>
+                            {{ product.headphonespec.noise_cancellation }}
                         </li>
                         <li>
-                            <span>Display:</span> 
-                            {{ product.laptopspec.display }} {{ product.laptopspec.display_detail }}
+                            <span>Connector type:</span>
+                            {{ product.headphonespec.connector_type }}
                         </li>
                         <li>
-                            <span>Operating System:</span> 
-                            {{ product.laptopspec.operating_system }}
+                            <span>Weight:</span>
+                            {{ product.headphonespec.weight }}
                         </li>
                         <li>
-                            <span>Battery: </span>
-                            {{ product.laptopspec.battery }}
+                            <span>Battery life:</span>
+                            {{ product.headphonespec.battery_life }}
                         </li>
                         <li>
-                            <span>Webcam:</span> 
-                            {{ product.laptopspec.webcam }}
-                        </li>
-                        <li>
-                            <span>Weight:</span> 
-                            {{ product.laptopspec.weight }}
-                        </li>
-                        <li>
-                            <span>Wireless connectivity:</span>
-                            {{ product.laptopspec.wireless_connectivity }}
-                        </li>
-                        <li>
-                            <span>Port:</span> 
-                            {{ product.laptopspec.port }}
+                            <span>Additional features:</span>
+                            {{ product.headphonespec.additional_features }}
                         </li>
                         <li style="color:red">
                             Warranty:
                             {% if product.warranty_months %}
-                                {{ product.warranty_months }} months
-                                {% if product.warranty_years %}
-                                    and {{ product.warranty_years }} years
-                                {% endif %}
+                            {{ product.warranty_months }} months
+                            {% if product.warranty_years %}
+                            and {{ product.warranty_years }} years
+                            {% endif %}
                             {% elif product.warranty_years %}
-                                {{ product.warranty_years }} years
+                            {{ product.warranty_years }} years
                             {% else %}
-                                No information available
+                            No information available
                             {% endif %}
                         </li>
-                        
                     </ul>
                 </div>
                 {% endif %}
-                
-    
             </div>
-            
-    
+
         </div>
         <div class="recommend-ctn">
             <h3 style="font-size: 20px; text-align: center; color:var(--fourth-color)">Recommend products</h3>
             <hr>
             <div class="sub-recommend-ctn">
                 {% for recommended_product in recommended_products %}
-                <a href="{% url 'home:product_details' recommended_product.id %}">
+                <a href="{% url 'home:headphone_details' recommended_product.id %}">
                     <div class="recommend-product">
                         <img src="{{ recommended_product.images.url }}" alt="img">
                         <div class="recommend-ctn-spec">
-                            <h3 class="product-name">{{ recommended_product.brand_name }}</h3>
+                            <h3 class="product-name">{{ recommended_product.brand_name }} {{ recommended_product.model
+                                }}</h3>
                             <h6 class="price">${{ recommended_product.price }}</h6>
                         </div>
                     </div>
@@ -159,44 +138,40 @@
                 {% endfor %}
             </div>
         </div>
-
-
     </div>
 
 
-
-<!-- Add this to your HTML template -->
-<script>
-    function addToCart(productId) {
-        // Get the quantity value from the input field
-        var quantity = document.getElementById('quantity-input').value;
-
-        // You can use JavaScript to send an AJAX request to your add_to_cart view
-        // Here's a simple example using fetch:
-        fetch(`/add-to-cart/${productId}/?quantity=${quantity}`)
+    <script>
+        function addToCart(productId) {
+            // Get the quantity value from the input field
+            var quantity = document.getElementById('quantity-input').value;
+    
+            // Display a simple JavaScript alert
+            alert('Item Added to Cart');
+    
+            // Delay the page reload for 1.5 seconds (1500 milliseconds)
+            setTimeout(function () {
+                // Reload the page
+                window.location.reload();
+            }, 1500);
+    
+            // Send an AJAX request to add the item to the cart
+            fetch(`/add-to-cart/${productId}/?quantity=${quantity}`)
             .then(response => response.json())
             .then(data => {
-                alert(data.message); // Display the message in an alert for testing
+                // Display an alert notification
+                alert('Item Added to Cart');
+        
+                // Reload the page immediately
+                window.location.reload();
             })
             .catch(error => console.error('Error:', error));
-    }
-</script>
-
-
-
-
-
-
-
-    <script>
-        // JavaScript to enforce numeric input
-        document.addEventListener('input', function (e) {
-            if (e.target.tagName.toLowerCase() === 'input' && e.target.type === 'text') {
-                e.target.value = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-            }
-        });
+        
+    
+        }
     </script>
 
+    
     <script>
         const imageContainer = document.querySelector('.image-container');
         const zoomImages = document.querySelectorAll('.zoom-image');
@@ -247,6 +222,7 @@
                 const fullscreenImageElement = document.createElement('img');
                 fullscreenImageElement.src = image.src;
                 fullscreenImageElement.alt = image.alt;
+
                 const closeButton = document.createElement('button');
                 closeButton.classList.add('close-button');
                 closeButton.innerHTML = 'X';
