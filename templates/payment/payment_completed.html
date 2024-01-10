@@ -8,6 +8,10 @@ Payment Completed
 {% block content %}
 
 <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
     .sub-ctn {
         box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
         margin: auto;
@@ -17,36 +21,66 @@ Payment Completed
         line-height: 40px;
         border-radius: 12px;
     }
-    
+
     @media screen and (max-width: 768px) {
         .sub-ctn {
-            width:80%;
-            padding:1rem;
+            width: 80%;
+            padding: 1rem;
         }
+    }
+
+    @keyframes rotateLeftRight {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        25% {
+            transform: rotate(-50deg);
+        }
+
+        50% {
+            transform: rotate(0deg);
+        }
+
+        75% {
+            transform: rotate(50deg);
+        }
+
+        100% {
+            transform: rotate(0deg);
+        }
+    }
+
+    .rotate-animation {
+        animation: rotateLeftRight 4s linear infinite;
+        /* Adjust the duration and timing function as needed */
+    }
+    p.order-num{
+        color:red;
     }
 </style>
 
 <div class="success-ctn">
     <div class="sub-ctn">
-            <h1>Payment Successful! <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="60" height="60"
-                    viewBox="0 0 48 48">
-                    <path fill="#c8e6c9"
-                        d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z">
-                    </path>
-                    <path fill="#4caf50"
-                        d="M34.586,14.586l-13.57,13.586l-5.602-5.586l-2.828,2.828l8.434,8.414l16.395-16.414L34.586,14.586z">
-                    </path>
-                </svg></h1>
-            <p>Your payment has been completed successfully.</p>
-            
-                <p>Order History ID: #{{ order.id }}</p>
-                <p>Ordered Date: {{ order.ordered_date }}</p>
-                <p>We have received your payment of ${{ order.total_price }}.</l>
-                <p>Your order will be shipped to you soon.</p>
+        <h1>Payment Successful!
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="60" height="60" viewBox="0 0 48 48"
+                class="rotate-animation">
+                <path fill="#c8e6c9" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z">
+                </path>
+                <path fill="#4caf50"
+                    d="M34.586,14.586l-13.57,13.586l-5.602-5.586l-2.828,2.828l8.434,8.414l16.395-16.414L34.586,14.586z">
+                </path>
+            </svg>
+        </h1>
+        <p>Your payment has been completed successfully.</p>
 
-            <p>Thank you for shopping with us!</p>
+        <p class="order-num">Order number: # {{ order_history.order_history.id }}</p>
+        <p>Order Date: {{ order_history.order_history.ordered_date }}</p>
+        <p>We have received your payment of ${{ order_history.order_history.total_price }}.</p>
 
-            <a href="{% url 'home:product_list' %}" class="btn btn-primary">Continue Shopping</a>
+        <p>Thank you for shopping with us!</p>
+
+        <a href="{% url 'home:product_list' %}" class="btn btn-primary">Continue Shopping</a>
     </div>
 </div>
 {% endblock content %}

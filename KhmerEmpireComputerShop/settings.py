@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sites',
     'embed_video',
     'home',
     'userprofile',
@@ -102,7 +103,7 @@ WSGI_APPLICATION = 'KhmerEmpireComputerShop.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "db_khmer_empire",
+        "NAME": "database_khmer_empire",
         "USER": "root",
         "PASSWORD": "",
         "HOST": "localhost",
@@ -177,10 +178,8 @@ PAYPAL_TEST = True
 
 AUTHENTICATION_BACKENDS = [
 
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
 
-    # `allauth` specific authentication methods, such as login by email
+    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 
 ]
