@@ -12,19 +12,22 @@
 
 <div class="container-profile">
     <div class="sub-ctn">
-        <img src="{{user.socialaccount_set.all.0.get_avatar_url}}" class="pfp"/>
-        {% if user.is_authenticated %}
         {% if user.socialaccount_set.all %}
-        <p>Full name: {{ user.socialaccount_set.all.0.extra_data.name }}</p>
+            <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="pfp" alt="Social Account Profile Picture">
+            <p>Full name: {{ user.socialaccount_set.all.0.extra_data.name }}</p>
+        {% elif user.userprofile.profile_picture %}
+            <img src="{{ user.userprofile.profile_picture.url }}" class="pfp-userprofile" alt="User Profile Picture">
+            <p>Full name: {{ user.get_full_name }}</p>
         {% else %}
-        <p>Full name: {{ user.get_full_name }}</p>
+            <img src="{% static 'path/to/default_avatar.png' %}" class="pfp" alt="Default Avatar">
+            <p>Full name: {{ user.get_full_name }}</p>
         {% endif %}
-        {% else %}
-        {% endif %}
-        <p>Username: {{ user.get_username}}</p>
-        <a href="{% url 'home:order_history'%}" class="btn btn-success">Check your order history <img src="{% static 'images/icons/icons8-history-50.png'%}" class="his-icon"></a>
-
+        
+        <p>Username: {{ user.get_username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <a href="{% url 'home:order_history'%}" class="btn btn-success btn-custom">Check my order history <img src="{% static 'images/icons/icons8-history-50.png'%}" class="his-icon"></a>
     </div>
 </div>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 {% endblock content %}

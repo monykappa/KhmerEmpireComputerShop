@@ -46,7 +46,7 @@
                 </div>
                 <div class="qty">
                     <p class="quantity">Quantity:</p>
-                    <input type="text" pattern="\d*" title="Please enter a number" value="1">
+                    <input type="text" id="quantity-input" pattern="\d*" title="Please enter a number" value="1">
                 </div>
                 <button id="add-to-cart-btn" onclick="addToCart({{ product.id }})">
                     <img src="{% static 'images/shopping-cart-outline-svgrepo-com.svg' %}" width="20px"
@@ -129,8 +129,7 @@
                     <div class="recommend-product">
                         <img src="{{ recommended_product.images.url }}" alt="img">
                         <div class="recommend-ctn-spec">
-                            <h3 class="product-name">{{ recommended_product.brand_name }} {{ recommended_product.model
-                                }}</h3>
+                            <h3 class="product-name">{{ recommended_product.brand_name }} {{ recommended_product.model }}</h3>
                             <h6 class="price">${{ recommended_product.price }}</h6>
                         </div>
                     </div>
@@ -145,33 +144,33 @@
         function addToCart(productId) {
             // Get the quantity value from the input field
             var quantity = document.getElementById('quantity-input').value;
-    
+
             // Display a simple JavaScript alert
             alert('Item Added to Cart');
-    
+
             // Delay the page reload for 1.5 seconds (1500 milliseconds)
             setTimeout(function () {
                 // Reload the page
                 window.location.reload();
             }, 1500);
-    
+
             // Send an AJAX request to add the item to the cart
             fetch(`/add-to-cart/${productId}/?quantity=${quantity}`)
-            .then(response => response.json())
-            .then(data => {
-                // Display an alert notification
-                alert('Item Added to Cart');
-        
-                // Reload the page immediately
-                window.location.reload();
-            })
-            .catch(error => console.error('Error:', error));
-        
-    
+                .then(response => response.json())
+                .then(data => {
+                    // Display an alert notification
+                    alert('Item Added to Cart');
+
+                    // Reload the page immediately
+                    window.location.reload();
+                })
+                .catch(error => console.error('Error:', error));
+
+
         }
     </script>
 
-    
+
     <script>
         const imageContainer = document.querySelector('.image-container');
         const zoomImages = document.querySelectorAll('.zoom-image');

@@ -39,12 +39,15 @@ button#go-back-button:hover {
     flex-basis: 50%;
     height: 400px;
     margin: 0 auto;
+
 }
 
 .image-container {
     height: 100%;
     display: flex;
     margin: 0 auto;
+    border-radius: 5px;
+
 }
 
 .product-ctn img {
@@ -54,6 +57,11 @@ button#go-back-button:hover {
     display: flex;
     margin: 0 auto;
 
+}
+
+
+a.rec-pro {
+    text-decoration: none !important;
 }
 
 .header h1 {
@@ -99,12 +107,15 @@ span.product-year {
     width: 130px;
     cursor: pointer;
     padding: 5px;
-    transition: 0.3s ease-out;
+    transition: 0.3s ease;
 }
-.related-image img:hover{
+
+.related-image img:hover {
+    border-radius: 10px;
     background-color: #CFD7DA;
-    transition: 0.3s ease-out;
+    transform: scale(1.35);
 }
+
 #fullscreen-image {
     position: fixed;
     top: 0;
@@ -134,7 +145,7 @@ span.product-year {
     position: absolute;
     top: 3rem;
     right: 10rem;
-    padding:5px 15px;
+    padding: 5px 15px;
     border-radius: 5px;
     background: transparent;
     border: 1px solid grey;
@@ -143,9 +154,10 @@ span.product-year {
     cursor: pointer;
     transition: 0.3s ease;
 }
+
 .close-button:hover {
     background: rgb(255, 255, 255);
-    color:var(--fourth-color);
+    color: var(--fourth-color);
 }
 
 .sub-box-ctn {
@@ -178,34 +190,35 @@ span.product-year {
 .recommend-ctn-spec {
     padding: 0.5rem;
 }
-.specs ul li span{
+
+.specs ul li span {
     font-weight: 700;
-    
+
 }
 
-.qty{
+.qty {
     margin-bottom: 15px;
 }
-.qty input{
+
+.qty input {
     border-radius: 5px;
-    border:1px solid var(--third-color);
+    border: 1px solid var(--third-color);
     height: 35px;
     width: 50px;
     padding: 5px;
     text-align: center;
 }
 
-.recommend-product a:hover {
-    text-decoration: none;
-}
+
 /* Add this CSS to your stylesheet or within a <style> tag in your HTML */
 .plyr-play {
     display: none;
-  }
-  
-  .plyr-pause {
+}
+
+.plyr-pause {
     display: none;
-  }
+}
+
 .recommend-product {
     margin: 10px 0;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -213,10 +226,10 @@ span.product-year {
     padding: 15px;
     transition: 0.3s ease;
 }
-
 .recommend-product:hover {
-    border-style: dotted;
-}
+    transform: scale(1.05);
+}   
+
 
 h3.product-name {
     color: var(--fourth-color);
@@ -271,6 +284,7 @@ button#add-to-cart-btn {
 
 button#add-to-cart-btn:hover {
     background-color: var(--fourth-color);
+    transform: scale(1.15);
 
 }
 
@@ -278,20 +292,24 @@ button#add-to-cart-btn:hover {
     .sub-box-ctn {
         width: 100%;
     }
-    .related-image img{
+
+    .related-image img {
         width: 70px;
     }
-    .related-image{
-        margin:0 .5rem 0 0;
+
+    .related-image {
+        margin: 0 .5rem 0 0;
     }
-    .image-container{
+
+    .image-container {
         border: 1px solid rgba(128, 128, 128, 0.288);
         width: 100%;
     }
+
     .close-button {
         top: 3rem;
         right: 2rem;
-        padding:5px 15px;
+        padding: 5px 15px;
         border-radius: 5px;
         background: transparent;
         border: 1px solid grey;
@@ -300,12 +318,13 @@ button#add-to-cart-btn:hover {
         cursor: pointer;
         transition: 0.3s ease;
     }
+
     .whole-ctn {
         display: block;
     }
 
-    .sub-recommend-ctn{
-        justify-content:space-between;
+    .sub-recommend-ctn {
+        justify-content: space-between;
         display: flex;
         flex-wrap: wrap;
     }
@@ -319,7 +338,7 @@ button#add-to-cart-btn:hover {
     }
 
     .recommend-product img {
-        width: 100%; 
+        width: 100%;
         height: auto;
     }
 
@@ -361,20 +380,24 @@ button#add-to-cart-btn:hover {
     .sub-box-ctn {
         width: 100%;
     }
-    .related-image img{
+
+    .related-image img {
         width: 90px;
     }
-    .related-image{
-        margin:0 .5rem 0 0;
+
+    .related-image {
+        margin: 0 .5rem 0 0;
     }
-    .image-container{
+
+    .image-container {
         border: 1px solid rgba(128, 128, 128, 0.288);
         width: 100%;
     }
+
     .close-button {
         top: 3rem;
         right: 2rem;
-        padding:5px 15px;
+        padding: 5px 15px;
         border-radius: 5px;
         background: transparent;
         border: 1px solid grey;
@@ -383,6 +406,7 @@ button#add-to-cart-btn:hover {
         cursor: pointer;
         transition: 0.3s ease;
     }
+
     .whole-ctn {
         display: block;
     }
@@ -434,16 +458,19 @@ button#add-to-cart-btn:hover {
     .sub-box-ctn {
         width: 100%;
     }
-    .related-image img{
+
+    .related-image img {
         width: 100px;
     }
-    .related-image{
-        margin:0 .5rem 0 0;
+
+    .related-image {
+        margin: 0 .5rem 0 0;
     }
+
     .close-button {
         top: 3rem;
         right: 3rem;
-        padding:5px 15px;
+        padding: 5px 15px;
         border-radius: 5px;
         background: transparent;
         border: 1px solid grey;
@@ -452,7 +479,7 @@ button#add-to-cart-btn:hover {
         cursor: pointer;
         transition: 0.3s ease;
     }
-    
+
     .whole-ctn {
         display: block;
     }
@@ -498,13 +525,15 @@ button#add-to-cart-btn:hover {
         flex-basis: 100%;
         max-width: 100%;
     }
-    .image-container{
+
+    .image-container {
         border: 1px solid rgba(128, 128, 128, 0.288);
         width: 100%;
     }
+
     .spec-ctn {
         margin: 0;
-    
+
     }
 
     .header h1 {
@@ -516,16 +545,20 @@ button#add-to-cart-btn:hover {
     .sub-box-ctn {
         width: 60%;
     }
-    .related-image img{
+
+    .related-image img {
         width: 80px;
     }
-    .related-image{
-        margin:0 .5rem 0 0;
+
+    .related-image {
+        margin: 0 .5rem 0 0;
     }
-    .image-container{
+
+    .image-container {
         border: 1px solid rgba(128, 128, 128, 0.288);
         width: 100%;
     }
+
     .whole-ctn {
         display: block;
     }
@@ -586,16 +619,20 @@ button#add-to-cart-btn:hover {
         width: 50%;
         margin-left: 1.5rem;
     }
-    .related-image img{
+
+    .related-image img {
         width: 80px;
     }
-    .related-image{
-        margin:0 .5rem 0 0;
+
+    .related-image {
+        margin: 0 .5rem 0 0;
     }
-    .image-container{
+
+    .image-container {
         border: 1px solid rgba(128, 128, 128, 0.288);
         width: 100%;
     }
+
     .whole-ctn {
         display: flex;
     }
@@ -655,16 +692,20 @@ button#add-to-cart-btn:hover {
     .sub-box-ctn {
         width: 55%;
     }
-    .related-image img{
+
+    .related-image img {
         width: 100px;
     }
-    .related-image{
-        margin:0 .5rem 0 0;
+
+    .related-image {
+        margin: 0 .5rem 0 0;
     }
-    .image-container{
+
+    .image-container {
         border: 1px solid rgba(128, 128, 128, 0.288);
         width: 100%;
     }
+
     .whole-ctn {
         display: flex;
     }

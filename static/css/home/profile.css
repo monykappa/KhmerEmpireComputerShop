@@ -1,6 +1,22 @@
 body{
     font-family: "Poppins", sans-serif;
 }
+img.pfp-userprofile, .pfp{
+    width:200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 3vh;
+}
+a.btn-custom{
+    transition: 0.3s ease;
+    background-color: var(--fourth-color);
+    border: none;
+}
+a.btn-custom:hover{
+    transform: scale(1.05);
+    background-color: var(--third-color);
+}
 .sub-ctn {
     border: 1px solid rgba(128, 128, 128, 0.213);
     text-align: center;

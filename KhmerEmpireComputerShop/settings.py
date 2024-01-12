@@ -36,6 +36,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 ALLOWED_HOSTS = ['*']
 
 
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,6 +64,22 @@ INSTALLED_APPS = [
 ]
 
 
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+
+SOCIALACCOUNT_EMAIL_VERIFICATION=True
+SOCIALACCOUNT_EMAIL_REQUIRED=True
 
 SITE_ID = 1
 MIDDLEWARE = [

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 import uuid
 from django.core.exceptions import ValidationError
 import os
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, AbstractUser
 from django.utils import timezone
 
 
@@ -22,6 +22,7 @@ def user_directory_path(instance, filename):
 
     # Return the complete file path
     return os.path.join(directory_path, filename)
+
 
 
 

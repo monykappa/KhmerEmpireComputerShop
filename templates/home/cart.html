@@ -1,4 +1,4 @@
-<!-- cart/cart.html -->
+
 {% extends 'home/base.html' %}
 {% load static %}
 
@@ -8,36 +8,13 @@
 <title>{% block title %}Cart{% endblock %}</title>
 
 {% block content %}
-<style>
-    table{
-        text-align: center;
-    }
-    #paypal-button-container {
-        width: 30%;
-        margin: auto;
-    }
-
-    .product-image {
-        object-fit: contain;
-    }
-
-    @media screen and (max-width: 768px) {
-        #paypal-button-container {
-            width: 70%;
-        }
-    }
-    thead tr{
-        background-color: var(--fourth-color);
-        color: var(--main-color);
-    }
-</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <div class="container mt-5">
     <h2>My Cart ({{ cart_items|length }} items)</h2>
     <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">Product Name</th>
@@ -51,12 +28,16 @@
             </thead>
             <tbody>
                 {% for item in cart_items %}
-                <tr>
-                    <td>{{ item.product.brand_name }}</td>
+                <tr onclick="window.location='{% url 'home:product_details' product_id=item.product.id %}'"
+                    style="cursor: pointer;">
+                    <td>
+                        {{ item.product.brand_name }}
+                    </td>
                     <td>{{ item.product.model }}</td>
                     <td>
                         <a href="{{ item.product.images.url }}" target="_blank">
-                            <img src="{{ item.product.images.url }}" width="100px" height="100px" alt="{{ item.product.brand_name }} Image" class="img-fluid">
+                            <img src="{{ item.product.images.url }}" width="100px" height="100px"
+                                alt="{{ item.product.brand_name }} Image" class="img-fluid">
                         </a>
                     </td>
                     <td>${{ item.product.price }}</td>
@@ -73,8 +54,9 @@
                 {% endfor %}
             </tbody>
         </table>
+
     </div>
-    <p class="font-weight-bold text-danger">Total: ${{ total_price|floatformat:"0" }}</p>
+    <h3 class="font-weight-bold text-danger grand-total">Grand total: ${{ total_price|floatformat:"0" }}</h3>
     <p class="">Note: Items will be removed from the cart if there is no checkout process.</p>
     <!-- <a href="" class="btn btn-primary">Proceed to Checkout</a> -->
 </div>
@@ -121,8 +103,6 @@
         })
     }
 
-
-
     paypal.Buttons({
         style: {
             color: 'blue',
@@ -160,8 +140,6 @@
         }
     }).render('#paypal-button-container');
 </script>
-
-
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

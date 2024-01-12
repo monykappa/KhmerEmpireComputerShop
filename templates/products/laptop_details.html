@@ -151,7 +151,7 @@ Product Details
         <hr>
         <div class="sub-recommend-ctn">
             {% for recommended_product in recommended_products %}
-            <a href="{% url 'home:product_details' recommended_product.id %}">
+            <a href="{% url 'home:product_details' recommended_product.id %}" class="rec-pro">
                 <div class="recommend-product">
                     <img src="{{ recommended_product.images.url }}" alt="img">
                     <div class="recommend-ctn-spec">

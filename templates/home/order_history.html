@@ -28,13 +28,14 @@ Order History
     a.custom-decoration{
     }
     li.list-group-item{
-        transition: 0.2s ease;
+        transition: 0.3s ease;
         margin: 5px 0;
         border-radius: 5px !important;
     }
     li.list-group-item:hover{
         border:1px solid var(--fourth-color);
         background-color: var(--main-color);
+        transform: scale(1.06);
     }
     .product-ctn span{
         color:#000;
@@ -57,24 +58,24 @@ Order History
                 </div>
                 <div class="card-body">
                         <ul class="list-group">
-                            {% for item in order.orderhistoryitem_set.all %}
-                            <a href="{% url 'home:product_details' product_id=item.product.id %}"
-                                class="product-detail custom-decoration">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div class="product-ctn">
-                                        <span class="product-name">{{ item.product.brand_name }}</span>
-                                        <span>
-                                            <br>
-                                            Quantity: {{ item.quantity }}
-                                            <br>
-                                            Price per unit: ${{ item.subtotal }}
-                                        </span>
-                                    </div>
-                                    <img src="{{ item.product.images.url }}" alt="product_images" class="product-images"
-                                        width="200px">
-                                </li>
-                            </a>
-                            {% endfor %}
+                                {% for item in order.orderhistoryitem_set.all %}
+                                <a href="{% url 'home:product_details' product_id=item.product.id %}"
+                                    class="product-detail custom-decoration">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div class="product-ctn">
+                                            <span class="product-name">{{ item.product.brand_name }}</span>
+                                            <span>
+                                                <br>
+                                                Quantity: {{ item.quantity }}
+                                                <br>
+                                                Price per unit: ${{ item.subtotal }}
+                                            </span>
+                                        </div>
+                                        <img src="{{ item.product.images.url }}" alt="product_images" class="product-images"
+                                            width="200px">
+                                    </li>
+                                </a>
+                                {% endfor %}
                         </ul>
 
                         <p class="mt-3 total-price">Total: ${{ order.total_price|floatformat:"0" }}</p>
