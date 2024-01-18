@@ -196,8 +196,6 @@ PAYPAL_RECEIVER_EMAIL = 'sb-amy1d29165459@personal.example.com'
 PAYPAL_TEST = True
 
 AUTHENTICATION_BACKENDS = [
-
-
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 

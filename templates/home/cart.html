@@ -1,4 +1,3 @@
-
 {% extends 'home/base.html' %}
 {% load static %}
 
@@ -56,16 +55,21 @@
         </table>
 
     </div>
-    <h3 class="font-weight-bold text-danger grand-total">Grand total: ${{ total_price|floatformat:"0" }}</h3>
-    <p class="">Note: Items will be removed from the cart if there is no checkout process.</p>
+    {% if total_price|floatformat:"0" > "0" %}
+    <h3 class="font-weight-bold text-danger grand-total text-right">Grand total: ${{ total_price|floatformat:"0" }}</h3>
+    <p class="text-right ">Note: Items will be removed from the cart if there is no checkout process.</p>
+    {% endif %}
     <!-- <a href="" class="btn btn-primary">Proceed to Checkout</a> -->
 </div>
-
-
 <div class="paypal-ctn">
-    <div id="paypal-button-container">
-    </div>
+    {% if total_price|floatformat:"0" > "0" %}
+    <div id="paypal-button-container"></div>
+    {% endif %}
 </div>
+
+
+
+
 
 
 <script

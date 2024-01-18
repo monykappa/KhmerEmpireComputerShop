@@ -327,16 +327,21 @@ button#add-to-cart-btn:hover {
         justify-content: space-between;
         display: flex;
         flex-wrap: wrap;
+        width: 100%;
     }
 
     .recommend-product {
         flex-basis: calc(50% - 5px);
-        display: flex;
+        display: block;
         width: 100%;
         margin-top: 10px;
         box-sizing: border-box;
-    }
 
+    }
+    a.rec-pro{
+        width:45%;
+
+    }
     .recommend-product img {
         width: 100%;
         height: auto;
@@ -344,6 +349,7 @@ button#add-to-cart-btn:hover {
 
     .recommend-ctn {
         width: 100%;
+        
         margin: 0 auto;
     }
 
@@ -369,6 +375,10 @@ button#add-to-cart-btn:hover {
 
     .spec-ctn {
         margin: 0;
+    }
+    .specs ul li{
+        list-style-type: circle !important;
+        text-align: left;
     }
 
     .header h1 {
@@ -576,6 +586,7 @@ button#add-to-cart-btn:hover {
         width: 100%;
         margin-top: 10px;
         height: 250px;
+
     }
 
     .recommend-product img {
