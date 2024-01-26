@@ -20,7 +20,7 @@
     margin-top: 17vh;
 }
 a.logo-name {
-    width: 320px;
+    width: 290px;
     display: flex;
     flex-wrap: wrap;
     margin-left: 10px;
@@ -53,6 +53,9 @@ button.btn-toggle svg {
     display: flex;
     margin: 0 auto;
 }
+
+
+
 
 .navbar {
     font-family: var(--primary-font);
@@ -182,7 +185,14 @@ footer {
     margin: 20px 0;
 }
 
+img.social-logo{
+    transition: 0.5s ease;
+}
+img.social-logo:hover{
+    transform: scale(1.5);  
+}
 .logo-social-media {
+
     margin: 0px 5px;
 }
 

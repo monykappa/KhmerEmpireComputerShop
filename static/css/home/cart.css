@@ -47,3 +47,9 @@ thead tr {
     background-color: var(--fourth-color);
     color: var(--main-color);
 }
+
+@media screen and (max-width: 1000px) {
+    table{
+        display: none;
+    }
+}
