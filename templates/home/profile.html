@@ -13,19 +13,20 @@
 <div class="container-profile">
     <div class="sub-ctn">
         {% if user.socialaccount_set.all %}
-            <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="pfp" alt="Social Account Profile Picture">
-            <p>Full name: {{ user.socialaccount_set.all.0.extra_data.name }}</p>
+        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="pfp" alt="Social Account Profile Picture">
+        <p>Full name: {{ user.socialaccount_set.all.0.extra_data.name }}</p>
         {% elif user.userprofile.profile_picture %}
-            <img src="{{ user.userprofile.profile_picture.url }}" class="pfp-userprofile" alt="User Profile Picture">
-            <p>Full name: {{ user.get_full_name }}</p>
+        <img src="{{ user.userprofile.profile_picture.url }}" class="pfp-userprofile" alt="User Profile Picture">
+        <p>Full name: {{ user.get_full_name }}</p>
         {% else %}
-            <img src="{% static 'path/to/default_avatar.png' %}" class="pfp" alt="Default Avatar">
-            <p>Full name: {{ user.get_full_name }}</p>
+        <img src="{% static 'path/to/default_avatar.png' %}" class="pfp" alt="Default Avatar">
+        <p>Full name: {{ user.get_full_name }}</p>
         {% endif %}
-        
+
         <p>Username: {{ user.get_username }}</p>
         <p>Email: {{ user.email }}</p>
-        <a href="{% url 'home:order_history'%}" class="btn btn-success btn-custom">Check my order history <img src="{% static 'images/icons/icons8-history-50.png'%}" class="his-icon"></a>
+        <a href="{% url 'home:order_history'%}" class="btn btn-success btn-custom">Check my order history <img
+                src="{% static 'images/icons/icons8-history-50.png'%}" class="his-icon"></a>
     </div>
 </div>
 

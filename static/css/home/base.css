@@ -234,7 +234,7 @@ p.copy-rigth{
         box-shadow: none;
     }
     a.logo-name {
-        width:100%;
+        width:80% !important;
         margin-left: 0;
     }
     img.nav-logo{
@@ -242,17 +242,20 @@ p.copy-rigth{
         margin: 0 auto;
     }
     .container{
-        margin: 0 5px;
+
+        margin: 10px 5px !important;
     }   
     h5.logo-name-logo{
         display: flex;
-        margin: 0 auto;
+        /* margin: 0 auto; */
         font-size: 20px;
+        margin:15px 0;
+        padding:0;
     }
     button.btn-toggle{
         margin: 0 auto;
         margin-top: 10px;
-        width:100%;
+        width:15% !important;
     }
     ul li.cart a {
         border: 2px solid var(--main-color);

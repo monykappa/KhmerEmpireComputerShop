@@ -187,6 +187,10 @@ footer {
 
 
 @media (min-width:237px) and (max-width:427px){
+    .ctn{
+        border: 1px solid red;
+        width: 100%;
+    }
     ul{
         text-align: center;
         width:100%;

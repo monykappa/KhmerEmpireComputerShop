@@ -8,6 +8,7 @@
     <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
     {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/home/product_details.css' %}">
+    
     {% endblock extra_css %}
     {% block title %}
     Product details
@@ -15,7 +16,10 @@
 </head>
 
 <body>
+    
     {% block content %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">   
+    <button id="buttontest">Click Me</button>
     <div class="go-back-ctn">
         <button id="go-back-button">← Back</button>
     </div>
@@ -139,8 +143,19 @@
         </div>
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>     
     <script>
+        $("#buttontest").on("click",function(){
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+              }).then(function(){
+                console.log("after alert");
+              })
+       })
         function addToCart(productId) {
             // Get the quantity value from the input field
             var quantity = document.getElementById('quantity-input').value;

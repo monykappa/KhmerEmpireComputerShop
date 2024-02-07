@@ -94,7 +94,6 @@ class StockInline(admin.TabularInline):
     model = Stock
     extra = 1
     
-
 from django import forms
 class StockForm(forms.ModelForm):
     class Meta:
@@ -132,7 +131,7 @@ class StockAdmin(admin.ModelAdmin):
         return formatted_total_price.rstrip('0').rstrip('.') if '.' in formatted_total_price else formatted_total_price
     total_price_with_dollar.short_description = 'Total Price'
 
-
+    
 class OrderHistoryItemInline(admin.TabularInline):
     model = OrderHistoryItem
 
